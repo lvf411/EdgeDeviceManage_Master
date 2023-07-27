@@ -1,5 +1,5 @@
 {
-    "ip":   "xxx.xxx.xxx.xxx",
-    "listen_port":  1234
+    "ip":   "192.168.44.128",
+    "listen_port":  8888
 }
   

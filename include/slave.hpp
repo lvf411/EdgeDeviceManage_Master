@@ -43,7 +43,7 @@ struct PrevInput{
 };
 
 //分配到的任务
-struct Task{
+struct SubTask{
     int root_id;                        //整个任务的ID
     int task_id;                        //当前子任务在整个任务中的ID
     int prev_num;                       //运行当前子任务需要传来输入的前驱的数量
@@ -55,7 +55,7 @@ struct Task{
     struct list_head self;              //自身在任务链表中的节点
 };
 
-struct Master{
+struct Slave{
     int sock;                           //与服务端通信的文件描述符
     struct sockaddr_in addr;            //服务端地址信息
     int slave_id;                       //客户端编号
@@ -64,6 +64,6 @@ struct Master{
     struct Task *current_task;          //当前正在执行的任务
     struct Task *next_task;             //下一个执行的任务
     std::map<int, struct sockaddr_in> work_slave_addr;          //按照客户端编号存储的正在运行的所有客户端节点地址信息
-};
+};   
 
 #endif //__SLAVE_HPP

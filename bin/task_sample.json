@@ -23,12 +23,7 @@
             "run_time": 4,
             "input_src_num":    1,
             "input_src":[
-                {
-                    "src_id":   1,
-                    "input_type":   "int",
-                    "input_size":   10,
-                    "#input_size":  "单位字节，-1为无限制"
-                }
+                1
             ],
             "output_dst_num":   1,
             "output_dst":[
@@ -41,11 +36,7 @@
             "exe_path": "xxxxxxxx",
             "input_src_num":    1,
             "input_src":[
-                {
-                    "src_id":   1,
-                    "input_type":   "int",
-                    "input_size":   10
-                }
+                1
             ],
             "output_dst_num":   1,
             "output_dst":[
@@ -58,11 +49,7 @@
             "exe_path": "xxxxxxxx",
             "input_src_num":    1,
             "input_src":[
-                {
-                    "src_id":   1,
-                    "input_type":   "int",
-                    "input_size":   10
-                }
+                1
             ],
             "output_dst_num":   1,
             "output_dst":[
@@ -74,21 +61,9 @@
             "exe_path": "xxxxxxxx",
             "input_src_num":    3,
             "input_src":[
-                {
-                    "src_id":   2,
-                    "input_type":   "int",
-                    "input_size":   10
-                },
-                {
-                    "src_id":   3,
-                    "input_type":   "int",
-                    "input_size":   10
-                },
-                {
-                    "src_id":   4,
-                    "input_type":   "int",
-                    "input_size":   10
-                }
+                2,
+                3,
+                4
             ],
             "output_dst_num":   0,
             "output_dst":[]  

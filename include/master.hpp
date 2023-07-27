@@ -15,46 +15,27 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "list.hpp"
 
-//链表节点
-struct list_head{
-    struct list_head *prev, *next;
-    void *source;                       //指向该链表节点对应的节点实例的首地址
-};
-
-//参数描述
-struct Parameter{
-    int para_type;                      //该参数计量的类型
-    int para_size;                      //该参数最大字节数
-    struct Parameter *next;             //参数链表后继
-};
-
-//子任务需要的输出参数结果
-struct  SubTaskParameter{
-    void *owner;                        //生成该输出结果的子任务描述节点指针
-    int owner_id;                       //生成该输出结果的子任务的ID
-    int para_num;                       //生成输出结果中的参数个数
-    struct Parameter *head;             //参数描述链表头地址
-    struct SubTaskParameter *next;      //输出结果链表后继
-};
-
-//后继信息节点
-struct SubTaskSuccessorListNode{
-    int successor_id;                   //后继子任务的ID
-    struct SubTaskSuccessorListNode *next;
+//子任务间结果传递
+struct SubTaskResult{
+    int dir;                            //结果传递方向，值为0表示为接收子任务结果，subtask_id为结果源的id；值为1表示为发送子任务结果，subtask_id为发送的目标的id
+    int subtask_id;                     //子任务的ID
+    struct SubTaskResult *next;
 };
 
 //子任务描述节点
 struct SubTaskNode{
-    int task_id;                        //标记当前子任务在整个任务中的编号
+    int subtask_id;                     //标记当前子任务在整个任务中的编号
     int root_id;                        //标记整个任务在系统中的编号
     int client_id;                      //标记被分配到的设备编号
     int prev_num;                       //标记运行当前子任务需要传来参数的前驱的数量
-    struct SubTaskParameter *prev_head; //运行当前子任务需要传来参数的前驱的输出结果链表头节点
+    struct SubTaskResult *prev_head;    //运行当前子任务需要传来参数的前驱的输出结果链表头节点
     int next_num;                       //标记当前子任务需要向后传递的后继数量
-    struct SubTaskSuccessorListNode *head;  //当前子任务需要向后传递的后继信息链表头结点
+    struct SubTaskResult *succ_head;    //当前子任务需要向后传递的后继信息链表头结点
     struct list_head head;              //任务链表表头
     struct list_head self;              //指向自身在链表中的指针
+    string exepath;                     //子任务执行文件路径
 };
 
 //客户端链表节点
@@ -62,22 +43,24 @@ struct ClientNode{
     int sock;                           //与客户端通信的文件描述符
     struct sockaddr_in addr;            //客户端的地址信息
     int flag;                           //表示当前该进程是否在运行，若为-1表示空闲；若大于0，表示分配给编号为flag的任务运行
-    struct list_head head;              //链表头地址，若flag为-1，为空闲链表表头；若大于0，为任务链表表头
-    struct list_head self;              //指向自身在链表中的指针
-    struct ClientNode *source;          //指向自身的指针
+    int ability;                        //执行任务的效率，能力，越大越强
+    int subtask_num;                    //分配到的子任务数量
+    struct list_head head;              //任务链表头地址，若flag为-1，为空闲节点；若大于0，为任务链表表头
+    struct list_head self;              //指向自身在客户端链表中的指针
+
 };
 
 //任务描述
 struct Task{
-    int task_id;                        //任务编号
+    int id;                             //系统内的任务编号
+    string task_id;                     //任务自身编号
     int subtask_num;                    //可分解的子任务个数
     struct list_head subtask_head;      //子任务链表表头
-    struct list_head head;              //任务链表表头
-    struct list_head self;              //自身在链表中的指针
+    struct list_head self;              //自身在任务链表中的指针
 };
 
 //服务端信息结构体
-struct Server{
+struct Master{
     int sock;                           //监听的文件描述符
     struct sockaddr_in addr;            //服务端的地址信息
     int free_client_num;                //空闲设备数量
