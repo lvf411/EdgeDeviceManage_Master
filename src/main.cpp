@@ -2,6 +2,7 @@
 #include <fstream>
 #include <jsoncpp/json/json.h>
 #include <pthread.h>
+#include "interface.hpp"
 
 #define InitFile "master_init_sample.json"
 #define MAX_LISTENING 1000
@@ -184,12 +185,7 @@ void* slave_accept(void *arg)
         list_add_tail(self, &free_client_list);
         pthread_mutex_unlock(&mutex_slave_list);
     }
-}
-
-//操作终端页面实现与人交互
-void* bash_io(void *arg)
-{
-
+    return;
 }
 
 //分配任务给各个节点
@@ -210,7 +206,10 @@ void* task_deploy(void *arg)
         pthread_mutex_unlock(&mutex_task_list);
 
         //更新从节点结构体中的信息
+
+        
     }
+    return;
 }
 
 int main(){
@@ -221,9 +220,10 @@ int main(){
     pthread_mutex_init(&mutex_uninit_task_list, NULL);
     pthread_mutex_init(&mutex_task_id, NULL);
 
-    pthread_t slave_listen_threadID, io_interface_threadID, task_deploy_threadID;
+    pthread_t slave_listen_threadID, bash_input_threadID, bash_output_threadID, task_deploy_threadID;
     pthread_create(&slave_listen_threadID, NULL, slave_accept, &sock);
-    pthread_create(&io_interface_threadID, NULL, bash_io, NULL);
+    pthread_create(&bash_output_threadID, NULL, bash_output, NULL);
+    pthread_create(&bash_input_threadID, NULL, bash_input, NULL);
     pthread_create(&task_deploy_threadID, NULL, task_deploy, NULL);
     
     pthread_mutex_destroy(&mutex_slave_list);

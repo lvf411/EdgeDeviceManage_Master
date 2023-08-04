@@ -1,14 +1,19 @@
-
-# Consider dependencies only in project.
-set(CMAKE_DEPENDS_IN_PROJECT_ONLY OFF)
-
 # The set of languages for which implicit dependencies are needed:
 set(CMAKE_DEPENDS_LANGUAGES
+  "CXX"
   )
+# The set of files for implicit dependencies of each language:
+set(CMAKE_DEPENDS_CHECK_CXX
+  "/home/lf/Documents/EdgeDeviceManage_Master/src/interface.cpp" "/home/lf/Documents/EdgeDeviceManage_Master/build/CMakeFiles/main.dir/src/interface.cpp.o"
+  "/home/lf/Documents/EdgeDeviceManage_Master/src/kbhit.cpp" "/home/lf/Documents/EdgeDeviceManage_Master/build/CMakeFiles/main.dir/src/kbhit.cpp.o"
+  "/home/lf/Documents/EdgeDeviceManage_Master/src/list.cpp" "/home/lf/Documents/EdgeDeviceManage_Master/build/CMakeFiles/main.dir/src/list.cpp.o"
+  "/home/lf/Documents/EdgeDeviceManage_Master/src/main.cpp" "/home/lf/Documents/EdgeDeviceManage_Master/build/CMakeFiles/main.dir/src/main.cpp.o"
+  )
+set(CMAKE_CXX_COMPILER_ID "GNU")
 
-# The set of dependency files which are needed:
-set(CMAKE_DEPENDS_DEPENDENCY_FILES
-  "/home/lf/CloudEdge/cloud/src/main.cpp" "CMakeFiles/main.dir/src/main.cpp.o" "gcc" "CMakeFiles/main.dir/src/main.cpp.o.d"
+# The include file search paths:
+set(CMAKE_CXX_TARGET_INCLUDE_PATH
+  "../include"
   )
 
 # Targets to which this target links.

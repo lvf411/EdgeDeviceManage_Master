@@ -14,7 +14,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string>
-#include <string.h>
 #include "list.hpp"
 
 //子任务间结果传递
@@ -35,7 +34,7 @@ struct SubTaskNode{
     struct SubTaskResult *succ_head;    //当前子任务需要向后传递的后继信息链表头结点
     struct list_head head;              //任务链表表头
     struct list_head self;              //指向自身在链表中的指针
-    string exepath;                     //子任务执行文件路径
+    std::string exepath;                     //子任务执行文件路径
 };
 
 //客户端链表节点
@@ -52,7 +51,7 @@ struct ClientNode{
 //任务描述
 struct Task{
     int id;                             //系统内的任务编号
-    string task_id;                     //任务自身编号
+    std::string task_id;                     //任务自身编号
     int subtask_num;                    //可分解的子任务个数
     struct list_head subtask_head;      //子任务链表表头
     struct list_head self;              //自身在任务链表中的指针

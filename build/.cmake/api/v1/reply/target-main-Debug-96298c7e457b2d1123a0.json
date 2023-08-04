@@ -2,7 +2,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "/home/lf/CloudEdge/cloud/bin/main"
+			"path" : "/home/lf/Documents/EdgeDeviceManage_Master/bin/main"
 		}
 	],
 	"backtrace" : 1,
@@ -12,7 +12,6 @@
 		[
 			"add_executable",
 			"link_directories",
-			"target_link_libraries",
 			"include_directories"
 		],
 		"files" : 
@@ -39,12 +38,6 @@
 			{
 				"command" : 2,
 				"file" : 0,
-				"line" : 18,
-				"parent" : 0
-			},
-			{
-				"command" : 3,
-				"file" : 0,
 				"line" : 8,
 				"parent" : 0
 			}
@@ -56,14 +49,14 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "-g"
+					"fragment" : "-g  "
 				}
 			],
 			"includes" : 
 			[
 				{
-					"backtrace" : 4,
-					"path" : "/home/lf/CloudEdge/cloud/include"
+					"backtrace" : 3,
+					"path" : "/home/lf/Documents/EdgeDeviceManage_Master/include"
 				}
 			],
 			"language" : "CXX",
@@ -71,7 +64,8 @@
 			[
 				0,
 				1,
-				2
+				2,
+				3
 			]
 		}
 	],
@@ -90,20 +84,18 @@
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "-L/home/lf/CloudEdge/cloud/usr/local/lib",
+				"fragment" : "-L/home/lf/Documents/EdgeDeviceManage_Master/usr/local/lib",
 				"role" : "libraryPath"
 			},
 			{
-				"fragment" : "-Wl,-rpath,/home/lf/CloudEdge/cloud/usr/local/lib",
+				"fragment" : "-Wl,-rpath,/home/lf/Documents/EdgeDeviceManage_Master/usr/local/lib",
 				"role" : "libraries"
 			},
 			{
-				"backtrace" : 3,
 				"fragment" : "-lpthread",
 				"role" : "libraries"
 			},
 			{
-				"backtrace" : 3,
 				"fragment" : "-ljsoncpp",
 				"role" : "libraries"
 			}
@@ -125,7 +117,8 @@
 			[
 				0,
 				1,
-				2
+				2,
+				3
 			]
 		}
 	],
@@ -135,6 +128,12 @@
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
 			"path" : "src/interface.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/kbhit.cpp",
 			"sourceGroupIndex" : 0
 		},
 		{
