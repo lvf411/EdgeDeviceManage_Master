@@ -1,4 +1,5 @@
 #include "master.hpp"
+#include <fstream>
 #include <jsoncpp/json/json.h>
 #include <pthread.h>
 
@@ -8,7 +9,7 @@
 using namespace std;
 
 Master master;
-list_head free_client_list, work_client_list, task_list, uninit_task_list;
+list_head free_client_list, work_client_list, deployed_task_list, uninit_task_list;
 pthread_mutex_t mutex_slave_list, mutex_task_list, mutex_uninit_task_list, mutex_task_id;
 int task_increment_id = 0;
 
@@ -64,8 +65,8 @@ int startup()
     work_client_list = LIST_HEAD_INIT(work_client_list);
     master.work_client_head = work_client_list;
     master.task_num = 0;
-    task_list = LIST_HEAD_INIT(task_list);
-    master.task_list_head = task_list;
+    deployed_task_list = LIST_HEAD_INIT(deployed_task_list);
+    master.task_list_head = deployed_task_list;
     uninit_task_list = LIST_HEAD_INIT(uninit_task_list);
     master.uninit_task_list_head = uninit_task_list;
 
@@ -205,8 +206,10 @@ void* task_deploy(void *arg)
 
         //将任务插入任务链表
         pthread_mutex_lock(&mutex_task_list);
-        list_add_tail(&task, &task_list);
+        list_add_tail(&task, &deployed_task_list);
         pthread_mutex_unlock(&mutex_task_list);
+
+        //更新从节点结构体中的信息
     }
 }
 
@@ -218,9 +221,10 @@ int main(){
     pthread_mutex_init(&mutex_uninit_task_list, NULL);
     pthread_mutex_init(&mutex_task_id, NULL);
 
-    pthread_t slave_listen_threadID, io_interface_threadID;
+    pthread_t slave_listen_threadID, io_interface_threadID, task_deploy_threadID;
     pthread_create(&slave_listen_threadID, NULL, slave_accept, &sock);
     pthread_create(&io_interface_threadID, NULL, bash_io, NULL);
+    pthread_create(&task_deploy_threadID, NULL, task_deploy, NULL);
     
     pthread_mutex_destroy(&mutex_slave_list);
     pthread_mutex_destroy(&mutex_task_list);

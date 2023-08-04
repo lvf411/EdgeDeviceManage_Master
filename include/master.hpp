@@ -3,7 +3,6 @@
 
 #include <iostream>
 #include <list>
-#include <fstream>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -14,6 +13,7 @@
 #include <unistd.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string>
 #include <string.h>
 #include "list.hpp"
 
@@ -47,7 +47,6 @@ struct ClientNode{
     int subtask_num;                    //分配到的子任务数量
     struct list_head head;              //任务链表头地址，若flag为-1，为空闲节点；若大于0，为任务链表表头
     struct list_head self;              //指向自身在客户端链表中的指针
-
 };
 
 //任务描述

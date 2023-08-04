@@ -1,0 +1,17 @@
+[
+{
+  "directory": "/home/lf/CloudEdge/cloud/build",
+  "command": "/usr/bin/g++ -I/home/lf/CloudEdge/cloud/include -g -o CMakeFiles/main.dir/src/interface.cpp.o -c /home/lf/CloudEdge/cloud/src/interface.cpp",
+  "file": "/home/lf/CloudEdge/cloud/src/interface.cpp"
+},
+{
+  "directory": "/home/lf/CloudEdge/cloud/build",
+  "command": "/usr/bin/g++ -I/home/lf/CloudEdge/cloud/include -g -o CMakeFiles/main.dir/src/list.cpp.o -c /home/lf/CloudEdge/cloud/src/list.cpp",
+  "file": "/home/lf/CloudEdge/cloud/src/list.cpp"
+},
+{
+  "directory": "/home/lf/CloudEdge/cloud/build",
+  "command": "/usr/bin/g++ -I/home/lf/CloudEdge/cloud/include -g -o CMakeFiles/main.dir/src/main.cpp.o -c /home/lf/CloudEdge/cloud/src/main.cpp",
+  "file": "/home/lf/CloudEdge/cloud/src/main.cpp"
+}
+]
