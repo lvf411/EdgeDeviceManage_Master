@@ -5,8 +5,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <cstring>
+#include <fstream>
 #include "master.hpp"
 #include "kbhit.hpp"
+#include "task.hpp"
 
 void* bash_output(void *arg);
 

@@ -231,6 +231,33 @@ src/main.cpp.s:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/main.cpp.s
 .PHONY : src/main.cpp.s
 
+src/task.o: src/task.cpp.o
+
+.PHONY : src/task.o
+
+# target to build an object file
+src/task.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/task.cpp.o
+.PHONY : src/task.cpp.o
+
+src/task.i: src/task.cpp.i
+
+.PHONY : src/task.i
+
+# target to preprocess a source file
+src/task.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/task.cpp.i
+.PHONY : src/task.cpp.i
+
+src/task.s: src/task.cpp.s
+
+.PHONY : src/task.s
+
+# target to generate assembly for a file
+src/task.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/task.cpp.s
+.PHONY : src/task.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -252,6 +279,9 @@ help:
 	@echo "... src/main.o"
 	@echo "... src/main.i"
 	@echo "... src/main.s"
+	@echo "... src/task.o"
+	@echo "... src/task.i"
+	@echo "... src/task.s"
 .PHONY : help
 
 

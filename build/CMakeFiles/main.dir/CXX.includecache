@@ -6,26 +6,6 @@
 
 #IncludeRegexTransform: 
 
-../include/interface.hpp
-iostream
--
-stdlib.h
--
-stdio.h
--
-master.hpp
-../include/master.hpp
-
-../include/kbhit.hpp
-stdio.h
--
-termios.h
--
-unistd.h
--
-fcntl.h
--
-
 ../include/list.hpp
 
 ../include/master.hpp
@@ -55,32 +35,24 @@ stdlib.h
 -
 string
 -
-string.h
--
 list.hpp
 ../include/list.hpp
 
-/home/lf/Documents/EdgeDeviceManage_Master/src/interface.cpp
-interface.hpp
-/home/lf/Documents/EdgeDeviceManage_Master/src/interface.hpp
-
-/home/lf/Documents/EdgeDeviceManage_Master/src/kbhit.cpp
-kbhit.hpp
-/home/lf/Documents/EdgeDeviceManage_Master/src/kbhit.hpp
-
-/home/lf/Documents/EdgeDeviceManage_Master/src/list.cpp
-list.hpp
-/home/lf/Documents/EdgeDeviceManage_Master/src/list.hpp
-
-/home/lf/Documents/EdgeDeviceManage_Master/src/main.cpp
-master.hpp
-/home/lf/Documents/EdgeDeviceManage_Master/src/master.hpp
-fstream
+../include/task.hpp
+string
 -
-jsoncpp/json/json.h
+fstream
 -
 pthread.h
 -
-interface.hpp
-/home/lf/Documents/EdgeDeviceManage_Master/src/interface.hpp
+jsoncpp/json/json.h
+-
+master.hpp
+../include/master.hpp
+list.hpp
+../include/list.hpp
+
+/home/lf/Documents/EdgeDeviceManage_Master/src/task.cpp
+task.hpp
+/home/lf/Documents/EdgeDeviceManage_Master/src/task.hpp
 

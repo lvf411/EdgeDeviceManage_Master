@@ -16,6 +16,8 @@
 #include <string>
 #include "list.hpp"
 
+#define SLAVE_ABILITY_DEFAULT 10
+
 //子任务间结果传递
 struct SubTaskResult{
     int dir;                            //结果传递方向，值为0表示为接收子任务结果，subtask_id为结果源的id；值为1表示为发送子任务结果，subtask_id为发送的目标的id
@@ -34,11 +36,12 @@ struct SubTaskNode{
     struct SubTaskResult *succ_head;    //当前子任务需要向后传递的后继信息链表头结点
     struct list_head head;              //任务链表表头
     struct list_head self;              //指向自身在链表中的指针
-    std::string exepath;                     //子任务执行文件路径
+    std::string exepath;                //子任务执行文件路径
 };
 
 //客户端链表节点
 struct ClientNode{
+    int client_id;                      //设备编号
     int sock;                           //与客户端通信的文件描述符
     struct sockaddr_in addr;            //客户端的地址信息
     int flag;                           //表示当前该进程是否在运行，若为-1表示空闲；若大于0，表示分配给编号为flag的任务运行
@@ -51,7 +54,7 @@ struct ClientNode{
 //任务描述
 struct Task{
     int id;                             //系统内的任务编号
-    std::string task_id;                     //任务自身编号
+    std::string task_id;                //任务自身编号
     int subtask_num;                    //可分解的子任务个数
     struct list_head subtask_head;      //子任务链表表头
     struct list_head self;              //自身在任务链表中的指针

@@ -5,6 +5,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/main.dir/src/kbhit.cpp.o"
   "CMakeFiles/main.dir/src/list.cpp.o"
   "CMakeFiles/main.dir/src/main.cpp.o"
+  "CMakeFiles/main.dir/src/task.cpp.o"
 )
 
 # Per-language clean rules from dependency scanning.

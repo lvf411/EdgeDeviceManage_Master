@@ -13,6 +13,7 @@ Master master;
 list_head free_client_list, work_client_list, deployed_task_list, uninit_task_list;
 pthread_mutex_t mutex_slave_list, mutex_task_list, mutex_uninit_task_list, mutex_task_id;
 int task_increment_id = 0;
+int increment_slave_id = 1;
 
 //初始化主节点
 int startup()
@@ -74,89 +75,6 @@ int startup()
 	return sock;
 }
 
-//根据任务描述文件添加任务
-bool task_add(string path){
-    ifstream ifs(path);
-    Json::Reader reader;
-    Json::Value obj;
-    reader.parse(ifs, obj);
-
-    Task *task = new(Task);
-    pthread_mutex_lock(&mutex_task_id);
-    task->id = ++task_increment_id;
-    pthread_mutex_unlock(&mutex_task_id);
-    task->task_id = obj["task_id"].asString();
-    task->subtask_num = obj["subtask_num"].asInt();
-
-    list_head *subtask_list_head = new(list_head);
-    *subtask_list_head = LIST_HEAD_INIT(*subtask_list_head);
-    task->subtask_head = *subtask_list_head;
-    //解析描述文件取出任务内容
-    if(!obj["subtask"].isArray()){
-        perror("desc file error");
-        return false;
-    }
-    for(int i = 0; i < obj["subtask"].size(); i++)
-    {
-        SubTaskNode *node = new(SubTaskNode);
-        node->subtask_id = obj["subtask"][i]["subtaskid"].asInt();
-        node->root_id = task->id;
-        node->exepath = obj["subtask"][i]["exe_path"].asString();
-        node->prev_num = obj["subtask"][i]["input_src_num"].asInt();
-        if(node->prev_num ==0)
-        {
-            node->prev_head = NULL;
-        }
-        else{
-            node->prev_head = new(SubTaskResult);
-            SubTaskResult *temp = node->prev_head;
-            temp->next = NULL;
-            for(int j = 0; j < node->prev_num; j++)
-            {
-                SubTaskResult *n = new(SubTaskResult);
-                n->dir = 0;
-                n->subtask_id = obj["subtask"][i]["input_src"][j].asInt();
-                n->next = temp->next;
-                temp->next = n;
-            }
-        }
-        node->next_num = obj["subtask"][i]["output_dst_num"].asInt();
-        if(node->next_num ==0)
-        {
-            node->succ_head = NULL;
-        }
-        else{
-            node->succ_head = new(SubTaskResult);
-            SubTaskResult *temp = node->succ_head;
-            temp->next = NULL;
-            for(int j = 0; j < node->next_num; j++)
-            {
-                SubTaskResult *n = new(SubTaskResult);
-                n->dir = 0;
-                n->subtask_id = obj["subtask"][i]["output_dst"][j].asInt();
-                n->next = temp->next;
-                temp->next = n;
-            }
-        }
-
-        node->head = task->subtask_head;
-        list_head *s = new(list_head);
-        *s = LIST_HEAD_INIT(*s);
-        node->self = *s;
-        list_add_tail(s, &task->subtask_head);
-    }
-
-    //将任务节点插入到待分配任务链表尾部
-    list_head *self = new(list_head);
-    *self = LIST_HEAD_INIT(*self);
-    task->self = *self;
-    pthread_mutex_lock(&mutex_uninit_task_list);
-    list_add_tail(self, &uninit_task_list);
-    pthread_mutex_unlock(&mutex_uninit_task_list);
-
-    return true;
-}
-
 //从节点连接主节点线程，接收从节点连接并将其加入到从节点管理链表
 void* slave_accept(void *arg)
 {
@@ -169,13 +87,15 @@ void* slave_accept(void *arg)
 
         pthread_mutex_lock(&mutex_slave_list);
         ClientNode *clientNode = new ClientNode();
+        clientNode->client_id = increment_slave_id;
+        increment_slave_id++;
         clientNode->sock = new_sock;
         clientNode->addr.sin_family = client.sin_family;
         clientNode->addr.sin_addr.s_addr = client.sin_addr.s_addr;
         clientNode->addr.sin_port = client.sin_port;
         clientNode->flag = -1;      //节点空闲
         clientNode->subtask_num = 0;
-        //clientNode->ability = 
+        clientNode->ability = SLAVE_ABILITY_DEFAULT;
         list_head *task_list_head = new list_head();
         *task_list_head = LIST_HEAD_INIT(*task_list_head);
         clientNode->head = *task_list_head;
@@ -185,7 +105,7 @@ void* slave_accept(void *arg)
         list_add_tail(self, &free_client_list);
         pthread_mutex_unlock(&mutex_slave_list);
     }
-    return;
+    return NULL;
 }
 
 //分配任务给各个节点
@@ -209,7 +129,7 @@ void* task_deploy(void *arg)
 
         
     }
-    return;
+    return NULL;
 }
 
 int main(){

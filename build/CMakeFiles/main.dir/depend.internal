@@ -3,8 +3,10 @@
 
 CMakeFiles/main.dir/src/interface.cpp.o
  ../include/interface.hpp
+ ../include/kbhit.hpp
  ../include/list.hpp
  ../include/master.hpp
+ ../include/task.hpp
  /home/lf/Documents/EdgeDeviceManage_Master/src/interface.cpp
 CMakeFiles/main.dir/src/kbhit.cpp.o
  ../include/kbhit.hpp
@@ -14,6 +16,13 @@ CMakeFiles/main.dir/src/list.cpp.o
  /home/lf/Documents/EdgeDeviceManage_Master/src/list.cpp
 CMakeFiles/main.dir/src/main.cpp.o
  ../include/interface.hpp
+ ../include/kbhit.hpp
  ../include/list.hpp
  ../include/master.hpp
+ ../include/task.hpp
  /home/lf/Documents/EdgeDeviceManage_Master/src/main.cpp
+CMakeFiles/main.dir/src/task.cpp.o
+ ../include/list.hpp
+ ../include/master.hpp
+ ../include/task.hpp
+ /home/lf/Documents/EdgeDeviceManage_Master/src/task.cpp
