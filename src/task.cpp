@@ -1,5 +1,6 @@
 #include "task.hpp"
 
+extern Master master;
 extern list_head uninit_task_list;
 extern int task_increment_id;
 extern pthread_mutex_t mutex_uninit_task_list, mutex_task_id;
@@ -84,5 +85,8 @@ bool task_add(std::string path){
     list_add_tail(self, &uninit_task_list);
     pthread_mutex_unlock(&mutex_uninit_task_list);
 
+    //任务数量加一
+    master.uninit_task_num++;
+    
     return true;
 }

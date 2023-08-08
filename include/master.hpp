@@ -47,7 +47,7 @@ struct ClientNode{
     int flag;                           //表示当前该进程是否在运行，若为-1表示空闲；若大于0，表示分配给编号为flag的任务运行
     int ability;                        //执行任务的效率，能力，越大越强
     int subtask_num;                    //分配到的子任务数量
-    struct list_head head;              //任务链表头地址，若flag为-1，为空闲节点；若大于0，为任务链表表头
+    struct list_head head;              //子任务链表头地址，若flag为-1，为空闲节点；若大于0，为分配给该从节点的子任务链表表头
     struct list_head self;              //指向自身在客户端链表中的指针
 };
 
@@ -68,8 +68,9 @@ struct Master{
     struct list_head free_client_head;  //空闲设备链表表头
     int work_client_num;                //工作设备数量
     struct list_head work_client_head;  //工作设备链表表头
-    int task_num;                       //任务数量
-    struct list_head task_list_head;    //任务链表表头
+    int task_num;                       //已分配的任务数量
+    struct list_head task_list_head;    //已分配的任务链表表头
+    int uninit_task_num;                //未分配的任务数量
     struct list_head uninit_task_list_head;     //未分配的任务的链表表头
 };
 

@@ -156,14 +156,14 @@ void SlaveNodeStatus_print(){
         else
         {
             int j = 0;
-            list_head task_head = node->head, *task_temp = node->head.next;
+            list_head subtask_head = node->head, *subtask_temp = node->head.next;
             printf("\t[编号] (任务编号):(子任务编号)\n");
-            while(j < node->subtask_num && task_temp != NULL)
+            while(j < node->subtask_num && subtask_temp != NULL)
             {
                 j++;
-                SubTaskNode *subtask_node = (SubTaskNode *)(list_entry(task_temp, SubTaskNode, self));
+                SubTaskNode *subtask_node = (SubTaskNode *)(list_entry(subtask_temp, SubTaskNode, self));
                 printf("\t\t[%d] %d:%d\n", j, subtask_node->root_id, subtask_node->subtask_id);
-                task_temp = task_temp->next;
+                subtask_temp = subtask_temp->next;
             }
         }
         temp = temp->next;
@@ -191,15 +191,41 @@ void SlaveNodeStatus_print(){
     }
 }
 
-//操作终端页面实现与人交互
-void* bash_output(void *arg)
+void TaskDeployed_print()
 {
-
-
-    return NULL;
+    list_head head = master.task_list_head, *temp = master.task_list_head.next;
+    int i = 0;
+    while(temp != &head && i < master.task_num)
+    {
+        i++;
+        Task *t = (Task *)(list_entry(temp, Task, self));
+        printf("[%d] 任务ID:%s 共有子任务%d个，子任务分配情况：\n", i, t->task_id.c_str(), t->subtask_num);
+        int j = 0;
+        list_head subtask_head = t->subtask_head, *subtask_temp = t->subtask_head.next;
+        printf("(编号) [子任务编号]:[分配从节点编号]\n");
+        while(subtask_temp != &subtask_head && j < t->subtask_num)
+        {
+            j++;
+            SubTaskNode *subt = (SubTaskNode *)(list_entry(subtask_temp, SubTaskNode, self));
+            printf("\t(%d) %d:%d\n", j, subt->subtask_id, subt->client_id);
+        }
+    }
 }
 
-void* bash_input(void *arg){
+void TaskUndeployed_print()
+{
+    list_head head = master.uninit_task_list_head, *temp = master.uninit_task_list_head.next;
+    int i = 0;
+    while(temp != &head && i < master.uninit_task_num)
+    {
+        i++;
+        Task *t = (Task *)(list_entry(temp, Task, self));
+        printf("[%d] 任务ID:%s 共有子任务%d个\n", i, t->task_id.c_str(), t->subtask_num);
+    }
+}
+
+//操作终端页面实现与人交互
+void* bash_io(void *arg){
     int buf_size = 1024;
     char buf[buf_size];
     while(1){
@@ -353,14 +379,68 @@ void* bash_input(void *arg){
             case TaskDeployed:
                 {
                     screen_clear();
+                    printf("已分配任务的状态：\n");
+                    TaskDeployed_print();
+                    printf("按[s/S]切换为显示待分配任务，按[b/B]返回目录\n");
+                    memset(buf, 0, buf_size);
+                    scanf("%s", buf);
+                    int ret = key_word_recognize(buf);
+                    switch (ret)
+                    {
+                    case SWITCH:
+                        {
+                            current_status = TaskUndeployed;
+                            break;
+                        }
+                    case BACK:
+                        {
+                            current_status = MNEU;
+                            screen_clear();
+                            menu_print();
+                            break;
+                        }
+                    default:
+                        {
+                            printf("请输入正确的操作码!\n");
+                            break;
+                        }
+                    }
                     break;
                 }
             case TaskUndeployed:
                 {
+                    screen_clear();
+                    printf("已分配任务的状态：\n");
+                    TaskDeployed_print();
+                    printf("按[s/S]切换为显示已分配任务，按[b/B]返回目录\n");
+                    memset(buf, 0, buf_size);
+                    scanf("%s", buf);
+                    int ret = key_word_recognize(buf);
+                    switch (ret)
+                    {
+                    case SWITCH:
+                        {
+                            current_status = TaskDeployed;
+                            break;
+                        }
+                    case BACK:
+                        {
+                            current_status = MNEU;
+                            screen_clear();
+                            menu_print();
+                            break;
+                        }
+                    default:
+                        {
+                            printf("请输入正确的操作码!\n");
+                            break;
+                        }
+                    }
                     break;
                 }
             default:
                 {
+                    printf("请输入正确的操作码!\n");
                     break;
                 }
         }

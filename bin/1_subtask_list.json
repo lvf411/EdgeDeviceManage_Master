@@ -1,0 +1,73 @@
+{
+    "client_id":    1,
+    "ip":   "xxx.xxx.xxx.xxx",
+    "port": 5678,
+    "master_ip":    "xxx.xxx.xxx.xxx",
+    "master_port":  1234,
+    "subtask_num":  3,
+    "subtask":[
+        {
+            "root_id":  1,
+            "subtask_id":   1,
+            "exe_name": "1_1",
+            "input_src_num":    0,
+            "input_src":[],
+            "output_dst_num":   3,
+            "output_dst":[
+                {
+                    "subtask_id":   2,
+                    "client_id":    2
+                },
+                {
+                    "subtask_id":   3,
+                    "client_id":    1
+                },
+                {
+                    "subtask_id":   4,
+                    "client_id":    2
+                }
+            ]
+        },
+        {
+            "root_id":  1,
+            "subtask_id":   3,
+            "exe_name": "1_3",
+            "input_src_num":    1,
+            "input_src":[
+                {
+                    "subtask_id":   1,
+                    "client_id":    1
+                }
+            ],
+            "output_dst_num":   1,
+            "output_dst":[
+                {
+                    "subtask_id":   5,
+                    "client_id":    1
+                }
+            ]
+        },
+        {
+            "root_id":  1,
+            "subtask_id":   5,
+            "exe_name": "1_5",
+            "input_src_num":    3,
+            "input_src":[
+                {
+                    "subtask_id":   2,
+                    "client_id":    2
+                },
+                {
+                    "subtask_id":   3,
+                    "client_id":    1
+                },
+                {
+                    "subtask_id":   4,
+                    "client_id":    2
+                }
+            ],
+            "output_dst_num":   0,
+            "output_dst":[]
+        }
+    ]
+}

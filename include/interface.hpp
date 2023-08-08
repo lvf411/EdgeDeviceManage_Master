@@ -10,8 +10,6 @@
 #include "kbhit.hpp"
 #include "task.hpp"
 
-void* bash_output(void *arg);
-
-void* bash_input(void *arg);
+void* bash_io(void *arg);
 
 #endif //__INTERFACE_HPP

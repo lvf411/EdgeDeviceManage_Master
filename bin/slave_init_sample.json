@@ -2,5 +2,5 @@
     "ip":   "xxx.xxx.xxx.xxx",
     "port": 5678,
     "master_ip":    "xxx.xxx.xxx.xxx",
-    "server_port":  1234
+    "master_port":  1234
 }

@@ -1,5 +1,7 @@
 #include "master.hpp"
 #include <fstream>
+#include <map>
+#include <sstream>
 #include <jsoncpp/json/json.h>
 #include <pthread.h>
 #include "interface.hpp"
@@ -12,6 +14,7 @@ using namespace std;
 Master master;
 list_head free_client_list, work_client_list, deployed_task_list, uninit_task_list;
 pthread_mutex_t mutex_slave_list, mutex_task_list, mutex_uninit_task_list, mutex_task_id;
+map<int, ClientNode *> free_client_list_map, work_client_list_map;
 int task_increment_id = 0;
 int increment_slave_id = 1;
 
@@ -20,6 +23,11 @@ int startup()
 {
     //从初始化文件中获取主节点设置的IP地址与监听端口
     ifstream ifs(InitFile);
+    if(!ifs.is_open())
+    {
+        printf("open init file error!\n");
+        exit(0);
+    }
     Json::Reader reader;
     Json::Value obj;
     reader.parse(ifs, obj);
@@ -34,7 +42,7 @@ int startup()
     //2.绑定监听 socket ip与端口
 	struct sockaddr_in local;
 	local.sin_family = AF_INET;
-	local.sin_port = htons(obj["port"].asInt());
+	local.sin_port = htons(obj["listen_port"].asInt());
 	local.sin_addr.s_addr = inet_addr(obj["ip"].asCString());
     //closesocket 后不经历 TIME_WAIT 的过程，继续重用该socket
 	bool bReuseaddr=true;
@@ -57,7 +65,7 @@ int startup()
     //初始化 master 变量信息
     master.sock = sock;
     master.addr.sin_family = AF_INET;
-	master.addr.sin_port = htons(obj["port"].asInt());
+	master.addr.sin_port = htons(obj["listen_port"].asInt());
     master.addr.sin_addr.s_addr = inet_addr(obj["ip"].asCString());
     master.task_num = 0;
     master.free_client_num = 0;
@@ -70,6 +78,7 @@ int startup()
     deployed_task_list = LIST_HEAD_INIT(deployed_task_list);
     master.task_list_head = deployed_task_list;
     uninit_task_list = LIST_HEAD_INIT(uninit_task_list);
+    master.uninit_task_num = 0;
     master.uninit_task_list_head = uninit_task_list;
 
 	return sock;
@@ -103,6 +112,7 @@ void* slave_accept(void *arg)
         *self = LIST_HEAD_INIT(*self);
         clientNode->self = *self;
         list_add_tail(self, &free_client_list);
+        free_client_list_map.insert(map<int, ClientNode *>::value_type(clientNode->client_id, clientNode));
         pthread_mutex_unlock(&mutex_slave_list);
     }
     return NULL;
@@ -112,24 +122,130 @@ void* slave_accept(void *arg)
 void* task_deploy(void *arg)
 {
     while(!list_empty(&uninit_task_list)){
-        //从未分配任务链表中取出任务
+        //0、保证至少有两个设备可供分配
+        while(master.work_client_num < 2 && master.free_client_num > 0){
+            pthread_mutex_lock(&mutex_slave_list);
+            list_head *temp = free_client_list.next;
+            ClientNode *slave = (ClientNode *)(list_entry(temp, ClientNode, self));
+            list_del(free_client_list.next);
+            free_client_list_map.erase(slave->client_id);
+            master.free_client_num--;
+            list_add_tail(temp, &(master.work_client_head));
+            work_client_list_map.insert(map<int, ClientNode*>::value_type(slave->client_id, slave));
+            master.work_client_num++;
+            pthread_mutex_unlock(&mutex_slave_list);
+        }
+        //没有大于2个从节点设备可供调配，休眠一段时间等待有无新从节点加入
+        if(master.work_client_num < 2)
+        {
+            printf("从节点数量不足\n");
+            sleep(10);
+            continue;
+        }
+        
+        //1、从未分配任务链表中取出任务
         pthread_mutex_lock(&mutex_uninit_task_list);
-        list_head task = *uninit_task_list.next;
+        list_head task_node = *uninit_task_list.next;
         list_del(uninit_task_list.next);
         pthread_mutex_unlock(&mutex_uninit_task_list);
 
-        //分配子任务执行的从节点
+        //2、分配子任务执行的从节点，并更新对应从节点结构体中的信息
+        //此处将子任务交替依次分配给工作从节点链表头两个节点
+        int i = 0;
+        Task *task = (Task *)(list_entry(&task_node, Task, self));
+        list_head subt_head = task->subtask_head, *subt_temp = task->subtask_head.next;
+        ClientNode *slave[2];
+        slave[0] = (ClientNode *)(list_entry(master.work_client_head.next, ClientNode, self));
+        slave[1] = (ClientNode *)(list_entry(master.work_client_head.next->next, ClientNode, self));
+        int pick = 0;   //指定当前子任务分配给slave[0]还是slave[1]
+        while(i < task->subtask_num)
+        {
+            i++;
+            SubTaskNode *subt = (SubTaskNode *)(list_entry(&subt_temp, SubTaskNode, self));
+            subt->client_id = slave[pick]->client_id;
+            slave[pick]->subtask_num++;
+            if(slave[pick]->flag == -1)
+            {
+                slave[pick]->flag = 0;
+            }
+            list_add_tail(subt_temp, &(slave[pick]->head));
+            pick = 1 - pick;
+        }        
 
-        //将任务插入任务链表
+        //3、将任务插入任务链表
         pthread_mutex_lock(&mutex_task_list);
-        list_add_tail(&task, &deployed_task_list);
+        list_add_tail(&task_node, &deployed_task_list);
         pthread_mutex_unlock(&mutex_task_list);
-
-        //更新从节点结构体中的信息
-
-        
     }
     return NULL;
+}
+
+//将工作从节点链表导出为json文件
+string work_client_list_export()
+{
+    Json::Value root, client;
+    root["work_client_num"] = Json::Value((int)work_client_list_map.size());
+    map<int, ClientNode*>::iterator it = work_client_list_map.begin();
+    while(it != work_client_list_map.end())
+    {
+        ClientNode *node = it->second;
+        Json::Value json_node;
+        json_node["client_id"] = Json::Value(node->client_id);
+        json_node["ip"] = Json::Value(inet_ntoa(node->addr.sin_addr));
+        json_node["listen_port"] = Json::Value(node->addr.sin_port);
+        client.append(json_node);
+        it++;
+    }
+    root["work_client"] = client;
+
+    Json::StyledWriter sw;
+    ofstream f;
+    stringstream ss;
+    ss << "work_client_list.json";
+    string fname = ss.str();
+    f.open(fname.c_str(), ios::trunc);
+    if(!f.is_open())
+    {
+        printf("open file %s error\n", fname.c_str());
+        return NULL;
+    }
+    f << sw.write(root);
+    f.close();
+}
+
+//根据客户端id导出当前分配的子任务链表为json文件
+string client_task_list_export(int client_id)
+{
+    map<int, ClientNode *>::iterator it = work_client_list_map.find(client_id);
+    if(it == work_client_list_map.end()){
+        printf("目标从节点查找失败\n");
+        return NULL;
+    }
+    ClientNode *client = it->second;
+    Json::Value root;
+    root["client_id"] = Json::Value(client_id);
+    root["ip"] = Json::Value(inet_ntoa(client->addr.sin_addr));
+    root["port"] = Json::Value(client->addr.sin_port);
+    root["master_ip"] = Json::Value(inet_ntoa(master.addr.sin_addr));
+    root["master_port"] = Json::Value(master.addr.sin_port);
+    root["subtask_num"] = Json::Value(client->subtask_num);
+    Json::Value json_subtask;
+    
+
+    
+    Json::StyledWriter sw;
+    ofstream f;
+    stringstream ss;
+    ss << client_id << "_subtask_list.json";
+    string fname = ss.str();
+    f.open(fname.c_str(), ios::trunc);
+    if(!f.is_open())
+    {
+        printf("open file %s error\n", fname.c_str());
+        return NULL;
+    }
+    f << sw.write(root);
+    f.close();
 }
 
 int main(){
@@ -142,8 +258,7 @@ int main(){
 
     pthread_t slave_listen_threadID, bash_input_threadID, bash_output_threadID, task_deploy_threadID;
     pthread_create(&slave_listen_threadID, NULL, slave_accept, &sock);
-    pthread_create(&bash_output_threadID, NULL, bash_output, NULL);
-    pthread_create(&bash_input_threadID, NULL, bash_input, NULL);
+    pthread_create(&bash_output_threadID, NULL, bash_io, NULL);
     pthread_create(&task_deploy_threadID, NULL, task_deploy, NULL);
     
     pthread_mutex_destroy(&mutex_slave_list);
