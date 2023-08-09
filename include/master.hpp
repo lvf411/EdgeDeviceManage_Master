@@ -20,7 +20,7 @@
 
 //子任务间结果传递
 struct SubTaskResult{
-    int dir;                            //结果传递方向，值为0表示为接收子任务结果，subtask_id为结果源的id；值为1表示为发送子任务结果，subtask_id为发送的目标的id
+    int client_id;                      //对应前驱和后继被分配的从节点ID
     int subtask_id;                     //子任务的ID
     struct SubTaskResult *next;
 };
@@ -49,6 +49,9 @@ struct ClientNode{
     int subtask_num;                    //分配到的子任务数量
     struct list_head head;              //子任务链表头地址，若flag为-1，为空闲节点；若大于0，为分配给该从节点的子任务链表表头
     struct list_head self;              //指向自身在客户端链表中的指针
+    pthread_t msg_send_threadID;        //消息发送线程ID
+    pthread_t msg_recv_threadID;        //消息接收线程ID
+    
 };
 
 //任务描述

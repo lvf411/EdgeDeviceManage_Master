@@ -45,7 +45,7 @@ bool task_add(std::string path){
             for(int j = 0; j < node->prev_num; j++)
             {
                 SubTaskResult *n = new(SubTaskResult);
-                n->dir = 0;
+                n->client_id = 0;
                 n->subtask_id = obj["subtask"][i]["input_src"][j].asInt();
                 n->next = temp->next;
                 temp->next = n;
@@ -63,7 +63,7 @@ bool task_add(std::string path){
             for(int j = 0; j < node->next_num; j++)
             {
                 SubTaskResult *n = new(SubTaskResult);
-                n->dir = 0;
+                n->client_id = 0;
                 n->subtask_id = obj["subtask"][i]["output_dst"][j].asInt();
                 n->next = temp->next;
                 temp->next = n;

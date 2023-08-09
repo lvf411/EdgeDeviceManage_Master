@@ -1,5 +1,6 @@
 #include "master.hpp"
 #include <fstream>
+#include <vector>
 #include <map>
 #include <sstream>
 #include <jsoncpp/json/json.h>
@@ -84,7 +85,19 @@ int startup()
 	return sock;
 }
 
-//从节点连接主节点线程，接收从节点连接并将其加入到从节点管理链表
+//从节点消息发送线程
+void *msg_send(void *arg)
+{
+
+}
+
+//从节点消息接收线程
+void *msg_recv(void *arg)
+{
+
+}
+
+//从节点连接主节点线程，接收从节点连接并将其加入到从节点管理链表，为每个从节点连接分配单独的消息收发线程
 void* slave_accept(void *arg)
 {
     int sock = *(int*)arg;
@@ -114,6 +127,12 @@ void* slave_accept(void *arg)
         list_add_tail(self, &free_client_list);
         free_client_list_map.insert(map<int, ClientNode *>::value_type(clientNode->client_id, clientNode));
         pthread_mutex_unlock(&mutex_slave_list);
+        
+        pthread_t msg_send_threadID, msg_recv_threadID;
+        pthread_create(&msg_send_threadID, NULL, msg_send, (void *)clientNode);
+        pthread_create(&msg_recv_threadID, NULL,msg_recv, (void*)clientNode);
+        clientNode->msg_send_threadID = msg_send_threadID;
+        clientNode->msg_recv_threadID = msg_recv_threadID;
     }
     return NULL;
 }
@@ -158,6 +177,7 @@ void* task_deploy(void *arg)
         slave[0] = (ClientNode *)(list_entry(master.work_client_head.next, ClientNode, self));
         slave[1] = (ClientNode *)(list_entry(master.work_client_head.next->next, ClientNode, self));
         int pick = 0;   //指定当前子任务分配给slave[0]还是slave[1]
+        vector<int> task_workclient_a;      //记录每个子任务按顺序被分配的执行从节点
         while(i < task->subtask_num)
         {
             i++;
@@ -169,10 +189,35 @@ void* task_deploy(void *arg)
                 slave[pick]->flag = 0;
             }
             list_add_tail(subt_temp, &(slave[pick]->head));
+            task_workclient_a.push_back(pick);
             pick = 1 - pick;
-        }        
+            subt_temp = subt_temp->next;
+        }
 
-        //3、将任务插入任务链表
+        //3、更新子任务节点中的前驱后继内容
+        subt_temp = subt_head.next;
+        while(subt_temp != &subt_head)
+        {
+            int j = 0;
+            SubTaskNode *subt = (SubTaskNode *)(list_entry(&subt_temp, SubTaskNode, self));
+            SubTaskResult *res_temp = subt->prev_head->next;
+            while(j < subt->prev_num)
+            {
+                j++;
+                res_temp->client_id = slave[task_workclient_a[res_temp->subtask_id]]->client_id;
+                res_temp = res_temp->next;
+            }
+            j = 0;
+            SubTaskResult *res_temp = subt->succ_head->next;
+            while(j < subt->next_num)
+            {
+                j++;
+                res_temp->client_id = slave[task_workclient_a[res_temp->subtask_id]]->client_id;
+                res_temp = res_temp->next;
+            }
+        }
+
+        //4、将任务插入任务链表
         pthread_mutex_lock(&mutex_task_list);
         list_add_tail(&task_node, &deployed_task_list);
         pthread_mutex_unlock(&mutex_task_list);
@@ -230,8 +275,45 @@ string client_task_list_export(int client_id)
     root["master_port"] = Json::Value(master.addr.sin_port);
     root["subtask_num"] = Json::Value(client->subtask_num);
     Json::Value json_subtask;
-    
-
+    int i = 0;
+    list_head subtask_head = client->head, *subtask_temp = client->head.next;
+    while(i < client->subtask_num && subtask_temp != &subtask_head)
+    {
+        i++;
+        SubTaskNode *node = (SubTaskNode *)(list_entry(subtask_temp, SubTaskNode, self));
+        Json::Value json_temp;
+        json_temp["root_id"] = Json::Value(node->root_id);
+        json_temp["subtask_id"] = Json::Value(node->subtask_id);
+        stringstream ss;
+        ss << node->root_id << '_' << node->subtask_id;
+        string fname = ss.str();
+        json_temp["exe_name"] = Json::Value(fname);
+        json_temp["input_src_num"] = Json::Value(node->prev_num);
+        Json::Value prev, next;
+        SubTaskResult *res_temp = node->prev_head->next;
+        int j = 0;
+        while(res_temp != NULL && j < node->prev_num)
+        {
+            Json::Value temp;
+            temp["subtask_id"] = Json::Value(res_temp->subtask_id);
+            temp["client_id"] = Json::Value(res_temp->client_id);
+            prev.append(temp);
+        }
+        json_temp["input_src"] = prev;
+        json_temp["output_dst_num"] = node->next_num;
+        res_temp = node->succ_head->next;
+        j = 0;
+        while(res_temp != NULL && j < node->next_num)
+        {
+            Json::Value temp;
+            temp["subtask_id"] = Json::Value(res_temp->subtask_id);
+            temp["client_id"] = Json::Value(res_temp->client_id);
+            next.append(temp);
+        }
+        json_temp["output_dst"] = next;
+        json_subtask.append(json_temp);
+    }
+    root["subtask"] = json_subtask;
     
     Json::StyledWriter sw;
     ofstream f;
@@ -256,7 +338,8 @@ int main(){
     pthread_mutex_init(&mutex_uninit_task_list, NULL);
     pthread_mutex_init(&mutex_task_id, NULL);
 
-    pthread_t slave_listen_threadID, bash_input_threadID, bash_output_threadID, task_deploy_threadID;
+    pthread_t slave_listen_threadID, bash_input_threadID, bash_output_threadID, task_deploy_threadID,\
+        master2slave_instruction_threadID, master2slave_file_threadID, slave2master_response_threadID, slave2master_file_threadID;
     pthread_create(&slave_listen_threadID, NULL, slave_accept, &sock);
     pthread_create(&bash_output_threadID, NULL, bash_io, NULL);
     pthread_create(&task_deploy_threadID, NULL, task_deploy, NULL);
