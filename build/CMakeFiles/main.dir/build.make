@@ -57,9 +57,35 @@ include CMakeFiles/main.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/main.dir/flags.make
 
+CMakeFiles/main.dir/src/base64.cpp.o: CMakeFiles/main.dir/flags.make
+CMakeFiles/main.dir/src/base64.cpp.o: ../src/base64.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lf/Documents/EdgeDeviceManage_Master/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/main.dir/src/base64.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/src/base64.cpp.o -c /home/lf/Documents/EdgeDeviceManage_Master/src/base64.cpp
+
+CMakeFiles/main.dir/src/base64.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/src/base64.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lf/Documents/EdgeDeviceManage_Master/src/base64.cpp > CMakeFiles/main.dir/src/base64.cpp.i
+
+CMakeFiles/main.dir/src/base64.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/src/base64.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lf/Documents/EdgeDeviceManage_Master/src/base64.cpp -o CMakeFiles/main.dir/src/base64.cpp.s
+
+CMakeFiles/main.dir/src/file.cpp.o: CMakeFiles/main.dir/flags.make
+CMakeFiles/main.dir/src/file.cpp.o: ../src/file.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lf/Documents/EdgeDeviceManage_Master/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/main.dir/src/file.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/src/file.cpp.o -c /home/lf/Documents/EdgeDeviceManage_Master/src/file.cpp
+
+CMakeFiles/main.dir/src/file.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/src/file.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lf/Documents/EdgeDeviceManage_Master/src/file.cpp > CMakeFiles/main.dir/src/file.cpp.i
+
+CMakeFiles/main.dir/src/file.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/src/file.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lf/Documents/EdgeDeviceManage_Master/src/file.cpp -o CMakeFiles/main.dir/src/file.cpp.s
+
 CMakeFiles/main.dir/src/interface.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/src/interface.cpp.o: ../src/interface.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lf/Documents/EdgeDeviceManage_Master/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/main.dir/src/interface.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lf/Documents/EdgeDeviceManage_Master/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/main.dir/src/interface.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/src/interface.cpp.o -c /home/lf/Documents/EdgeDeviceManage_Master/src/interface.cpp
 
 CMakeFiles/main.dir/src/interface.cpp.i: cmake_force
@@ -72,7 +98,7 @@ CMakeFiles/main.dir/src/interface.cpp.s: cmake_force
 
 CMakeFiles/main.dir/src/kbhit.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/src/kbhit.cpp.o: ../src/kbhit.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lf/Documents/EdgeDeviceManage_Master/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/main.dir/src/kbhit.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lf/Documents/EdgeDeviceManage_Master/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/main.dir/src/kbhit.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/src/kbhit.cpp.o -c /home/lf/Documents/EdgeDeviceManage_Master/src/kbhit.cpp
 
 CMakeFiles/main.dir/src/kbhit.cpp.i: cmake_force
@@ -85,7 +111,7 @@ CMakeFiles/main.dir/src/kbhit.cpp.s: cmake_force
 
 CMakeFiles/main.dir/src/list.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/src/list.cpp.o: ../src/list.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lf/Documents/EdgeDeviceManage_Master/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/main.dir/src/list.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lf/Documents/EdgeDeviceManage_Master/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/main.dir/src/list.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/src/list.cpp.o -c /home/lf/Documents/EdgeDeviceManage_Master/src/list.cpp
 
 CMakeFiles/main.dir/src/list.cpp.i: cmake_force
@@ -98,7 +124,7 @@ CMakeFiles/main.dir/src/list.cpp.s: cmake_force
 
 CMakeFiles/main.dir/src/main.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/src/main.cpp.o: ../src/main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lf/Documents/EdgeDeviceManage_Master/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/main.dir/src/main.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lf/Documents/EdgeDeviceManage_Master/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Building CXX object CMakeFiles/main.dir/src/main.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/src/main.cpp.o -c /home/lf/Documents/EdgeDeviceManage_Master/src/main.cpp
 
 CMakeFiles/main.dir/src/main.cpp.i: cmake_force
@@ -109,9 +135,35 @@ CMakeFiles/main.dir/src/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/src/main.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lf/Documents/EdgeDeviceManage_Master/src/main.cpp -o CMakeFiles/main.dir/src/main.cpp.s
 
+CMakeFiles/main.dir/src/md5.cpp.o: CMakeFiles/main.dir/flags.make
+CMakeFiles/main.dir/src/md5.cpp.o: ../src/md5.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lf/Documents/EdgeDeviceManage_Master/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_7) "Building CXX object CMakeFiles/main.dir/src/md5.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/src/md5.cpp.o -c /home/lf/Documents/EdgeDeviceManage_Master/src/md5.cpp
+
+CMakeFiles/main.dir/src/md5.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/src/md5.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lf/Documents/EdgeDeviceManage_Master/src/md5.cpp > CMakeFiles/main.dir/src/md5.cpp.i
+
+CMakeFiles/main.dir/src/md5.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/src/md5.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lf/Documents/EdgeDeviceManage_Master/src/md5.cpp -o CMakeFiles/main.dir/src/md5.cpp.s
+
+CMakeFiles/main.dir/src/msg.cpp.o: CMakeFiles/main.dir/flags.make
+CMakeFiles/main.dir/src/msg.cpp.o: ../src/msg.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lf/Documents/EdgeDeviceManage_Master/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_8) "Building CXX object CMakeFiles/main.dir/src/msg.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/src/msg.cpp.o -c /home/lf/Documents/EdgeDeviceManage_Master/src/msg.cpp
+
+CMakeFiles/main.dir/src/msg.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/src/msg.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lf/Documents/EdgeDeviceManage_Master/src/msg.cpp > CMakeFiles/main.dir/src/msg.cpp.i
+
+CMakeFiles/main.dir/src/msg.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/src/msg.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lf/Documents/EdgeDeviceManage_Master/src/msg.cpp -o CMakeFiles/main.dir/src/msg.cpp.s
+
 CMakeFiles/main.dir/src/task.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/src/task.cpp.o: ../src/task.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lf/Documents/EdgeDeviceManage_Master/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Building CXX object CMakeFiles/main.dir/src/task.cpp.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lf/Documents/EdgeDeviceManage_Master/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/main.dir/src/task.cpp.o"
 	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/src/task.cpp.o -c /home/lf/Documents/EdgeDeviceManage_Master/src/task.cpp
 
 CMakeFiles/main.dir/src/task.cpp.i: cmake_force
@@ -124,23 +176,31 @@ CMakeFiles/main.dir/src/task.cpp.s: cmake_force
 
 # Object files for target main
 main_OBJECTS = \
+"CMakeFiles/main.dir/src/base64.cpp.o" \
+"CMakeFiles/main.dir/src/file.cpp.o" \
 "CMakeFiles/main.dir/src/interface.cpp.o" \
 "CMakeFiles/main.dir/src/kbhit.cpp.o" \
 "CMakeFiles/main.dir/src/list.cpp.o" \
 "CMakeFiles/main.dir/src/main.cpp.o" \
+"CMakeFiles/main.dir/src/md5.cpp.o" \
+"CMakeFiles/main.dir/src/msg.cpp.o" \
 "CMakeFiles/main.dir/src/task.cpp.o"
 
 # External object files for target main
 main_EXTERNAL_OBJECTS =
 
+../bin/main: CMakeFiles/main.dir/src/base64.cpp.o
+../bin/main: CMakeFiles/main.dir/src/file.cpp.o
 ../bin/main: CMakeFiles/main.dir/src/interface.cpp.o
 ../bin/main: CMakeFiles/main.dir/src/kbhit.cpp.o
 ../bin/main: CMakeFiles/main.dir/src/list.cpp.o
 ../bin/main: CMakeFiles/main.dir/src/main.cpp.o
+../bin/main: CMakeFiles/main.dir/src/md5.cpp.o
+../bin/main: CMakeFiles/main.dir/src/msg.cpp.o
 ../bin/main: CMakeFiles/main.dir/src/task.cpp.o
 ../bin/main: CMakeFiles/main.dir/build.make
 ../bin/main: CMakeFiles/main.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/lf/Documents/EdgeDeviceManage_Master/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_6) "Linking CXX executable ../bin/main"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/lf/Documents/EdgeDeviceManage_Master/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Linking CXX executable ../bin/main"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/main.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

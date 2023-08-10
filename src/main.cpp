@@ -4,8 +4,11 @@
 #include <map>
 #include <sstream>
 #include <jsoncpp/json/json.h>
-#include <pthread.h>
+#include <thread>
+#include <mutex>
 #include "interface.hpp"
+#include "file.hpp"
+#include "msg.hpp"
 
 #define InitFile "master_init_sample.json"
 #define MAX_LISTENING 1000
@@ -14,10 +17,13 @@ using namespace std;
 
 Master master;
 list_head free_client_list, work_client_list, deployed_task_list, uninit_task_list;
-pthread_mutex_t mutex_slave_list, mutex_task_list, mutex_uninit_task_list, mutex_task_id;
+mutex mutex_slave_list, mutex_task_list, mutex_uninit_task_list, mutex_task_id;
 map<int, ClientNode *> free_client_list_map, work_client_list_map;
 int task_increment_id = 0;
 int increment_slave_id = 1;
+
+string work_client_list_export();
+string client_task_list_export(int client_id);
 
 //初始化主节点
 int startup()
@@ -86,28 +92,67 @@ int startup()
 }
 
 //从节点消息发送线程
-void *msg_send(void *arg)
+void msg_send(ClientNode *client)
 {
+    while(1)
+    {
+        switch(client->status)
+        {
+            case 0:
+            {
+                //检查是否有被分配新任务，若有，则切换状态请求发送导出的同步文件
+                if(client->modified == 1)
+                {
+                    client->status = 100;
+                }
+                //其他
 
+
+                break;
+            }
+            case 100:
+            {
+                //从节点被分配了新任务，导出子任务链表并向从节点发送json文件
+                string path = client_task_list_export(client->client_id);
+                if(path.empty())
+                {
+                    printf("client %d, IP:%s, port:%d export client task list error\n", client->client_id, inet_ntoa(client->addr.sin_addr), client->addr.sin_port);
+                    return;
+                }
+                FileInfo info;
+                FileInfoInit(&info);
+                FileInfoGet(path, &info);
+                string msg = FileInfoMsgEncode(&info);
+                send(client->sock, msg.c_str(), msg.length(), 0);
+
+                client->status = 101;
+                //=================================================================
+                break;
+            }
+            
+        }
+        
+    }
 }
 
 //从节点消息接收线程
-void *msg_recv(void *arg)
+void msg_recv(void *arg)
 {
-
+    ClientNode *client = (ClientNode *)arg;
+    
+    return;
 }
 
 //从节点连接主节点线程，接收从节点连接并将其加入到从节点管理链表，为每个从节点连接分配单独的消息收发线程
-void* slave_accept(void *arg)
+void slave_accept(int sock)
 {
-    int sock = *(int*)arg;
     struct sockaddr_in client;
 	socklen_t len = sizeof(client);
     while(1)
     {
         int new_sock = accept(sock,(struct sockaddr *)&client,&len);
 
-        pthread_mutex_lock(&mutex_slave_list);
+        mutex_slave_list.lock();
         ClientNode *clientNode = new ClientNode();
         clientNode->client_id = increment_slave_id;
         increment_slave_id++;
@@ -126,24 +171,23 @@ void* slave_accept(void *arg)
         clientNode->self = *self;
         list_add_tail(self, &free_client_list);
         free_client_list_map.insert(map<int, ClientNode *>::value_type(clientNode->client_id, clientNode));
-        pthread_mutex_unlock(&mutex_slave_list);
+        mutex_slave_list.unlock();
         
-        pthread_t msg_send_threadID, msg_recv_threadID;
-        pthread_create(&msg_send_threadID, NULL, msg_send, (void *)clientNode);
-        pthread_create(&msg_recv_threadID, NULL,msg_recv, (void*)clientNode);
-        clientNode->msg_send_threadID = msg_send_threadID;
-        clientNode->msg_recv_threadID = msg_recv_threadID;
+        clientNode->msg_send_threadID = thread(msg_send, clientNode);
+        clientNode->msg_recv_threadID = thread(msg_recv, clientNode);
+        clientNode->modified = 0;
+        clientNode->status = 0;
     }
-    return NULL;
+    return;
 }
 
 //分配任务给各个节点
-void* task_deploy(void *arg)
+void task_deploy(void *arg)
 {
     while(!list_empty(&uninit_task_list)){
         //0、保证至少有两个设备可供分配
         while(master.work_client_num < 2 && master.free_client_num > 0){
-            pthread_mutex_lock(&mutex_slave_list);
+            mutex_slave_list.lock();
             list_head *temp = free_client_list.next;
             ClientNode *slave = (ClientNode *)(list_entry(temp, ClientNode, self));
             list_del(free_client_list.next);
@@ -152,7 +196,7 @@ void* task_deploy(void *arg)
             list_add_tail(temp, &(master.work_client_head));
             work_client_list_map.insert(map<int, ClientNode*>::value_type(slave->client_id, slave));
             master.work_client_num++;
-            pthread_mutex_unlock(&mutex_slave_list);
+            mutex_slave_list.unlock();
         }
         //没有大于2个从节点设备可供调配，休眠一段时间等待有无新从节点加入
         if(master.work_client_num < 2)
@@ -163,10 +207,10 @@ void* task_deploy(void *arg)
         }
         
         //1、从未分配任务链表中取出任务
-        pthread_mutex_lock(&mutex_uninit_task_list);
+        mutex_uninit_task_list.lock();
         list_head task_node = *uninit_task_list.next;
         list_del(uninit_task_list.next);
-        pthread_mutex_unlock(&mutex_uninit_task_list);
+        mutex_uninit_task_list.unlock();
 
         //2、分配子任务执行的从节点，并更新对应从节点结构体中的信息
         //此处将子任务交替依次分配给工作从节点链表头两个节点
@@ -188,6 +232,7 @@ void* task_deploy(void *arg)
             {
                 slave[pick]->flag = 0;
             }
+            slave[pick]->modified = 1;
             list_add_tail(subt_temp, &(slave[pick]->head));
             task_workclient_a.push_back(pick);
             pick = 1 - pick;
@@ -208,7 +253,7 @@ void* task_deploy(void *arg)
                 res_temp = res_temp->next;
             }
             j = 0;
-            SubTaskResult *res_temp = subt->succ_head->next;
+            res_temp = subt->succ_head->next;
             while(j < subt->next_num)
             {
                 j++;
@@ -218,14 +263,14 @@ void* task_deploy(void *arg)
         }
 
         //4、将任务插入任务链表
-        pthread_mutex_lock(&mutex_task_list);
+        mutex_task_list.lock();
         list_add_tail(&task_node, &deployed_task_list);
-        pthread_mutex_unlock(&mutex_task_list);
+        mutex_task_list.unlock();
     }
-    return NULL;
+    return;
 }
 
-//将工作从节点链表导出为json文件
+//将工作从节点链表导出为json文件，返回导出的文件名
 string work_client_list_export()
 {
     Json::Value root, client;
@@ -252,13 +297,15 @@ string work_client_list_export()
     if(!f.is_open())
     {
         printf("open file %s error\n", fname.c_str());
-        return NULL;
+        return "";
     }
     f << sw.write(root);
     f.close();
+
+    return fname;
 }
 
-//根据客户端id导出当前分配的子任务链表为json文件
+//根据客户端id导出当前分配的子任务链表为json文件，返回导出的文件名
 string client_task_list_export(int client_id)
 {
     map<int, ClientNode *>::iterator it = work_client_list_map.find(client_id);
@@ -324,29 +371,33 @@ string client_task_list_export(int client_id)
     if(!f.is_open())
     {
         printf("open file %s error\n", fname.c_str());
-        return NULL;
+        return "";
     }
     f << sw.write(root);
     f.close();
+
+    return fname;
 }
 
 int main(){
     int sock = startup();
 
-    pthread_mutex_init(&mutex_slave_list, NULL);
-    pthread_mutex_init(&mutex_task_list, NULL);
-    pthread_mutex_init(&mutex_uninit_task_list, NULL);
-    pthread_mutex_init(&mutex_task_id, NULL);
+    thread slave_listen_threadID(slave_accept, sock);
+    thread bash_io_threadID(bash_io);
+    thread task_deploy_threadID(task_deploy);
 
-    pthread_t slave_listen_threadID, bash_input_threadID, bash_output_threadID, task_deploy_threadID,\
-        master2slave_instruction_threadID, master2slave_file_threadID, slave2master_response_threadID, slave2master_file_threadID;
-    pthread_create(&slave_listen_threadID, NULL, slave_accept, &sock);
-    pthread_create(&bash_output_threadID, NULL, bash_io, NULL);
-    pthread_create(&task_deploy_threadID, NULL, task_deploy, NULL);
-    
-    pthread_mutex_destroy(&mutex_slave_list);
-    pthread_mutex_destroy(&mutex_task_list);
-    pthread_mutex_destroy(&mutex_uninit_task_list);
-    pthread_mutex_destroy(&mutex_task_id);
+    if(slave_listen_threadID.joinable())
+    {
+        slave_listen_threadID.join();
+    }
+    if(bash_io_threadID.joinable())
+    {
+        bash_io_threadID.join();
+    }
+    if(task_deploy_threadID.joinable())
+    {
+        task_deploy_threadID.join();
+    }
+
     return 0;
 }
