@@ -8,7 +8,6 @@
 #include "interact_status.hpp"
 
 #define MSG_BUFFER_SIZE 1024
-#define FILE_PACKAGE_SIZE 40960     //4KB
 
 void msg_send(ClientNode *client);
 void msg_recv(ClientNode *client);

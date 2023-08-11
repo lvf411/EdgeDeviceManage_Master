@@ -151,10 +151,70 @@ string client_task_list_export(int client_id)
 
 void file_send(int sock, std::string path)
 {
-    
+    FileInfo info;
+    FileInfoInit(&info);
+    FileInfoGet(path, &info);
+    int packid = 0, packnum = ((info.exatsize / 3) * 4) / FILE_PACKAGE_SIZE;
+    ifstream ifs(path, std::ios::binary);
+    char file_readbuf[FILEBUF_MAX_LENGTH];
+    char sendbuf[FILE_PACKAGE_SIZE];
+    char recvbuf[1024];
+    while(packid < packnum)
+    {
+        uint32_t sendlength;
+        int ack = 0;
+        memset(file_readbuf, 0, FILEBUF_MAX_LENGTH);
+        memset(sendbuf, 0, FILE_PACKAGE_SIZE);
+        memset(recvbuf, 0, 1024);
+        ifs.read(file_readbuf, FILEBUF_MAX_LENGTH);
+        Base64_Encode(file_readbuf, ifs.gcount(), sendbuf, &sendlength);
+        do{
+            send(sock, sendbuf, sendlength, 0);
+            recv(sock, recvbuf, 1024, 0);
+            Json::Value root;
+            Json::Reader rd;
+            rd.parse(recvbuf, root);
+            ack = root["ret"].asInt();
+        }while(ack < packid);
+        packid++;
+    }
+    ifs.close();
 }
 
-void file_recv(int sock, int fd)
+//接收了对方的文件传输套接字的连接，还没发送确认信息,res_md5传引用
+void file_recv(int sock, FileInfo *info, std::ofstream ofs, std::string res_md5)
 {
-
+    // std::ofstream ofs(info->fname, std::ios::binary | std::ios::app);
+    char recvbuf[FILE_PACKAGE_SIZE];
+    char file_writebuf[FILEBUF_MAX_LENGTH];
+    char sendbuf[1024];
+    long long int  whole_length = 0;
+    uint32_t file_length = 0, recv_length = 0;
+    int packid = 0, packnum = ((info->exatsize / 3) * 4) / FILE_PACKAGE_SIZE;
+    while(packid < packnum)
+    {
+        recv_length = recv(sock, recvbuf, FILE_PACKAGE_SIZE, 0);
+        Base64_Decode(recvbuf, recv_length, file_writebuf, &file_length);
+        ofs.write(file_writebuf, file_length);
+        whole_length += file_length;
+        packid++;
+        Json::Value root;
+        root["ret"] = Json::Value(packid);
+    }
+    ofs.close();
+    std::ifstream ifs(info->fname, std::ios::binary);
+    MD5 md5;
+    std::streamsize length;
+    char buf[1024];
+    while(!(ifs.eof()))
+    {
+        ifs.read(buf, 1024);
+        length = ifs.gcount();
+        if(length > 0)
+        {
+            md5.update(buf, length);
+        }
+    }
+    ifs.close();
+    res_md5 = md5.toString();
 }
