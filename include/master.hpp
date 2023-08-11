@@ -47,10 +47,12 @@ struct ClientNode{
     int subtask_num;                    //分配到的子任务数量
     struct list_head head;              //子任务链表头地址，若flag为-1，为空闲节点；若大于0，为分配给该从节点的子任务链表表头
     struct list_head self;              //指向自身在客户端链表中的指针
-    std::thread msg_send_threadID;        //消息发送线程ID
-    std::thread msg_recv_threadID;        //消息接收线程ID
+    std::thread msg_send_threadID;      //消息发送线程ID
+    std::thread msg_recv_threadID;      //消息接收线程ID
     int modified;                       //修改标记，当值为0时表示没有受到修改，没有分配新的子任务；当被置为1时，表示被分配了新的子任务，需要同步任务链表
     int status;                         //分配的发送/接收线程状态，用以指示状态机运行以及部分同步问题
+    int file_trans_sock;                //文件传输时与从节点建立的新连接
+    int file_trans_port;                //文件传输时从节点提供的端口号
 };
 
 //任务描述

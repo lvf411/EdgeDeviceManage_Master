@@ -111,7 +111,7 @@ void SlaveNodeStatusBrief_print(){
         i++;
         ClientNode *node = (ClientNode *)(list_entry(temp, ClientNode, self));
         printf("[%d] ID:%d %s:%d\n", i, node->client_id, inet_ntoa(node->addr.sin_addr) \
-                        , node->addr.sin_port);
+                        , ntohs(node->addr.sin_port));
         temp = temp->next;
     }
     if(i == master.work_client_num)
@@ -127,7 +127,7 @@ void SlaveNodeStatusBrief_print(){
         i++;
         ClientNode *node = (ClientNode *)(list_entry(temp, ClientNode, self));
         printf("[%d] ID:%d %s:%d\n", i, node->client_id, inet_ntoa(node->addr.sin_addr) \
-                        , node->addr.sin_port);
+                        , ntohs(node->addr.sin_port));
         temp = temp->next;
     }
     if(i == master.free_client_num)
@@ -148,7 +148,7 @@ void SlaveNodeStatus_print(){
         i++;
         ClientNode *node = (ClientNode *)(list_entry(temp, ClientNode, self));
         printf("\t[%d] ID:%d %s:%d 算力:%d 已分配任务%d个\n", i, node->client_id, inet_ntoa(node->addr.sin_addr) \
-                        , node->addr.sin_port, node->ability, node->subtask_num);
+                        , ntohs(node->addr.sin_port), node->ability, node->subtask_num);
         if(node->flag == -1)
         {
             printf("当前从节点接下来没有被分配任务\n");
@@ -181,7 +181,7 @@ void SlaveNodeStatus_print(){
         i++;
         ClientNode *node = (ClientNode *)(list_entry(temp, ClientNode, self));
         printf("[%d] ID:%d %s:%d\n", i, node->client_id, inet_ntoa(node->addr.sin_addr) \
-                        , node->addr.sin_port);
+                        , ntohs(node->addr.sin_port));
         temp = temp->next;
     }
     if(i == master.free_client_num)
