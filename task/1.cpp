@@ -17,11 +17,11 @@ int main(){
     time_t tt;
     tm *t;
     ofstream log, output1, output2, output3;
-    string taskid = TASK_ID;
-    taskid += "_";
-    taskid += SUBTASK_ID;
-
-    log.open(taskid + "_log.txt", ios::app);
+    string logfile_name = TASK_ID;
+    logfile_name += "_";
+    logfile_name += SUBTASK_ID;
+    logfile_name += "_log.txt";
+    log.open(logfile_name.c_str(), ios::app);
     output1.open(OUTPUT_PATH_1, ios::out);
     output2.open(OUTPUT_PATH_2, ios::out);
     output3.open(OUTPUT_PATH_3, ios::out);

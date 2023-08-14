@@ -17,11 +17,11 @@ int main(){
     tm *t;
     ofstream log, output1;
     ifstream input1;
-    string subtaskid = TASK_ID;
-    subtaskid += "_";
-    subtaskid += SUBTASK_ID;
-
-    log.open(subtaskid + "_log.txt", ios::app);
+    string logfile_name = TASK_ID;
+    logfile_name += "_";
+    logfile_name += SUBTASK_ID;
+    logfile_name += "_log.txt";
+    log.open(logfile_name.c_str(), ios::app);
     input1.open(INPUT_PATH, ios::in);
     output1.open(OUTPUT_PATH, ios::out);
 

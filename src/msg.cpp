@@ -44,7 +44,7 @@ void msg_send(ClientNode *client)
                 client->status = INTERACT_STATUS_SUBTASK_SYNCFILE_SEND_WAIT_ACK;
                 break;
             }
-            case INTERACT_STATUS_SUBTASK_SYNCFILE_SEND_SEND:
+            case INTERACT_STATUS_SUBTASK_SYNCFILE_SEND_CONNECT:
             {
                 //从节点同意了文件传输请求，正式建立连接并新建线程发送文件
                 client->file_trans_sock = socket(AF_INET, SOCK_STREAM, 0);
@@ -60,12 +60,14 @@ void msg_send(ClientNode *client)
                     send(client->sock, msg.c_str(), msg.length(), 0);
                     client->status = INTERACT_STATUS_ROOT;
                 }
-                else
-                {
-                    std::thread filesend_threadID(file_send, client->file_trans_sock, path);
-                    filesend_threadID.join();
-                }
+                break;
+            }
+            case INTERACT_STATUS_SUBTASK_SYNCFILE_SEND_SEND:
+            {
+                std::thread filesend_threadID(file_send, client->file_trans_sock, path);
+                filesend_threadID.join();
                 close(client->file_trans_sock);
+                break;
             }
             default:
             {
@@ -100,13 +102,22 @@ void msg_recv(void *arg)
                 if(ret == 0)
                 {
                     client->file_trans_port = root["listen_port"].asInt();
-                    client->status = INTERACT_STATUS_SUBTASK_SYNCFILE_SEND_SEND;
+                    client->status = INTERACT_STATUS_SUBTASK_SYNCFILE_SEND_CONNECT;
                 }
                 else
                 {
                     client->status = INTERACT_STATUS_ROOT;
                 }
                 
+                break;
+            }
+            case MSG_TYPE_FILESEND_START:
+            {
+                client->status = INTERACT_STATUS_SUBTASK_SYNCFILE_SEND_SEND;
+                break;
+            }
+            default:
+            {
                 break;
             }
         }
