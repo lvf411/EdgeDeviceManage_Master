@@ -20,7 +20,7 @@ void msg_send(ClientNode *client)
                 {
                     client->status = INTERACT_STATUS_SUBTASK_SYNCFILE_SEND_REQ;
                 }
-                //其他
+                //起始状态其他检查项目
 
 
                 break;
@@ -64,6 +64,7 @@ void msg_send(ClientNode *client)
             }
             case INTERACT_STATUS_SUBTASK_SYNCFILE_SEND_SEND:
             {
+                //接收到从节点对主节点发起的tcp连接的ack确认，主节点可以开始发送文件内容
                 std::thread filesend_threadID(file_send, client->file_trans_sock, path);
                 filesend_threadID.join();
                 close(client->file_trans_sock);
@@ -88,6 +89,7 @@ void msg_recv(void *arg)
 
     while(1)
     {
+        memset(msg_buf, 0, MSG_BUFFER_SIZE);
         recv(client->sock, msg_buf, MSG_BUFFER_SIZE, 0);
         Json::Value root;
         Json::Reader rd;
@@ -98,8 +100,8 @@ void msg_recv(void *arg)
         {
             case MSG_TYPE_FILESEND_REQ_ACK:
             {
-                int ret = root["ret"].asInt();
-                if(ret == 0)
+                bool ret = root["ret"].asBool();
+                if(ret == true)
                 {
                     client->file_trans_port = root["listen_port"].asInt();
                     client->status = INTERACT_STATUS_SUBTASK_SYNCFILE_SEND_CONNECT;
@@ -157,23 +159,24 @@ std::string FileSendReqMsgEncode(FileInfo *info)
     Json::Value root;
     root["type"] = Json::Value(MSG_TYPE_FILESEND_REQ);
     root["src_ip"] = Json::Value(inet_ntoa(master.addr.sin_addr));
-    root["src_port"] = Json::Value(master.addr.sin_port);
+    root["src_port"] = Json::Value(ntohs(master.addr.sin_port));
     root["msg_id"] = Json::Value(MsgIDGenerate());
     root["fname"] = Json::Value(info->fname);
     root["exatsize"] = Json::Value(info->exatsize);
     root["md5"] = Json::Value(info->md5);
     //开启base64转码
-    root["base64"] = Json::Value(0);
+    root["base64"] = Json::Value(true);
     if(info->exatsize > (FILE_PACKAGE_SIZE / 4) * 3)
     {
         //文件大小大于单个包长度，需进行拆包发送
-        root["split"] = Json::Value(1);
+        root["split"] = Json::Value(true);
         root["pack_num"] = Json::Value(info->exatsize / ((FILE_PACKAGE_SIZE * 3) / 4));
+        root["pack_size"] = Json::Value(FILE_PACKAGE_SIZE);
     }
     else
     {
         //文件大小小于单个包长度，不需要拆包发送
-        root["split"] = Json::Value(0);
+        root["split"] = Json::Value(false);
     }
     
     //生成字符串
@@ -192,7 +195,7 @@ std::string FileSendCancelMsgEncode()
     Json::Value root;
     root["type"] = Json::Value(MSG_TYPE_FILESEND_CANCEL);
     root["src_ip"] = Json::Value(inet_ntoa(master.addr.sin_addr));
-    root["src_port"] = Json::Value(master.addr.sin_port);
+    root["src_port"] = Json::Value(ntohs(master.addr.sin_port));
     root["msg_id"] = Json::Value(MsgIDGenerate());
 
     //生成字符串
