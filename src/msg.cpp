@@ -8,7 +8,6 @@ extern Master master;
 //从节点消息发送线程
 void msg_send(ClientNode *client)
 {
-    std::string path;
     while(1)
     {
         switch(client->status)
@@ -16,35 +15,45 @@ void msg_send(ClientNode *client)
             case INTERACT_STATUS_ROOT:
             {
                 //检查是否有被分配新任务，若有，则切换状态请求发送导出的同步文件
-                if(client->modified == 1)
+                if(client->modified == true)
                 {
-                    client->status = INTERACT_STATUS_SUBTASK_SYNCFILE_SEND_REQ;
+                    client->mutex_status.lock();
+                    client->status = INTERACT_STATUS_SUBTASK_SYNCFILE_GETFILE;
+                    client->mutex_status.unlock();
                 }
                 //起始状态其他检查项目
 
 
                 break;
             }
-            case INTERACT_STATUS_SUBTASK_SYNCFILE_SEND_REQ:
+            case INTERACT_STATUS_SUBTASK_SYNCFILE_GETFILE:
             {
                 //从节点被分配了新任务，导出子任务链表并向从节点发送json文件
-                path.clear();
-                path = client_task_list_export(client->client_id);
-                if(path.empty())
+                client->file_trans_fname.clear();
+                client->file_trans_fname = client_task_list_export(client->client_id);
+                if(client->file_trans_fname.empty())
                 {
                     printf("client %d, IP:%s, port:%d export client task list error\n", client->client_id, inet_ntoa(client->addr.sin_addr), client->addr.sin_port);
                     return;
                 }
+                client->mutex_status.lock();
+                client->status = INTERACT_STATUS_FILESEND_SEND_REQ;
+                client->mutex_status.unlock();
+            }
+            case INTERACT_STATUS_FILESEND_SEND_REQ:
+            {
                 FileInfo info;
                 FileInfoInit(&info);
-                FileInfoGet(path, &info);
+                FileInfoGet(client->file_trans_fname, &info);
                 string msg = FileSendReqMsgEncode(&info);
                 send(client->sock, msg.c_str(), msg.length(), 0);
 
-                client->status = INTERACT_STATUS_SUBTASK_SYNCFILE_SEND_WAIT_ACK;
+                client->mutex_status.lock();
+                client->status = INTERACT_STATUS_FILESEND_WAIT_ACK;
+                client->mutex_status.unlock();
                 break;
             }
-            case INTERACT_STATUS_SUBTASK_SYNCFILE_SEND_CONNECT:
+            case INTERACT_STATUS_FILESEND_CONNECT:
             {
                 //从节点同意了文件传输请求，正式建立连接并新建线程发送文件
                 client->file_trans_sock = socket(AF_INET, SOCK_STREAM, 0);
@@ -58,16 +67,19 @@ void msg_send(ClientNode *client)
                     printf("file send: failed to connect to the target port\n");
                     std::string msg = FileSendCancelMsgEncode();
                     send(client->sock, msg.c_str(), msg.length(), 0);
+                    client->mutex_status.lock();
                     client->status = INTERACT_STATUS_ROOT;
+                    client->mutex_status.unlock();
                 }
                 break;
             }
-            case INTERACT_STATUS_SUBTASK_SYNCFILE_SEND_SEND:
+            case INTERACT_STATUS_FILESEND_SENDFILE:
             {
                 //接收到从节点对主节点发起的tcp连接的ack确认，主节点可以开始发送文件内容
-                std::thread filesend_threadID(file_send, client->file_trans_sock, path);
+                std::thread filesend_threadID(file_send, client->file_trans_sock, client->file_trans_fname);
                 filesend_threadID.join();
                 close(client->file_trans_sock);
+                client->modified = false;
                 break;
             }
             default:
@@ -82,9 +94,8 @@ void msg_send(ClientNode *client)
 }
 
 //从节点消息接收线程
-void msg_recv(void *arg)
+void msg_recv(ClientNode *client)
 {
-    ClientNode *client = (ClientNode *)arg;
     char msg_buf[MSG_BUFFER_SIZE] = {0};
 
     while(1)
@@ -104,18 +115,62 @@ void msg_recv(void *arg)
                 if(ret == true)
                 {
                     client->file_trans_port = root["listen_port"].asInt();
-                    client->status = INTERACT_STATUS_SUBTASK_SYNCFILE_SEND_CONNECT;
+                    client->mutex_status.lock();
+                    client->status = INTERACT_STATUS_FILESEND_CONNECT;
+                    client->mutex_status.unlock();
                 }
                 else
                 {
+                    client->mutex_status.lock();
                     client->status = INTERACT_STATUS_ROOT;
+                    client->mutex_status.unlock();
                 }
                 
                 break;
             }
             case MSG_TYPE_FILESEND_START:
             {
-                client->status = INTERACT_STATUS_SUBTASK_SYNCFILE_SEND_SEND;
+                client->mutex_status.lock();
+                client->status = INTERACT_STATUS_FILESEND_SENDFILE;
+                client->mutex_status.unlock();
+                break;
+            }
+            case MSG_TYPE_FILEREQ_REQ:
+            {
+                int flag;
+                std::string fname = root["fname"].asString();
+                std::ifstream ifs(fname);
+                if(ifs.good())
+                {
+                    if(client->status == INTERACT_STATUS_ROOT)
+                    {
+                        //只有客户端状态空闲时可以响应文件传输的请求
+                        client->mutex_status.lock();
+                        client->status = INTERACT_STATUS_FILESEND_SEND_REQ;
+                        client->mutex_status.unlock();
+                        client->file_trans_fname = fname;
+                        flag = FILEREQ_ACK_OK;
+                    }
+                    else
+                    {
+                        flag = FILEREQ_ACK_WAIT;
+                    }
+                }
+                else
+                {
+                    flag = FILEREQ_ACK_ERROR;
+                }
+                Json::Value msg;
+                msg["type"] = Json::Value(MSG_TYPE_FILEREQ_ACK);
+                msg["src_ip"] = Json::Value(inet_ntoa(master.addr.sin_addr));
+                msg["src_port"] = Json::Value(ntohs(master.addr.sin_port));
+                msg["msg_id"] = Json::Value(MsgIDGenerate());
+                msg["fname"] = Json::Value(fname);
+                msg["ret"] = Json::Value(flag);
+                Json::FastWriter fw;
+                std::stringstream ss;
+                ss << fw.write(msg);
+                send(client->sock, ss.str().c_str(), ss.str().length(), 0);
                 break;
             }
             default:

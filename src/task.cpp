@@ -145,7 +145,7 @@ void task_deploy()
             {
                 slave[pick]->flag = 0;
             }
-            slave[pick]->modified = 1;
+            slave[pick]->modified = true;
             list_add_tail(subt_temp, &(slave[pick]->head));
             task_workclient_a.push_back(pick);
             pick = 1 - pick;
