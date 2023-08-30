@@ -36,7 +36,7 @@ bool task_add(std::string path){
         node->subtask_id = obj["subtask"][i]["subtaskid"].asInt();
         node->root_id = task->id;
         node->exepath = obj["subtask"][i]["exe_path"].asString();
-        node->prev_num = obj["subtask"][i]["input_src_num"].asInt();
+        node->prev_num = obj["subtask"][i]["input_num"].asInt();
         if(node->prev_num ==0)
         {
             node->prev_head = NULL;
@@ -49,12 +49,13 @@ bool task_add(std::string path){
             {
                 SubTaskResult *n = new(SubTaskResult);
                 n->client_id = 0;
-                n->subtask_id = obj["subtask"][i]["input_src"][j].asInt();
+                n->subtask_id = obj["subtask"][i]["input"][j]["input_src"].asInt();
+                n->fname = obj["subtask"][i]["input"][j]["input_fname"].asString();
                 n->next = temp->next;
                 temp->next = n;
             }
         }
-        node->next_num = obj["subtask"][i]["output_dst_num"].asInt();
+        node->next_num = obj["subtask"][i]["output_num"].asInt();
         if(node->next_num ==0)
         {
             node->succ_head = NULL;
@@ -67,7 +68,8 @@ bool task_add(std::string path){
             {
                 SubTaskResult *n = new(SubTaskResult);
                 n->client_id = 0;
-                n->subtask_id = obj["subtask"][i]["output_dst"][j].asInt();
+                n->subtask_id = obj["subtask"][i]["output"][j]["output_dst"].asInt();
+                n->fname = obj["subtask"][i]["output"][j]["output_fname"].asString();
                 n->next = temp->next;
                 temp->next = n;
             }

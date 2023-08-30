@@ -9,11 +9,20 @@
             "run_time": 2,
             "input_src_num":    0,
             "input_src":[],
-            "output_dst_num":   3,
-            "output_dst":[
-                2,
-                3,
-                4
+            "output_num":   3,
+            "output":[
+                {
+                    "output_dst":   2,
+                    "output_fname": "1_1_2.txt"
+                },
+                {
+                    "output_dst":   3,
+                    "output_fname": "1_1_3.txt"
+                },
+                {
+                    "output_dst":   4,
+                    "output_fname": "1_1_4.txt"
+                }
             ],  
             "#output_dst":  "数组内容为输出目标子任务的编号"
         },
@@ -21,52 +30,79 @@
             "subtask_id":   2,
             "exe_path": "../task/2",
             "run_time": 4,
-            "input_src_num":    1,
-            "input_src":[
-                1
+            "input_num":    1,
+            "input":[
+                {
+                    "input_src":    1,
+                    "input_fname":  "1_1_2.txt"
+                }
             ],
-            "output_dst_num":   1,
-            "output_dst":[
-                5
+            "output_num":   1,
+            "output":[
+                {
+                    "output_dst":   5,
+                    "output_fname": "1_2_5.txt"
+                }
             ]  
         }
         ,
         {
             "subtask_id":   3,
             "exe_path": "../task/3",
-            "input_src_num":    1,
-            "input_src":[
-                1
+            "input_num":    1,
+            "input":[
+                {
+                    "input_src":    1,
+                    "input_fname":  "1_1_3.txt"
+                }
             ],
-            "output_dst_num":   1,
-            "output_dst":[
-                5
+            "output_num":   1,
+            "output":[
+                {
+                    "output_dst":   5,
+                    "output_fname": "1_3_5.txt"
+                }
             ]  
         }
         ,
         {
             "subtask_id":   4,
             "exe_path": "../task/4",
-            "input_src_num":    1,
-            "input_src":[
-                1
+            "input_num":    1,
+            "input":[
+                {
+                    "input_src":    1,
+                    "input_fname":  "1_1_4.txt"
+                }
             ],
-            "output_dst_num":   1,
-            "output_dst":[
-                5
+            "output_num":   1,
+            "output":[
+                {
+                    "output_dst":   5,
+                    "output_fname": "1_4_5.txt"
+                }
             ]  
         },
         {
             "subtask_id":   5,
             "exe_path": "../task/5",
-            "input_src_num":    3,
-            "input_src":[
-                2,
-                3,
-                4
+            "input_num":    3,
+            "input":[
+                {
+                    "input_src":    2,
+                    "input_fname":  "1_1_2.txt"
+                },
+                {
+                    "input_src":    3,
+                    "input_fname":  "1_1_3.txt"
+                },
+                {
+                    "input_src":    4,
+                    "input_fname":  "1_1_4.txt"
+                }
             ],
-            "output_dst_num":   0,
-            "output_dst":[]  
+            "output_num":   0,
+            "output":[]  
         }
     ]
 }

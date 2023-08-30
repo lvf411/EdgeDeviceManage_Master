@@ -61,7 +61,17 @@ void msg_send(ClientNode *client)
                 s_file_addr.sin_family = AF_INET;
                 s_file_addr.sin_addr.s_addr = client->addr.sin_addr.s_addr;
                 s_file_addr.sin_port = htons(client->file_trans_port);
-                if(connect(client->file_trans_sock, (struct sockaddr *)&s_file_addr, sizeof(struct sockaddr)) < 0)
+                int count = 0;
+                while(count < 10)
+                {
+                    count++;
+                    int ret = connect(client->file_trans_sock, (struct sockaddr *)&s_file_addr, sizeof(struct sockaddr));
+                    if(ret == 0)
+                    {
+                        break;
+                    }
+                }
+                if(count >= 10)
                 {
                     //连接目标端口失败，向从节点发送停止传输消息，退回普通状态
                     printf("file send: failed to connect to the target port\n");

@@ -105,7 +105,7 @@ string client_task_list_export(int client_id)
         ss << node->root_id << '_' << node->subtask_id;
         string fname = ss.str();
         json_temp["exe_name"] = Json::Value(fname);
-        json_temp["input_src_num"] = Json::Value(node->prev_num);
+        json_temp["input_num"] = Json::Value(node->prev_num);
         Json::Value prev, next;
         SubTaskResult *res_temp = node->prev_head->next;
         int j = 0;
@@ -114,10 +114,11 @@ string client_task_list_export(int client_id)
             Json::Value temp;
             temp["subtask_id"] = Json::Value(res_temp->subtask_id);
             temp["client_id"] = Json::Value(res_temp->client_id);
+            temp["fname"] = Json::Value(res_temp->fname);
             prev.append(temp);
         }
-        json_temp["input_src"] = prev;
-        json_temp["output_dst_num"] = node->next_num;
+        json_temp["input"] = prev;
+        json_temp["output_num"] = node->next_num;
         res_temp = node->succ_head->next;
         j = 0;
         while(res_temp != NULL && j < node->next_num)
@@ -125,9 +126,10 @@ string client_task_list_export(int client_id)
             Json::Value temp;
             temp["subtask_id"] = Json::Value(res_temp->subtask_id);
             temp["client_id"] = Json::Value(res_temp->client_id);
+            temp["fname"] = Json::Value(res_temp->fname);
             next.append(temp);
         }
-        json_temp["output_dst"] = next;
+        json_temp["output"] = next;
         json_subtask.append(json_temp);
     }
     root["subtask"] = json_subtask;

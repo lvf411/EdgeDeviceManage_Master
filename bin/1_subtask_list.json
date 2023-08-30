@@ -10,21 +10,24 @@
             "root_id":  1,
             "subtask_id":   1,
             "exe_name": "1_1",
-            "input_src_num":    0,
-            "input_src":[],
-            "output_dst_num":   3,
+            "input_num":    0,
+            "input":[],
+            "output_num":   3,
             "output_dst":[
                 {
                     "subtask_id":   2,
-                    "client_id":    2
+                    "client_id":    2,
+                    "fname":    "1_1_2.txt"
                 },
                 {
                     "subtask_id":   3,
-                    "client_id":    1
+                    "client_id":    1,
+                    "fname":    "1_1_3.txt"
                 },
                 {
                     "subtask_id":   4,
-                    "client_id":    2
+                    "client_id":    2,
+                    "fname":    "1_1_4.txt"
                 }
             ]
         },
@@ -32,18 +35,20 @@
             "root_id":  1,
             "subtask_id":   3,
             "exe_name": "1_3",
-            "input_src_num":    1,
-            "input_src":[
+            "input_num":    1,
+            "input":[
                 {
                     "subtask_id":   1,
-                    "client_id":    1
+                    "client_id":    1,
+                    "fname":    "1_1_3.txt"
                 }
             ],
-            "output_dst_num":   1,
-            "output_dst":[
+            "output_num":   1,
+            "output":[
                 {
                     "subtask_id":   5,
-                    "client_id":    1
+                    "client_id":    1,
+                    "fname":    "1_3_5.txt"
                 }
             ]
         },
@@ -51,23 +56,26 @@
             "root_id":  1,
             "subtask_id":   5,
             "exe_name": "1_5",
-            "input_src_num":    3,
-            "input_src":[
+            "input_num":    3,
+            "input":[
                 {
                     "subtask_id":   2,
-                    "client_id":    2
+                    "client_id":    2,
+                    "fname":    "1_2_5.txt"
                 },
                 {
                     "subtask_id":   3,
-                    "client_id":    1
+                    "client_id":    1,
+                    "fname":    "1_3_5.txt"
                 },
                 {
                     "subtask_id":   4,
-                    "client_id":    2
+                    "client_id":    2,
+                    "fname":    "1_4_5.txt"
                 }
             ],
-            "output_dst_num":   0,
-            "output_dst":[]
+            "output_num":   0,
+            "output":[]
         }
     ]
 }

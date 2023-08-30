@@ -20,6 +20,7 @@
 struct SubTaskResult{
     int client_id;                      //对应前驱和后继被分配的从节点ID
     int subtask_id;                     //子任务的ID
+    std::string fname;                  //传递的结果的文件名
     struct SubTaskResult *next;
 };
 
