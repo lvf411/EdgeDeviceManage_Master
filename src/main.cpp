@@ -76,16 +76,16 @@ int startup()
     master.task_num = 0;
     master.free_client_num = 0;
     free_client_list = LIST_HEAD_INIT(free_client_list);
-    master.free_client_head = free_client_list;
+    master.free_client_head = &free_client_list;
     master.work_client_num = 0;
     work_client_list = LIST_HEAD_INIT(work_client_list);
-    master.work_client_head = work_client_list;
+    master.work_client_head = &work_client_list;
     master.task_num = 0;
     deployed_task_list = LIST_HEAD_INIT(deployed_task_list);
-    master.task_list_head = deployed_task_list;
+    master.task_list_head = &deployed_task_list;
     uninit_task_list = LIST_HEAD_INIT(uninit_task_list);
     master.uninit_task_num = 0;
-    master.uninit_task_list_head = uninit_task_list;
+    master.uninit_task_list_head = &uninit_task_list;
 
 	return sock;
 }
@@ -110,7 +110,7 @@ void slave_accept(int sock)
         clientNode->flag = -1;      //节点空闲
         clientNode->subtask_num = 0;
         clientNode->ability = SLAVE_ABILITY_DEFAULT;
-        clientNode->head = LIST_HEAD_INIT(clientNode->head);
+        *clientNode->head = LIST_HEAD_INIT(*clientNode->head);
         clientNode->self = LIST_HEAD_INIT(clientNode->self);
         list_add_tail(&clientNode->self, &free_client_list);
         master.free_client_num++;

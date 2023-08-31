@@ -104,9 +104,9 @@ void menu_print(){
 void SlaveNodeStatusBrief_print(){
     printf("当前系统内工作从节点数量为：%d,空闲从节点数量为：%d\n", master.work_client_num, master.free_client_num);
     printf("工作从节点：\n");
-    list_head head = master.work_client_head, *temp = master.work_client_head.next;
+    list_head *head = master.work_client_head, *temp = master.work_client_head->next;
     int i = 0;
-    while(temp != &head && i < master.work_client_num)
+    while(temp != head && i < master.work_client_num)
     {
         i++;
         ClientNode *node = (ClientNode *)(list_entry(temp, ClientNode, self));
@@ -120,9 +120,10 @@ void SlaveNodeStatusBrief_print(){
         return;
     }
 
-    head = master.free_client_head, temp = master.free_client_head.next;
+    printf("空闲从节点：\n");
+    head = master.free_client_head, temp = master.free_client_head->next;
     i = 0;
-    while(temp != &head && i < master.free_client_num)
+    while(temp != head && i < master.free_client_num)
     {
         i++;
         ClientNode *node = (ClientNode *)(list_entry(temp, ClientNode, self));
@@ -141,9 +142,9 @@ void SlaveNodeStatusBrief_print(){
 void SlaveNodeStatus_print(){
     printf("当前系统内工作从节点数量为：%d,空闲从节点数量为：%d\n", master.work_client_num, master.free_client_num);
     printf("工作从节点：\n");
-    list_head head = master.work_client_head, *temp = master.work_client_head.next;
+    list_head *head = master.work_client_head, *temp = master.work_client_head->next;
     int i = 0;
-    while(temp != &head && i < master.work_client_num)
+    while(temp != head && i < master.work_client_num)
     {
         i++;
         ClientNode *node = (ClientNode *)(list_entry(temp, ClientNode, self));
@@ -156,7 +157,7 @@ void SlaveNodeStatus_print(){
         else
         {
             int j = 0;
-            list_head subtask_head = node->head, *subtask_temp = node->head.next;
+            list_head *subtask_head = node->head, *subtask_temp = node->head->next;
             printf("\t[编号] (任务编号):(子任务编号)\n");
             while(j < node->subtask_num && subtask_temp != NULL)
             {
@@ -174,9 +175,10 @@ void SlaveNodeStatus_print(){
         return;
     }
 
-    head = master.free_client_head, temp = master.free_client_head.next;
+    printf("空闲从节点：\n");
+    head = master.free_client_head, temp = master.free_client_head->next;
     i = 0;
-    while(temp != &head && i < master.free_client_num)
+    while(temp != head && i < master.free_client_num)
     {
         i++;
         ClientNode *node = (ClientNode *)(list_entry(temp, ClientNode, self));
@@ -184,7 +186,7 @@ void SlaveNodeStatus_print(){
                         , ntohs(node->addr.sin_port));
         temp = temp->next;
     }
-    if(i == master.free_client_num)
+    if(i > master.free_client_num)
     {
         printf(" free client number error!\n");
         return;
@@ -193,17 +195,17 @@ void SlaveNodeStatus_print(){
 
 void TaskDeployed_print()
 {
-    list_head head = master.task_list_head, *temp = master.task_list_head.next;
+    list_head *head = master.task_list_head, *temp = master.task_list_head->next;
     int i = 0;
-    while(temp != &head && i < master.task_num)
+    while(temp != head && i < master.task_num)
     {
         i++;
         Task *t = (Task *)(list_entry(temp, Task, self));
         printf("[%d] 任务ID:%s 共有子任务%d个，子任务分配情况：\n", i, t->task_id.c_str(), t->subtask_num);
         int j = 0;
-        list_head subtask_head = t->subtask_head, *subtask_temp = t->subtask_head.next;
+        list_head *subtask_head = t->subtask_head, *subtask_temp = t->subtask_head->next;
         printf("(编号) [子任务编号]:[分配从节点编号]\n");
-        while(subtask_temp != &subtask_head && j < t->subtask_num)
+        while(subtask_temp != subtask_head && j < t->subtask_num)
         {
             j++;
             SubTaskNode *subt = (SubTaskNode *)(list_entry(subtask_temp, SubTaskNode, self));
@@ -214,9 +216,9 @@ void TaskDeployed_print()
 
 void TaskUndeployed_print()
 {
-    list_head head = master.uninit_task_list_head, *temp = master.uninit_task_list_head.next;
+    list_head *head = master.uninit_task_list_head, *temp = master.uninit_task_list_head->next;
     int i = 0;
-    while(temp != &head && i < master.uninit_task_num)
+    while(temp != head && i < master.uninit_task_num)
     {
         i++;
         Task *t = (Task *)(list_entry(temp, Task, self));
@@ -262,7 +264,8 @@ void bash_io(){
                             case 3:
                                 {
                                     screen_clear();
-                                    current_status = SlaveNodeStatusBrief;
+                                    current_status = TaskDeployed;
+                                    break;
                                 }
                             default:
                                 {

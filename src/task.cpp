@@ -24,7 +24,7 @@ bool task_add(std::string path){
 
     list_head *subtask_list_head = new(list_head);
     *subtask_list_head = LIST_HEAD_INIT(*subtask_list_head);
-    task->subtask_head = *subtask_list_head;
+    task->subtask_head = subtask_list_head;
     //解析描述文件取出任务内容
     if(!obj["subtask"].isArray()){
         perror("desc file error");
@@ -79,7 +79,7 @@ bool task_add(std::string path){
         list_head *s = new(list_head);
         *s = LIST_HEAD_INIT(*s);
         node->self = *s;
-        list_add_tail(s, &task->subtask_head);
+        list_add_tail(s, task->subtask_head);
     }
 
     //将任务节点插入到待分配任务链表尾部
@@ -103,12 +103,12 @@ void task_deploy()
         //0、保证至少有两个设备可供分配
         while(master.work_client_num < 2 && master.free_client_num > 0){
             mutex_slave_list.lock();
-            list_head *temp = free_client_list.next;
+            list_head *temp = master.free_client_head->next;
             ClientNode *slave = (ClientNode *)(list_entry(temp, ClientNode, self));
-            list_del(free_client_list.next);
+            list_del(temp);
             free_client_list_map.erase(slave->client_id);
             master.free_client_num--;
-            list_add_tail(temp, &(master.work_client_head));
+            list_add_tail(temp, master.work_client_head);
             work_client_list_map.insert(std::map<int, ClientNode*>::value_type(slave->client_id, slave));
             master.work_client_num++;
             mutex_slave_list.unlock();
@@ -131,10 +131,10 @@ void task_deploy()
         //此处将子任务交替依次分配给工作从节点链表头两个节点
         int i = 0;
         Task *task = (Task *)(list_entry(&task_node, Task, self));
-        list_head subt_head = task->subtask_head, *subt_temp = task->subtask_head.next;
+        list_head *subt_head = task->subtask_head, *subt_temp = task->subtask_head->next;
         ClientNode *slave[2];
-        slave[0] = (ClientNode *)(list_entry(master.work_client_head.next, ClientNode, self));
-        slave[1] = (ClientNode *)(list_entry(master.work_client_head.next->next, ClientNode, self));
+        slave[0] = (ClientNode *)(list_entry(master.work_client_head->next, ClientNode, self));
+        slave[1] = (ClientNode *)(list_entry(master.work_client_head->next->next, ClientNode, self));
         int pick = 0;   //指定当前子任务分配给slave[0]还是slave[1]
         std::vector<int> task_workclient_a;      //记录每个子任务按顺序被分配的执行从节点
         while(i < task->subtask_num)
@@ -148,15 +148,15 @@ void task_deploy()
                 slave[pick]->flag = 0;
             }
             slave[pick]->modified = true;
-            list_add_tail(subt_temp, &(slave[pick]->head));
+            list_add_tail(subt_temp, slave[pick]->head);
             task_workclient_a.push_back(pick);
             pick = 1 - pick;
             subt_temp = subt_temp->next;
         }
 
         //3、更新子任务节点中的前驱后继内容
-        subt_temp = subt_head.next;
-        while(subt_temp != &subt_head)
+        subt_temp = subt_head->next;
+        while(subt_temp != subt_head)
         {
             int j = 0;
             SubTaskNode *subt = (SubTaskNode *)(list_entry(&subt_temp, SubTaskNode, self));
