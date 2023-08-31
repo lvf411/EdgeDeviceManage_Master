@@ -110,9 +110,10 @@ void slave_accept(int sock)
         clientNode->flag = -1;      //节点空闲
         clientNode->subtask_num = 0;
         clientNode->ability = SLAVE_ABILITY_DEFAULT;
+        clientNode->head = new list_head();
         *clientNode->head = LIST_HEAD_INIT(*clientNode->head);
         clientNode->self = LIST_HEAD_INIT(clientNode->self);
-        list_add_tail(&clientNode->self, &free_client_list);
+        list_add_tail(&clientNode->self, master.free_client_head);
         master.free_client_num++;
         free_client_list_map.insert(map<int, ClientNode *>::value_type(clientNode->client_id, clientNode));
         mutex_slave_list.unlock();
