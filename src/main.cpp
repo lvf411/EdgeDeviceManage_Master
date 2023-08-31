@@ -31,7 +31,7 @@ int startup()
     ifstream ifs(InitFile);
     if(!ifs.is_open())
     {
-        printf("open init file error!\n");
+        perror("open init file error!\n");
         exit(0);
     }
     Json::Reader reader;
@@ -110,20 +110,19 @@ void slave_accept(int sock)
         clientNode->flag = -1;      //节点空闲
         clientNode->subtask_num = 0;
         clientNode->ability = SLAVE_ABILITY_DEFAULT;
-        list_head *task_list_head = new list_head();
-        *task_list_head = LIST_HEAD_INIT(*task_list_head);
-        clientNode->head = *task_list_head;
-        list_head *self = new list_head();
-        *self = LIST_HEAD_INIT(*self);
-        clientNode->self = *self;
-        list_add_tail(self, &free_client_list);
+        clientNode->head = LIST_HEAD_INIT(clientNode->head);
+        clientNode->self = LIST_HEAD_INIT(clientNode->self);
+        list_add_tail(&clientNode->self, &free_client_list);
+        master.free_client_num++;
         free_client_list_map.insert(map<int, ClientNode *>::value_type(clientNode->client_id, clientNode));
         mutex_slave_list.unlock();
         
         clientNode->msg_send_threadID = thread(msg_send, clientNode);
         clientNode->msg_recv_threadID = thread(msg_recv, clientNode);
-        clientNode->modified = 0;
-        clientNode->status = 0;
+        clientNode->modified = false;
+        clientNode->status = INTERACT_STATUS_ROOT;
+        
+
     }
     return;
 }

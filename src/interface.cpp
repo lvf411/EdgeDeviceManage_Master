@@ -114,7 +114,7 @@ void SlaveNodeStatusBrief_print(){
                         , ntohs(node->addr.sin_port));
         temp = temp->next;
     }
-    if(i == master.work_client_num)
+    if(i > master.work_client_num)
     {
         printf(" work client number error!\n");
         return;
@@ -130,7 +130,7 @@ void SlaveNodeStatusBrief_print(){
                         , ntohs(node->addr.sin_port));
         temp = temp->next;
     }
-    if(i == master.free_client_num)
+    if(i > master.free_client_num)
     {
         printf(" free client number error!\n");
         return;
@@ -168,7 +168,7 @@ void SlaveNodeStatus_print(){
         }
         temp = temp->next;
     }
-    if(i == master.work_client_num)
+    if(i > master.work_client_num)
     {
         printf(" work client number error!\n");
         return;
@@ -228,11 +228,13 @@ void TaskUndeployed_print()
 void bash_io(){
     int buf_size = 1024;
     char buf[buf_size];
+    menu_print();
     while(1){
         switch(current_status)
         {
             case MNEU:
                 {
+                    
                     scanf("%s", buf);
                     if(strlen(buf) > 1)
                     {

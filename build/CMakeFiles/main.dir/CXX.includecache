@@ -124,6 +124,12 @@ master.hpp
 list.hpp
 ../include/list.hpp
 
+/home/lf/Documents/EdgeDeviceManage_Master/src/file.cpp
+file.hpp
+/home/lf/Documents/EdgeDeviceManage_Master/src/file.hpp
+master.hpp
+/home/lf/Documents/EdgeDeviceManage_Master/src/master.hpp
+
 /home/lf/Documents/EdgeDeviceManage_Master/src/interface.cpp
 interface.hpp
 /home/lf/Documents/EdgeDeviceManage_Master/src/interface.hpp
@@ -151,4 +157,18 @@ file.hpp
 /home/lf/Documents/EdgeDeviceManage_Master/src/file.hpp
 msg.hpp
 /home/lf/Documents/EdgeDeviceManage_Master/src/msg.hpp
+
+/home/lf/Documents/EdgeDeviceManage_Master/src/msg.cpp
+msg.hpp
+/home/lf/Documents/EdgeDeviceManage_Master/src/msg.hpp
+mutex
+-
+sys/time.h
+-
+sstream
+-
+
+/home/lf/Documents/EdgeDeviceManage_Master/src/task.cpp
+task.hpp
+/home/lf/Documents/EdgeDeviceManage_Master/src/task.hpp
 
