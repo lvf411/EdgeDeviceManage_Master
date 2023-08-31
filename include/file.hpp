@@ -18,7 +18,7 @@
 struct FileInfo
 {
     std::string fname;
-    long long int exatsize;
+    uint exatsize;
     int filesize;
     char unit;
     std::string md5;
