@@ -12,7 +12,9 @@
 #include <unistd.h>
 #include <string>
 #include <thread>
+#include <mutex>
 #include "list.hpp"
+#include "file.hpp"
 
 #define SLAVE_ABILITY_DEFAULT 10
 
@@ -54,6 +56,7 @@ struct ClientNode{
     int status;                         //分配的发送/接收线程状态，用以指示状态机运行以及部分同步问题
     std::mutex mutex_status;            //保障对发送/接收线程状态参数的互斥访问
     std::string file_trans_fname;       //文件传输时正在传输的文件的文件名
+    FileTransInfo *transinfo;           //文件传输时正在传输的文件的信息
     int file_trans_sock;                //文件传输时与从节点建立的新连接
     int file_trans_port;                //文件传输时从节点提供的端口号
 };

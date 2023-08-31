@@ -5,6 +5,10 @@
 
 extern Master master;
 
+long long int MsgIDGenerate();
+std::string FileSendReqMsgEncode(FileTransInfo *info);
+std::string FileSendCancelMsgEncode();
+
 //从节点消息发送线程
 void msg_send(ClientNode *client)
 {
@@ -36,16 +40,19 @@ void msg_send(ClientNode *client)
                     printf("client %d, IP:%s, port:%d export client task list error\n", client->client_id, inet_ntoa(client->addr.sin_addr), client->addr.sin_port);
                     return;
                 }
+                client->transinfo = new FileTransInfo();
+                FileInfoInit(&client->transinfo->info);
+                FileInfoGet(client->file_trans_fname, &client->transinfo->info);
+                client->transinfo->file_type = FILE_TYPE_KEY;
+                client->transinfo->dst_rootid = 0;
+                client->transinfo->dst_subtaskid = 0;
                 client->mutex_status.lock();
                 client->status = INTERACT_STATUS_FILESEND_SEND_REQ;
                 client->mutex_status.unlock();
             }
             case INTERACT_STATUS_FILESEND_SEND_REQ:
             {
-                FileInfo info;
-                FileInfoInit(&info);
-                FileInfoGet(client->file_trans_fname, &info);
-                string msg = FileSendReqMsgEncode(&info);
+                string msg = FileSendReqMsgEncode(client->transinfo);
                 send(client->sock, msg.c_str(), msg.length(), 0);
 
                 client->mutex_status.lock();
@@ -156,6 +163,9 @@ void msg_recv(ClientNode *client)
                     {
                         //只有客户端状态空闲时可以响应文件传输的请求
                         client->mutex_status.lock();
+                        client->transinfo->file_type = FILE_TYPE_EXE;
+                        client->transinfo->dst_rootid = root["rootid"].asInt();
+                        client->transinfo->dst_subtaskid = root["subtaskid"].asInt();
                         client->status = INTERACT_STATUS_FILESEND_SEND_REQ;
                         client->mutex_status.unlock();
                         client->file_trans_fname = fname;
@@ -219,23 +229,26 @@ long long int MsgIDGenerate()
     @param info 待填入的文件信息的结构体指针
     @return 封装出的消息的内容字符串
 */
-std::string FileSendReqMsgEncode(FileInfo *info)
+std::string FileSendReqMsgEncode(FileTransInfo *transinfo)
 {
     Json::Value root;
     root["type"] = Json::Value(MSG_TYPE_FILESEND_REQ);
     root["src_ip"] = Json::Value(inet_ntoa(master.addr.sin_addr));
     root["src_port"] = Json::Value(ntohs(master.addr.sin_port));
     root["msg_id"] = Json::Value(MsgIDGenerate());
-    root["fname"] = Json::Value(info->fname);
-    root["exatsize"] = Json::Value(info->exatsize);
-    root["md5"] = Json::Value(info->md5);
+    root["fname"] = Json::Value(transinfo->info.fname);
+    root["exatsize"] = Json::Value(transinfo->info.exatsize);
+    root["md5"] = Json::Value(transinfo->info.md5);
     //开启base64转码
     root["base64"] = Json::Value(true);
-    if(info->exatsize > (FILE_PACKAGE_SIZE / 4) * 3)
+    root["file_type"] = Json::Value(transinfo->file_type);
+    root["dst_rootid"] = Json::Value(transinfo->dst_rootid);
+    root["dst_subtaskid"] = Json::Value(transinfo->dst_subtaskid);
+    if(transinfo->info.exatsize > (FILE_PACKAGE_SIZE / 4) * 3)
     {
         //文件大小大于单个包长度，需进行拆包发送
         root["split"] = Json::Value(true);
-        root["pack_num"] = Json::Value(info->exatsize / ((FILE_PACKAGE_SIZE * 3) / 4));
+        root["pack_num"] = Json::Value(transinfo->info.exatsize / ((FILE_PACKAGE_SIZE * 3) / 4));
         root["pack_size"] = Json::Value(FILE_PACKAGE_SIZE);
     }
     else

@@ -7,9 +7,8 @@
 #include <cstring>
 #include <fstream>
 #include "master.hpp"
-#include "kbhit.hpp"
 #include "task.hpp"
 
-void* bash_io(void *arg);
+void bash_io();
 
 #endif //__INTERFACE_HPP

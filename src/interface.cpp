@@ -225,7 +225,7 @@ void TaskUndeployed_print()
 }
 
 //操作终端页面实现与人交互
-void* bash_io(void *arg){
+void bash_io(){
     int buf_size = 1024;
     char buf[buf_size];
     while(1){
@@ -446,5 +446,4 @@ void* bash_io(void *arg){
         }
 
     }
-    return NULL;
 }

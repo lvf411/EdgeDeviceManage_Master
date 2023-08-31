@@ -16,11 +16,6 @@
 },
 {
   "directory": "/home/lf/Documents/EdgeDeviceManage_Master/build",
-  "command": "/usr/bin/c++   -I/home/lf/Documents/EdgeDeviceManage_Master/include  -g   -o CMakeFiles/main.dir/src/kbhit.cpp.o -c /home/lf/Documents/EdgeDeviceManage_Master/src/kbhit.cpp",
-  "file": "/home/lf/Documents/EdgeDeviceManage_Master/src/kbhit.cpp"
-},
-{
-  "directory": "/home/lf/Documents/EdgeDeviceManage_Master/build",
   "command": "/usr/bin/c++   -I/home/lf/Documents/EdgeDeviceManage_Master/include  -g   -o CMakeFiles/main.dir/src/list.cpp.o -c /home/lf/Documents/EdgeDeviceManage_Master/src/list.cpp",
   "file": "/home/lf/Documents/EdgeDeviceManage_Master/src/list.cpp"
 },

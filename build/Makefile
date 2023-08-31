@@ -204,33 +204,6 @@ src/interface.cpp.s:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/interface.cpp.s
 .PHONY : src/interface.cpp.s
 
-src/kbhit.o: src/kbhit.cpp.o
-
-.PHONY : src/kbhit.o
-
-# target to build an object file
-src/kbhit.cpp.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/kbhit.cpp.o
-.PHONY : src/kbhit.cpp.o
-
-src/kbhit.i: src/kbhit.cpp.i
-
-.PHONY : src/kbhit.i
-
-# target to preprocess a source file
-src/kbhit.cpp.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/kbhit.cpp.i
-.PHONY : src/kbhit.cpp.i
-
-src/kbhit.s: src/kbhit.cpp.s
-
-.PHONY : src/kbhit.s
-
-# target to generate assembly for a file
-src/kbhit.cpp.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/kbhit.cpp.s
-.PHONY : src/kbhit.cpp.s
-
 src/list.o: src/list.cpp.o
 
 .PHONY : src/list.o
@@ -384,9 +357,6 @@ help:
 	@echo "... src/interface.o"
 	@echo "... src/interface.i"
 	@echo "... src/interface.s"
-	@echo "... src/kbhit.o"
-	@echo "... src/kbhit.i"
-	@echo "... src/kbhit.s"
 	@echo "... src/list.o"
 	@echo "... src/list.i"
 	@echo "... src/list.s"

@@ -1,4 +1,5 @@
 #include "file.hpp"
+#include "master.hpp"
 
 extern Master master;
 extern std::map<int, ClientNode *> free_client_list_map, work_client_list_map;
@@ -184,7 +185,7 @@ void file_send(int sock, std::string path)
 }
 
 //接收了对方的文件传输套接字的连接，还没发送确认信息,res_md5传引用
-void file_recv(int sock, FileInfo *info, std::ofstream ofs, std::string res_md5)
+void file_recv(int sock, FileInfo *info, std::ofstream& ofs, std::string& res_md5)
 {
     // std::ofstream ofs(info->fname, std::ios::binary | std::ios::app);
     char recvbuf[FILE_PACKAGE_SIZE];

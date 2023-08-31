@@ -12,8 +12,4 @@
 void msg_send(ClientNode *client);
 void msg_recv(ClientNode *client);
 
-std::string FileSendReqMsgEncode(FileInfo *info);
-
-std::string FileSendCancelMsgEncode();
-
 #endif //__MSG_HPP
