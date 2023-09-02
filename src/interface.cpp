@@ -161,10 +161,10 @@ void SlaveNodeStatus_print(){
             int j = 0;
             list_head *subtask_head = node->head, *subtask_temp = node->head->next;
             printf("\t[编号] (任务编号):(子任务编号)\n");
-            while(j < node->subtask_num && subtask_temp != NULL)
+            while(j < node->subtask_num && subtask_temp != subtask_head)
             {
                 j++;
-                SubTaskNode *subtask_node = (SubTaskNode *)(list_entry(subtask_temp, SubTaskNode, taskself));
+                SubTaskNode *subtask_node = (SubTaskNode *)(list_entry(subtask_temp, SubTaskNode, clientself));
                 printf("\t\t[%d] %d:%d\n", j, subtask_node->root_id, subtask_node->subtask_id);
                 subtask_temp = subtask_temp->next;
             }

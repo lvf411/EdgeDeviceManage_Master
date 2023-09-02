@@ -88,9 +88,9 @@ std::string client_task_list_export(int client_id)
     Json::Value root;
     root["client_id"] = Json::Value(client_id);
     root["ip"] = Json::Value(inet_ntoa(client->addr.sin_addr));
-    root["port"] = Json::Value(client->addr.sin_port);
+    root["port"] = Json::Value(ntohs(client->addr.sin_port));
     root["master_ip"] = Json::Value(inet_ntoa(master.addr.sin_addr));
-    root["master_port"] = Json::Value(master.addr.sin_port);
+    root["master_port"] = Json::Value(ntohs(master.addr.sin_port));
     root["subtask_num"] = Json::Value(client->subtask_num);
     Json::Value json_subtask;
     int i = 0;
@@ -102,10 +102,7 @@ std::string client_task_list_export(int client_id)
         Json::Value json_temp;
         json_temp["root_id"] = Json::Value(node->root_id);
         json_temp["subtask_id"] = Json::Value(node->subtask_id);
-        std::stringstream ss;
-        ss << node->root_id << '_' << node->subtask_id;
-        string fname = ss.str();
-        json_temp["exe_name"] = Json::Value(fname);
+        json_temp["exe_name"] = Json::Value(node->exepath);
         json_temp["input_num"] = Json::Value(node->prev_num);
         Json::Value prev, next;
         SubTaskResult *res_temp = node->prev_head->next;
@@ -136,6 +133,7 @@ std::string client_task_list_export(int client_id)
         }
         json_temp["output"] = next;
         json_subtask.append(json_temp);
+        subtask_temp = subtask_temp->next;
     }
     root["subtask"] = json_subtask;
     

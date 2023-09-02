@@ -33,7 +33,6 @@ void msg_send(ClientNode *client)
             case INTERACT_STATUS_SUBTASK_SYNCFILE_GETFILE:
             {
                 //从节点被分配了新任务，导出子任务链表并向从节点发送json文件
-                printf("2\n");      //=====================文件传输内存泄漏严重
                 client->file_trans_fname.clear();
                 client->file_trans_fname = client_task_list_export(client->client_id);
                 if(client->file_trans_fname.empty())

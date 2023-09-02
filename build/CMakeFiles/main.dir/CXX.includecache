@@ -32,6 +32,8 @@ md5.hpp
 base64.hpp
 ../include/base64.hpp
 
+../include/interact_status.hpp
+
 ../include/list.hpp
 
 ../include/master.hpp
@@ -72,9 +74,27 @@ fstream
 cstring
 -
 
-/home/lf/Documents/EdgeDeviceManage_Master/src/file.cpp
-file.hpp
-/home/lf/Documents/EdgeDeviceManage_Master/src/file.hpp
+../include/msg.hpp
+thread
+-
 master.hpp
-/home/lf/Documents/EdgeDeviceManage_Master/src/master.hpp
+../include/master.hpp
+file.hpp
+../include/file.hpp
+msg_type.hpp
+../include/msg_type.hpp
+interact_status.hpp
+../include/interact_status.hpp
+
+../include/msg_type.hpp
+
+/home/lf/Documents/EdgeDeviceManage_Master/src/msg.cpp
+msg.hpp
+/home/lf/Documents/EdgeDeviceManage_Master/src/msg.hpp
+mutex
+-
+sys/time.h
+-
+sstream
+-
 
