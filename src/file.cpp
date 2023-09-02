@@ -118,6 +118,7 @@ std::string client_task_list_export(int client_id)
             temp["fname"] = Json::Value(res_temp->fname);
             prev.append(temp);
             j++;
+            res_temp = res_temp->next;
         }
         json_temp["input"] = prev;
         json_temp["output_num"] = node->next_num;
@@ -131,6 +132,7 @@ std::string client_task_list_export(int client_id)
             temp["fname"] = Json::Value(res_temp->fname);
             next.append(temp);
             j++;
+            res_temp = res_temp->next;
         }
         json_temp["output"] = next;
         json_subtask.append(json_temp);
