@@ -35,8 +35,10 @@ struct SubTaskNode{
     struct SubTaskResult *prev_head;    //运行当前子任务需要传来参数的前驱的输出结果链表头节点
     int next_num;                       //标记当前子任务需要向后传递的后继数量
     struct SubTaskResult *succ_head;    //当前子任务需要向后传递的后继信息链表头结点
-    struct list_head *head;             //任务链表表头
-    struct list_head self;              //指向自身在链表中的指针
+    struct list_head *taskhead;         //整个任务的子任务链表表头
+    struct list_head taskself;          //指向自身在整个任务的子任务链表中的指针
+    struct list_head *clienthead;       //子任务分配执行的客户端的子任务链表表头
+    struct list_head clientself;        //指向自身在分配执行的客户端的子任务链表中的指针
     std::string exepath;                //子任务执行文件路径
 };
 

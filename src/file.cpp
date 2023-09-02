@@ -98,7 +98,7 @@ string client_task_list_export(int client_id)
     while(i < client->subtask_num && subtask_temp != subtask_head)
     {
         i++;
-        SubTaskNode *node = (SubTaskNode *)(list_entry(subtask_temp, SubTaskNode, self));
+        SubTaskNode *node = (SubTaskNode *)(list_entry(subtask_temp, SubTaskNode, clientself));
         Json::Value json_temp;
         json_temp["root_id"] = Json::Value(node->root_id);
         json_temp["subtask_id"] = Json::Value(node->subtask_id);

@@ -12,7 +12,8 @@ enum IOStatus{
     SlaveNodeStatusBrief,
     SlaveNodeStatus,
     TaskDeployed,
-    TaskUndeployed
+    TaskUndeployed,
+    SYSEXIT
 };
 
 //特定键入关键字
@@ -97,6 +98,7 @@ void menu_print(){
     printf("\t[1] 添加任务\n");
     printf("\t[2] 从节点状态\n");
     printf("\t[3] 任务分配状态\n");
+    printf("\t[4] 退出系统\n");
     printf("请输入想要执行的操作：");
 }
 
@@ -162,7 +164,7 @@ void SlaveNodeStatus_print(){
             while(j < node->subtask_num && subtask_temp != NULL)
             {
                 j++;
-                SubTaskNode *subtask_node = (SubTaskNode *)(list_entry(subtask_temp, SubTaskNode, self));
+                SubTaskNode *subtask_node = (SubTaskNode *)(list_entry(subtask_temp, SubTaskNode, taskself));
                 printf("\t\t[%d] %d:%d\n", j, subtask_node->root_id, subtask_node->subtask_id);
                 subtask_temp = subtask_temp->next;
             }
@@ -208,8 +210,9 @@ void TaskDeployed_print()
         while(subtask_temp != subtask_head && j < t->subtask_num)
         {
             j++;
-            SubTaskNode *subt = (SubTaskNode *)(list_entry(subtask_temp, SubTaskNode, self));
+            SubTaskNode *subt = (SubTaskNode *)(list_entry(subtask_temp, SubTaskNode, taskself));
             printf("\t(%d) %d:%d\n", j, subt->subtask_id, subt->client_id);
+            subtask_temp = subtask_temp->next;
         }
     }
 }
@@ -223,6 +226,7 @@ void TaskUndeployed_print()
         i++;
         Task *t = (Task *)(list_entry(temp, Task, self));
         printf("[%d] 任务ID:%s 共有子任务%d个\n", i, t->task_id.c_str(), t->subtask_num);
+        temp = temp->next;
     }
 }
 
@@ -235,219 +239,223 @@ void bash_io(){
         switch(current_status)
         {
             case MNEU:
-                {
-                    
-                    scanf("%s", buf);
-                    if(strlen(buf) > 1)
-                    {
-                        screen_clear();
-                        printf("请输入正确的操作码！\n");
-                        menu_print();
-                    }
-                    else{
-                        int op = atoi(buf);
-                        switch(op)
-                        {
-                            case 1:
-                                {
-                                    screen_clear();
-                                    printf("请输入待添加任务的描述文件(*.json):");
-                                    current_status = TaskAddPathGet;
-                                    break;
-                                }
-                            case 2:
-                                {
-                                    screen_clear();
-                                    current_status = SlaveNodeStatusBrief;
-                                    break;
-                                }
-                            case 3:
-                                {
-                                    screen_clear();
-                                    current_status = TaskDeployed;
-                                    break;
-                                }
-                            default:
-                                {
-                                    screen_clear();
-                                    printf("请输入正确的操作码！\n");
-                                    menu_print();
-                                    break;
-                                }
-                        }
-                    }
-                    break;
-                }
-            case TaskAddPathGet:
-                {
-                    memset(buf, 0, buf_size);
-                    scanf("%s", buf);
-                    int ret = key_word_recognize(buf);
-                    if(ret == BACK || ret == QUIT)
-                    {
-                        current_status = MNEU;
-                        screen_clear();
-                        menu_print();
-                        break;
-                    }
-                    
-                    //检查文件是否存在
-                    if(file_check(buf))
-                    {
-                        //根据json文件将任务假如到待分配任务链表
-                        if(task_add(buf)){
-                            current_status = TaskAddResult;
-                            screen_clear();
-                            printf("任务添加成功\n");
-                            printf("按[q/Q]返回目录\n");
-                            break;
-                        }
-                    }
-                    printf("选择任务描述文件有误,请重新输入,或按[b/B]返回目录\n");
-                    printf("任务描述文件路径：");
-                    break;
-                }
-            case TaskAddResult:
-                {
-                    memset(buf, 0, buf_size);
-                    scanf("%s", buf);
-                    int ret = key_word_recognize(buf);
-                    if(ret == QUIT)
-                    {
-                        current_status = MNEU;
-                        screen_clear();
-                        menu_print();
-                        break;
-                    }
-                    break;
-                }
-            case SlaveNodeStatusBrief:
+            {
+                
+                scanf("%s", buf);
+                if(strlen(buf) > 1)
                 {
                     screen_clear();
-                    SlaveNodeStatusBrief_print();
-                    printf("按[s/S]切换为详细显示，按[b/B]返回目录\n");
-                    memset(buf, 0, buf_size);
-                    scanf("%s", buf);
-                    int ret = key_word_recognize(buf);
-                    switch (ret)
-                    {
-                    case SWITCH:
-                        {
-                            current_status = SlaveNodeStatus;
-                            break;
-                        }
-                    case BACK:
-                        {
-                            current_status = MNEU;
-                            screen_clear();
-                            menu_print();
-                            break;
-                        }
-                    default:
-                        {
-                            printf("请输入正确的操作码!\n");
-                            break;
-                        }
-                    }
-                    break;
+                    printf("请输入正确的操作码！\n");
+                    menu_print();
                 }
-            case SlaveNodeStatus:
-                {
-                    screen_clear();
-                    SlaveNodeStatus_print();
-                    printf("按[s/S]切换为简略显示，按[b/B]返回目录\n");
-                    memset(buf, 0, buf_size);
-                    scanf("%s", buf);
-                    int ret = key_word_recognize(buf);
-                    switch (ret)
+                else{
+                    int op = atoi(buf);
+                    switch(op)
                     {
-                    case SWITCH:
+                        case 1:
                         {
+                            screen_clear();
+                            printf("请输入待添加任务的描述文件(*.json):");
+                            current_status = TaskAddPathGet;
+                            break;
+                        }
+                        case 2:
+                        {
+                            screen_clear();
                             current_status = SlaveNodeStatusBrief;
                             break;
                         }
-                    case BACK:
+                        case 3:
                         {
-                            current_status = MNEU;
                             screen_clear();
-                            menu_print();
-                            break;
-                        }
-                    default:
-                        {
-                            printf("请输入正确的操作码!\n");
-                            break;
-                        }
-                    }
-                    break;
-                }
-            case TaskDeployed:
-                {
-                    screen_clear();
-                    printf("已分配任务的状态：\n");
-                    TaskDeployed_print();
-                    printf("按[s/S]切换为显示待分配任务，按[b/B]返回目录\n");
-                    memset(buf, 0, buf_size);
-                    scanf("%s", buf);
-                    int ret = key_word_recognize(buf);
-                    switch (ret)
-                    {
-                    case SWITCH:
-                        {
-                            current_status = TaskUndeployed;
-                            break;
-                        }
-                    case BACK:
-                        {
-                            current_status = MNEU;
-                            screen_clear();
-                            menu_print();
-                            break;
-                        }
-                    default:
-                        {
-                            printf("请输入正确的操作码!\n");
-                            break;
-                        }
-                    }
-                    break;
-                }
-            case TaskUndeployed:
-                {
-                    screen_clear();
-                    printf("已分配任务的状态：\n");
-                    TaskDeployed_print();
-                    printf("按[s/S]切换为显示已分配任务，按[b/B]返回目录\n");
-                    memset(buf, 0, buf_size);
-                    scanf("%s", buf);
-                    int ret = key_word_recognize(buf);
-                    switch (ret)
-                    {
-                    case SWITCH:
-                        {
                             current_status = TaskDeployed;
                             break;
                         }
-                    case BACK:
+                        case 4:
                         {
-                            current_status = MNEU;
+                            exit(0);
+                        }
+                        default:
+                        {
                             screen_clear();
+                            printf("请输入正确的操作码！\n");
                             menu_print();
                             break;
                         }
-                    default:
-                        {
-                            printf("请输入正确的操作码!\n");
-                            break;
-                        }
                     }
-                    break;
                 }
-            default:
+                break;
+            }
+            case TaskAddPathGet:
+            {
+                memset(buf, 0, buf_size);
+                scanf("%s", buf);
+                int ret = key_word_recognize(buf);
+                if(ret == BACK || ret == QUIT)
                 {
-                    printf("请输入正确的操作码!\n");
+                    current_status = MNEU;
+                    screen_clear();
+                    menu_print();
                     break;
                 }
+                
+                //检查文件是否存在
+                if(file_check(buf))
+                {
+                    //根据json文件将任务假如到待分配任务链表
+                    if(task_add(buf)){
+                        current_status = TaskAddResult;
+                        screen_clear();
+                        printf("任务添加成功\n");
+                        printf("按[q/Q]返回目录\n");
+                        break;
+                    }
+                }
+                printf("选择任务描述文件有误,请重新输入,或按[b/B]返回目录\n");
+                printf("任务描述文件路径：");
+                break;
+            }
+            case TaskAddResult:
+            {
+                memset(buf, 0, buf_size);
+                scanf("%s", buf);
+                int ret = key_word_recognize(buf);
+                if(ret == QUIT)
+                {
+                    current_status = MNEU;
+                    screen_clear();
+                    menu_print();
+                    break;
+                }
+                break;
+            }
+            case SlaveNodeStatusBrief:
+            {
+                screen_clear();
+                SlaveNodeStatusBrief_print();
+                printf("按[s/S]切换为详细显示，按[b/B]返回目录\n");
+                memset(buf, 0, buf_size);
+                scanf("%s", buf);
+                int ret = key_word_recognize(buf);
+                switch (ret)
+                {
+                    case SWITCH:
+                    {
+                        current_status = SlaveNodeStatus;
+                        break;
+                    }
+                    case BACK:
+                    {
+                        current_status = MNEU;
+                        screen_clear();
+                        menu_print();
+                        break;
+                    }
+                    default:
+                    {
+                        printf("请输入正确的操作码!\n");
+                        break;
+                    }
+                }
+                break;
+            }
+            case SlaveNodeStatus:
+            {
+                screen_clear();
+                SlaveNodeStatus_print();
+                printf("按[s/S]切换为简略显示，按[b/B]返回目录\n");
+                memset(buf, 0, buf_size);
+                scanf("%s", buf);
+                int ret = key_word_recognize(buf);
+                switch (ret)
+                {
+                    case SWITCH:
+                    {
+                        current_status = SlaveNodeStatusBrief;
+                        break;
+                    }
+                    case BACK:
+                    {
+                        current_status = MNEU;
+                        screen_clear();
+                        menu_print();
+                        break;
+                    }
+                    default:
+                    {
+                        printf("请输入正确的操作码!\n");
+                        break;
+                    }
+                }
+                break;
+            }
+            case TaskDeployed:
+            {
+                screen_clear();
+                printf("已分配任务的状态：\n");
+                TaskDeployed_print();
+                printf("按[s/S]切换为显示待分配任务，按[b/B]返回目录\n");
+                memset(buf, 0, buf_size);
+                scanf("%s", buf);
+                int ret = key_word_recognize(buf);
+                switch (ret)
+                {
+                    case SWITCH:
+                    {
+                        current_status = TaskUndeployed;
+                        break;
+                    }
+                    case BACK:
+                    {
+                        current_status = MNEU;
+                        screen_clear();
+                        menu_print();
+                        break;
+                    }
+                    default:
+                    {
+                        printf("请输入正确的操作码!\n");
+                        break;
+                    }
+                }
+                break;
+            }
+            case TaskUndeployed:
+            {
+                screen_clear();
+                printf("待分配任务的状态：\n");
+                TaskUndeployed_print();
+                printf("按[s/S]切换为显示已分配任务，按[b/B]返回目录\n");
+                memset(buf, 0, buf_size);
+                scanf("%s", buf);
+                int ret = key_word_recognize(buf);
+                switch (ret)
+                {
+                    case SWITCH:
+                    {
+                        current_status = TaskDeployed;
+                        break;
+                    }
+                    case BACK:
+                    {
+                        current_status = MNEU;
+                        screen_clear();
+                        menu_print();
+                        break;
+                    }
+                    default:
+                    {
+                        printf("请输入正确的操作码!\n");
+                        break;
+                    }
+                }
+                break;
+            }
+            default:
+            {
+                printf("请输入正确的操作码!\n");
+                break;
+            }
         }
 
     }
