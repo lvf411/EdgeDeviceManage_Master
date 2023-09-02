@@ -33,7 +33,7 @@ extern Master master;
 //清屏
 void screen_clear()
 {
-    system("clear");
+    //system("clear");
 }
 
 //关键字识别

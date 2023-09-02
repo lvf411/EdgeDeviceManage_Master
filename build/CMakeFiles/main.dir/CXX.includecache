@@ -34,6 +34,22 @@ base64.hpp
 
 ../include/interact_status.hpp
 
+../include/interface.hpp
+iostream
+-
+stdlib.h
+-
+stdio.h
+-
+cstring
+-
+fstream
+-
+master.hpp
+../include/master.hpp
+task.hpp
+../include/task.hpp
+
 ../include/list.hpp
 
 ../include/master.hpp
@@ -88,6 +104,56 @@ interact_status.hpp
 
 ../include/msg_type.hpp
 
+../include/task.hpp
+string
+-
+vector
+-
+map
+-
+fstream
+-
+thread
+-
+mutex
+-
+jsoncpp/json/json.h
+-
+master.hpp
+../include/master.hpp
+list.hpp
+../include/list.hpp
+
+/home/lf/Documents/EdgeDeviceManage_Master/src/file.cpp
+file.hpp
+/home/lf/Documents/EdgeDeviceManage_Master/src/file.hpp
+master.hpp
+/home/lf/Documents/EdgeDeviceManage_Master/src/master.hpp
+
+/home/lf/Documents/EdgeDeviceManage_Master/src/main.cpp
+master.hpp
+/home/lf/Documents/EdgeDeviceManage_Master/src/master.hpp
+fstream
+-
+vector
+-
+map
+-
+sstream
+-
+jsoncpp/json/json.h
+-
+thread
+-
+mutex
+-
+interface.hpp
+/home/lf/Documents/EdgeDeviceManage_Master/src/interface.hpp
+file.hpp
+/home/lf/Documents/EdgeDeviceManage_Master/src/file.hpp
+msg.hpp
+/home/lf/Documents/EdgeDeviceManage_Master/src/msg.hpp
+
 /home/lf/Documents/EdgeDeviceManage_Master/src/msg.cpp
 msg.hpp
 /home/lf/Documents/EdgeDeviceManage_Master/src/msg.hpp
@@ -97,4 +163,8 @@ sys/time.h
 -
 sstream
 -
+
+/home/lf/Documents/EdgeDeviceManage_Master/src/task.cpp
+task.hpp
+/home/lf/Documents/EdgeDeviceManage_Master/src/task.hpp
 

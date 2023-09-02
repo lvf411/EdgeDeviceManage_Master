@@ -46,9 +46,9 @@ void FileInfoInit(FileInfo *info);
 
 bool FileInfoGet(std::string path, FileInfo *info);
 
-string client_task_list_export(int client_id);
+std::string client_task_list_export(int client_id);
 
-string work_client_list_export();
+std::string work_client_list_export();
 
 void file_send(int sock, std::string path);
 

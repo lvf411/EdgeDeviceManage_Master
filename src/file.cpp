@@ -42,7 +42,7 @@ bool FileInfoGet(std::string path, FileInfo *info)
 }
 
 //将工作从节点链表导出为json文件，返回导出的文件名
-string work_client_list_export()
+std::string work_client_list_export()
 {
     Json::Value root, client;
     root["work_client_num"] = Json::Value((int)work_client_list_map.size());
@@ -77,7 +77,7 @@ string work_client_list_export()
 }
 
 //根据客户端id导出当前分配的子任务链表为json文件，返回导出的文件名
-string client_task_list_export(int client_id)
+std::string client_task_list_export(int client_id)
 {
     std::map<int, ClientNode *>::iterator it = work_client_list_map.find(client_id);
     if(it == work_client_list_map.end()){
@@ -117,6 +117,7 @@ string client_task_list_export(int client_id)
             temp["client_id"] = Json::Value(res_temp->client_id);
             temp["fname"] = Json::Value(res_temp->fname);
             prev.append(temp);
+            j++;
         }
         json_temp["input"] = prev;
         json_temp["output_num"] = node->next_num;
@@ -129,6 +130,7 @@ string client_task_list_export(int client_id)
             temp["client_id"] = Json::Value(res_temp->client_id);
             temp["fname"] = Json::Value(res_temp->fname);
             next.append(temp);
+            j++;
         }
         json_temp["output"] = next;
         json_subtask.append(json_temp);
@@ -148,7 +150,6 @@ string client_task_list_export(int client_id)
     }
     f << sw.write(root);
     f.close();
-
     return fname;
 }
 
