@@ -7,7 +7,7 @@
 class Semaphore
 {
 public:
-    Semaphore(int value = 1) :count(value){}
+    Semaphore(int value = 0) :count(value){}
 
     void Wait()
     {

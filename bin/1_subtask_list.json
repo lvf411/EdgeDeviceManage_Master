@@ -1,9 +1,9 @@
 {
    "client_id" : 1,
-   "ip" : "169.254.212.224",
+   "ip" : "169.254.198.88",
    "master_ip" : "169.254.12.12",
    "master_port" : 10000,
-   "port" : 54184,
+   "port" : 50356,
    "subtask" : [
       {
          "exe_name" : "../task/1",

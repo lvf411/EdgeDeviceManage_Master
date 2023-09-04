@@ -12,6 +12,7 @@ std::string FileSendCancelMsgEncode();
 //从节点消息发送线程
 void msg_send(ClientNode *client)
 {
+    std::cout << "msgsend" << std::endl;
     while(1)
     {
         switch(client->status)
@@ -65,6 +66,7 @@ void msg_send(ClientNode *client)
             {
                 //从节点同意了文件传输请求，正式建立连接并新建线程发送文件
                 client->file_trans_sock = socket(AF_INET, SOCK_STREAM, 0);
+                std::cout << "client:" << client->client_id << "socket file_trans_sock:" << client->file_trans_sock << std::endl;
                 struct sockaddr_in s_file_addr = {0};
                 s_file_addr.sin_family = AF_INET;
                 s_file_addr.sin_addr.s_addr = client->addr.sin_addr.s_addr;
@@ -73,11 +75,15 @@ void msg_send(ClientNode *client)
                 while(count < 10)
                 {
                     count++;
+                    std::cout << "client:" << client->client_id << "count:" << count << std::endl;
                     int ret = connect(client->file_trans_sock, (struct sockaddr *)&s_file_addr, sizeof(struct sockaddr));
+                    std::cout << "client:" << client->client_id << "file_trans_sock:" << client->file_trans_sock << "ret:" << ret << std::endl;
                     if(ret == 0)
                     {
+                        std::cout << "ret:" << ret << std::endl;
                         break;
                     }
+                    
                 }
                 if(count >= 10)
                 {
@@ -90,6 +96,7 @@ void msg_send(ClientNode *client)
                     client->status = INTERACT_STATUS_ROOT;
                     client->mutex_status.unlock();
                 }
+                client->sem.Wait();
                 break;
             }
             case INTERACT_STATUS_FILESEND_SENDFILE:
@@ -157,6 +164,7 @@ void msg_recv(ClientNode *client)
             {
                 client->mutex_status.lock();
                 client->status = INTERACT_STATUS_FILESEND_SENDFILE;
+                client->sem.Signal();
                 client->mutex_status.unlock();
                 break;
             }

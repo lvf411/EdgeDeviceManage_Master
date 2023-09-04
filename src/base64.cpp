@@ -70,7 +70,8 @@ uint8_t Base64_Encode(char *pInData, uint32_t inLen, char *pOutData, uint32_t *p
     }
     *(pOutData + j) = '\0';
     // 编码后的长度
-    *pOutLen = inLen * 8 / 6;
+    //*pOutLen = inLen * 8 / 6;
+    *pOutLen = j;
     return 1;
 }
 

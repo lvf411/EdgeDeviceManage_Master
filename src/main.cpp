@@ -122,7 +122,6 @@ void slave_accept(int sock)
         clientNode->msg_recv_threadID = thread(msg_recv, clientNode);
         clientNode->modified = false;
         clientNode->status = INTERACT_STATUS_ROOT;
-        
 
     }
     return;
