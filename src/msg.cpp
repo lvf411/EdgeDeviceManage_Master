@@ -4,6 +4,8 @@
 #include <sstream>
 
 extern Master master;
+extern bool slave_change_flag, slave_list_export_file_flag;
+extern std::mutex mutex_slave_change;
 
 long long int MsgIDGenerate();
 std::string FileSendReqMsgEncode(FileTransInfo *info);
@@ -13,12 +15,26 @@ std::string FileSendCancelMsgEncode();
 void msg_send(ClientNode *client)
 {
     std::cout << "msgsend" << std::endl;
+    //先发送主节点分配给该从节点的从节点ID
+    Json::Value root;
+    root["slaveID"] = Json::Value(client->client_id);
+    Json::FastWriter fw;
+    std::stringstream ss;
+    ss << fw.write(root);
+    send(client->sock, ss.str().c_str(), ss.str().length(), 0);
     while(1)
     {
         switch(client->status)
         {
             case INTERACT_STATUS_ROOT:
             {
+                //检查是否需要重新同步从节点链表信息
+                if(slave_change_flag == true)
+                {
+                    client->mutex_status.lock();
+                    client->status = INTERACT_STATUS_SLAVELIST_EXPORT_FILE_GETFILE;
+                    client->mutex_status.unlock();
+                }
                 //检查是否有被分配新任务，若有，则切换状态请求发送导出的同步文件
                 if(client->modified == true)
                 {
@@ -41,6 +57,30 @@ void msg_send(ClientNode *client)
                     printf("client %d, IP:%s, port:%d export client task list error\n", client->client_id, inet_ntoa(client->addr.sin_addr), client->addr.sin_port);
                     return;
                 }
+                client->transinfo = new FileTransInfo();
+                FileInfoInit(&client->transinfo->info);
+                FileInfoGet(client->file_trans_fname, &client->transinfo->info);
+                client->transinfo->file_type = FILE_TYPE_KEY;
+                client->transinfo->dst_rootid = 0;
+                client->transinfo->dst_subtaskid = 0;
+                client->mutex_status.lock();
+                client->status = INTERACT_STATUS_FILESEND_SEND_REQ;
+                client->mutex_status.unlock();
+            }
+            case INTERACT_STATUS_SLAVELIST_EXPORT_FILE_GETFILE:
+            {
+                //工作从节点链表发生改变，需要重新同步
+                //检查当前的从节点链表导出文件是否最新
+                mutex_slave_change.lock();
+                if(slave_list_export_file_flag == false)
+                {
+                    work_client_list_export();
+                }
+                mutex_slave_change.unlock();
+                //从节点被分配了新任务，导出子任务链表并向从节点发送json文件
+                client->file_trans_fname.clear();
+                client->file_trans_fname = WORK_CLIENT_LIST_FNAME;
+
                 client->transinfo = new FileTransInfo();
                 FileInfoInit(&client->transinfo->info);
                 FileInfoGet(client->file_trans_fname, &client->transinfo->info);

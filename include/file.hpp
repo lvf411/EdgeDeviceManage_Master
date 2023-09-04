@@ -42,6 +42,8 @@ struct FileTransInfo
 #define FILE_TYPE_OUTPUT        3
 #define FILE_TYPE_KEY           4
 
+#define WORK_CLIENT_LIST_FNAME "work_client_list.json"
+
 void FileInfoInit(FileInfo *info);
 
 bool FileInfoGet(std::string path, FileInfo *info);

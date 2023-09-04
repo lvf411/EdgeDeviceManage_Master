@@ -20,6 +20,9 @@ list_head free_client_list, work_client_list, deployed_task_list, uninit_task_li
 mutex mutex_slave_list;
 map<int, ClientNode *> free_client_list_map, work_client_list_map;
 int increment_slave_id = 1;
+bool slave_change_flag = false;     //指示是否有新的从节点加入/旧的从节点退出，每个从节点需要同步最新的从节点链表导出文件
+bool slave_list_export_file_flag = true;   //指示当前的从节点链表导出文件是否为最新的
+mutex mutex_slave_change;
 
 string work_client_list_export();
 string client_task_list_export(int client_id);

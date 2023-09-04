@@ -62,7 +62,7 @@ std::string work_client_list_export()
     Json::StyledWriter sw;
     std::ofstream f;
     std::stringstream ss;
-    ss << "work_client_list.json";
+    ss << WORK_CLIENT_LIST_FNAME;
     string fname = ss.str();
     f.open(fname.c_str(), std::ios::trunc);
     if(!f.is_open())
