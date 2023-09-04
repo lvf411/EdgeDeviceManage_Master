@@ -15,6 +15,7 @@
 #include <mutex>
 #include "list.hpp"
 #include "file.hpp"
+#include "semaphore.hpp"
 
 #define SLAVE_ABILITY_DEFAULT 10
 
@@ -61,6 +62,7 @@ struct ClientNode{
     FileTransInfo *transinfo;           //文件传输时正在传输的文件的信息
     int file_trans_sock;                //文件传输时与从节点建立的新连接
     int file_trans_port;                //文件传输时从节点提供的端口号
+    Semaphore sem;                      //实现消息发送/接收线程同步的信号量
 };
 
 //任务描述

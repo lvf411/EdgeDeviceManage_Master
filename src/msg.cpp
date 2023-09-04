@@ -54,6 +54,7 @@ void msg_send(ClientNode *client)
             {
                 string msg = FileSendReqMsgEncode(client->transinfo);
                 send(client->sock, msg.c_str(), msg.length(), 0);
+                std::cout << msg << std::endl;
 
                 client->mutex_status.lock();
                 client->status = INTERACT_STATUS_FILESEND_WAIT_ACK;
@@ -84,6 +85,7 @@ void msg_send(ClientNode *client)
                     printf("file send: failed to connect to the target port\n");
                     std::string msg = FileSendCancelMsgEncode();
                     send(client->sock, msg.c_str(), msg.length(), 0);
+                    std::cout << msg << std::endl;
                     client->mutex_status.lock();
                     client->status = INTERACT_STATUS_ROOT;
                     client->mutex_status.unlock();
@@ -95,6 +97,11 @@ void msg_send(ClientNode *client)
                 //接收到从节点对主节点发起的tcp连接的ack确认，主节点可以开始发送文件内容
                 std::thread filesend_threadID(file_send, client->file_trans_sock, client->file_trans_fname);
                 filesend_threadID.join();
+                client->sem.Wait();
+                if(client->status == INTERACT_STATUS_FILESEND_SENDFILE)
+                {
+                    continue;
+                }
                 close(client->file_trans_sock);
                 client->modified = false;
                 break;
@@ -119,6 +126,7 @@ void msg_recv(ClientNode *client)
     {
         memset(msg_buf, 0, MSG_BUFFER_SIZE);
         recv(client->sock, msg_buf, MSG_BUFFER_SIZE, 0);
+        std::cout << "recv:" << msg_buf << std::endl;
         Json::Value root;
         Json::Reader rd;
         rd.parse(msg_buf, root);
@@ -150,6 +158,20 @@ void msg_recv(ClientNode *client)
                 client->mutex_status.lock();
                 client->status = INTERACT_STATUS_FILESEND_SENDFILE;
                 client->mutex_status.unlock();
+                break;
+            }
+            case MSG_TYPE_FILESEND_RES:
+            {
+                int res = root["res"].asBool();
+                if(res == false)
+                {
+                    client->status = INTERACT_STATUS_FILESEND_SENDFILE;
+                }
+                else
+                {
+                    client->status = INTERACT_STATUS_ROOT;
+                }
+                client->sem.Signal();
                 break;
             }
             case MSG_TYPE_FILEREQ_REQ:
@@ -191,6 +213,7 @@ void msg_recv(ClientNode *client)
                 std::stringstream ss;
                 ss << fw.write(msg);
                 send(client->sock, ss.str().c_str(), ss.str().length(), 0);
+                std::cout << ss.str() << std::endl;
                 break;
             }
             default:
@@ -248,7 +271,7 @@ std::string FileSendReqMsgEncode(FileTransInfo *transinfo)
     {
         //文件大小大于单个包长度，需进行拆包发送
         root["split"] = Json::Value(true);
-        root["pack_num"] = Json::Value(transinfo->info.exatsize / ((FILE_PACKAGE_SIZE * 3) / 4));
+        root["pack_num"] = Json::Value(transinfo->info.exatsize / ((FILE_PACKAGE_SIZE * 3) / 4) + 1);
         root["pack_size"] = Json::Value(FILE_PACKAGE_SIZE);
     }
     else

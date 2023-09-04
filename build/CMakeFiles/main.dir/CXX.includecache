@@ -65,6 +65,8 @@ list.hpp
 ../include/list.hpp
 file.hpp
 ../include/file.hpp
+semaphore.hpp
+../include/semaphore.hpp
 
 ../include/md5.hpp
 string
@@ -87,6 +89,18 @@ interact_status.hpp
 ../include/interact_status.hpp
 
 ../include/msg_type.hpp
+
+../include/semaphore.hpp
+mutex
+-
+condition_variable
+-
+
+/home/lf/Documents/EdgeDeviceManage_Master/src/file.cpp
+file.hpp
+/home/lf/Documents/EdgeDeviceManage_Master/src/file.hpp
+master.hpp
+/home/lf/Documents/EdgeDeviceManage_Master/src/master.hpp
 
 /home/lf/Documents/EdgeDeviceManage_Master/src/msg.cpp
 msg.hpp

@@ -3,7 +3,7 @@
    "ip" : "169.254.198.88",
    "master_ip" : "169.254.12.12",
    "master_port" : 10000,
-   "port" : 49328,
+   "port" : 42018,
    "subtask" : [
       {
          "exe_name" : "../task/2",
