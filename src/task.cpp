@@ -4,7 +4,7 @@ extern Master master;
 extern list_head free_client_list, work_client_list, deployed_task_list, uninit_task_list;
 extern std::mutex mutex_slave_list;
 extern std::map<int, ClientNode *> free_client_list_map, work_client_list_map;
-extern bool slave_change_flag, slave_list_export_file_flag;
+extern bool slave_list_export_file_flag;
 extern std::mutex mutex_slave_change;   
 
 int task_increment_id = 1;
@@ -125,7 +125,15 @@ void task_deploy()
                 if(master.work_client_num == 2)
                 {
                     mutex_slave_change.lock();
-                    slave_change_flag = true;
+                    list_head *wchead = master.work_client_head, *wctemp = master.work_client_head->next;
+                    int count = 0;
+                    while(count < master.work_client_num && wctemp != wchead)
+                    {
+                        count++;
+                        ClientNode *wcnode = (ClientNode *)list_entry(wctemp, ClientNode, self);
+                        wcnode->work_client_cahange_flag = true;
+                        wctemp = wctemp->next;
+                    }
                     slave_list_export_file_flag = false;
                     mutex_slave_change.unlock();
                 }

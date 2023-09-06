@@ -48,6 +48,7 @@ struct ClientNode{
     int client_id;                      //设备编号
     int sock;                           //与客户端通信的文件描述符
     struct sockaddr_in addr;            //客户端的地址信息
+    int listen_port;                    //客户端监听的端口地址
     int flag;                           //表示当前该进程是否在运行，若为-1表示空闲；若大于0，表示分配给编号为flag的任务运行
     int ability;                        //执行任务的效率，能力，越大越强
     int subtask_num;                    //分配到的子任务数量
@@ -56,6 +57,7 @@ struct ClientNode{
     std::thread msg_send_threadID;      //消息发送线程ID
     std::thread msg_recv_threadID;      //消息接收线程ID
     bool modified;                      //修改标记，当值为0时表示没有受到修改，没有分配新的子任务；当被置为1时，表示被分配了新的子任务，需要同步任务链表
+    bool work_client_cahange_flag;      //指示工作从节点链表是否有变动，是否需要重新同步从节点的工作从节点链表信息
     int status;                         //分配的发送/接收线程状态，用以指示状态机运行以及部分同步问题
     std::mutex mutex_status;            //保障对发送/接收线程状态参数的互斥访问
     std::string file_trans_fname;       //文件传输时正在传输的文件的文件名

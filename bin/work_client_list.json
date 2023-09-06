@@ -2,13 +2,13 @@
    "work_client" : [
       {
          "client_id" : 1,
-         "ip" : "169.254.198.88",
-         "listen_port" : 6873
+         "ip" : "169.254.212.224",
+         "listen_port" : 8888
       },
       {
          "client_id" : 2,
-         "ip" : "169.254.212.224",
-         "listen_port" : 197
+         "ip" : "169.254.198.88",
+         "listen_port" : 8888
       }
    ],
    "work_client_num" : 2

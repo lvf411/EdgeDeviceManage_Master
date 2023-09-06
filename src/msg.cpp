@@ -4,7 +4,7 @@
 #include <sstream>
 
 extern Master master;
-extern bool slave_change_flag, slave_list_export_file_flag;
+extern bool slave_list_export_file_flag;
 extern std::mutex mutex_slave_change;
 
 long long int MsgIDGenerate();
@@ -29,11 +29,12 @@ void msg_send(ClientNode *client)
             case INTERACT_STATUS_ROOT:
             {
                 //检查是否需要重新同步从节点链表信息
-                if(slave_change_flag == true)
+                if(client->work_client_cahange_flag == true)
                 {
                     client->mutex_status.lock();
                     client->status = INTERACT_STATUS_SLAVELIST_EXPORT_FILE_GETFILE;
                     client->mutex_status.unlock();
+                    break;
                 }
                 //检查是否有被分配新任务，若有，则切换状态请求发送导出的同步文件
                 if(client->modified == true)
@@ -41,6 +42,7 @@ void msg_send(ClientNode *client)
                     client->mutex_status.lock();
                     client->status = INTERACT_STATUS_SUBTASK_SYNCFILE_GETFILE;
                     client->mutex_status.unlock();
+                    break;
                 }
                 //起始状态其他检查项目
 
@@ -66,6 +68,8 @@ void msg_send(ClientNode *client)
                 client->mutex_status.lock();
                 client->status = INTERACT_STATUS_FILESEND_SEND_REQ;
                 client->mutex_status.unlock();
+                client->modified = false;
+                break;
             }
             case INTERACT_STATUS_SLAVELIST_EXPORT_FILE_GETFILE:
             {
@@ -90,6 +94,7 @@ void msg_send(ClientNode *client)
                 client->mutex_status.lock();
                 client->status = INTERACT_STATUS_FILESEND_SEND_REQ;
                 client->mutex_status.unlock();
+                client->work_client_cahange_flag = false;
             }
             case INTERACT_STATUS_FILESEND_SEND_REQ:
             {
@@ -150,7 +155,6 @@ void msg_send(ClientNode *client)
                     continue;
                 }
                 close(client->file_trans_sock);
-                client->modified = false;
                 break;
             }
             default:

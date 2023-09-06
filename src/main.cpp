@@ -20,7 +20,6 @@ list_head free_client_list, work_client_list, deployed_task_list, uninit_task_li
 mutex mutex_slave_list;
 map<int, ClientNode *> free_client_list_map, work_client_list_map;
 int increment_slave_id = 1;
-bool slave_change_flag = false;     //指示是否有新的从节点加入/旧的从节点退出，每个从节点需要同步最新的从节点链表导出文件
 bool slave_list_export_file_flag = true;   //指示当前的从节点链表导出文件是否为最新的
 mutex mutex_slave_change;
 
@@ -120,6 +119,14 @@ void slave_accept(int sock)
         master.free_client_num++;
         free_client_list_map.insert(map<int, ClientNode *>::value_type(clientNode->client_id, clientNode));
         mutex_slave_list.unlock();
+
+        char recvbuf[100] = {0};
+        recv(clientNode->sock, recvbuf, 100, 0);
+        Json::Value root;
+        Json::Reader rd;
+        rd.parse(recvbuf, root);
+        clientNode->listen_port = root["listen_port"].asInt();
+        sleep(1);
         
         clientNode->msg_send_threadID = thread(msg_send, clientNode);
         clientNode->msg_recv_threadID = thread(msg_recv, clientNode);
