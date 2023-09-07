@@ -230,7 +230,7 @@ void msg_recv(ClientNode *client)
             {
                 int flag;
                 std::string fname = root["fname"].asString();
-                std::ifstream ifs(fname);
+                std::ifstream ifs(TASK_STORE_PATH + fname);
                 if(ifs.good())
                 {
                     if(client->status == INTERACT_STATUS_ROOT)
@@ -240,9 +240,11 @@ void msg_recv(ClientNode *client)
                         client->transinfo->file_type = FILE_TYPE_EXE;
                         client->transinfo->dst_rootid = root["rootid"].asInt();
                         client->transinfo->dst_subtaskid = root["subtaskid"].asInt();
+                        FileInfoInit(&client->transinfo->info);
+                        FileInfoGet(TASK_STORE_PATH + fname, &client->transinfo->info);
                         client->status = INTERACT_STATUS_FILESEND_SEND_REQ;
                         client->mutex_status.unlock();
-                        client->file_trans_fname = fname;
+                        client->file_trans_fname = TASK_STORE_PATH + fname;
                         flag = FILEREQ_ACK_OK;
                     }
                     else
@@ -311,7 +313,7 @@ std::string FileSendReqMsgEncode(FileTransInfo *transinfo)
     root["src_ip"] = Json::Value(inet_ntoa(master.addr.sin_addr));
     root["src_port"] = Json::Value(ntohs(master.addr.sin_port));
     root["msg_id"] = Json::Value(MsgIDGenerate());
-    root["fname"] = Json::Value(transinfo->info.fname);
+    root["fname"] = Json::Value(GetFnameFromPath(transinfo->info.fname));
     root["exatsize"] = Json::Value(transinfo->info.exatsize);
     root["md5"] = Json::Value(transinfo->info.md5);
     //开启base64转码

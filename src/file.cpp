@@ -76,6 +76,19 @@ std::string work_client_list_export()
     return fname;
 }
 
+std::string GetFnameFromPath(std::string path)
+{
+    size_t last_index = path.find_last_of("\\/");
+    if(last_index != std::string::npos)
+    {
+        return path.substr(last_index + 1);
+    }
+    else
+    {
+        return path;
+    }
+}
+
 //根据客户端id导出当前分配的子任务链表为json文件，返回导出的文件名
 std::string client_task_list_export(int client_id)
 {
@@ -102,7 +115,7 @@ std::string client_task_list_export(int client_id)
         Json::Value json_temp;
         json_temp["root_id"] = Json::Value(node->root_id);
         json_temp["subtask_id"] = Json::Value(node->subtask_id);
-        json_temp["exe_name"] = Json::Value(node->exepath);
+        json_temp["exe_name"] = Json::Value(GetFnameFromPath(node->exepath));         //从路径中取出最终的文件名
         json_temp["input_num"] = Json::Value(node->prev_num);
         Json::Value prev, next;
         SubTaskResult *res_temp = node->prev_head->next;

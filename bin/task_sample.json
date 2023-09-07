@@ -5,7 +5,7 @@
     "subtask":[
         {
             "subtask_id":   1,
-            "exe_path": "../task/1",
+            "exe_path": "../task/1_pi",
             "run_time": 2,
             "input_src_num":    0,
             "input_src":[],
@@ -28,7 +28,7 @@
         },
         {
             "subtask_id":   2,
-            "exe_path": "../task/2",
+            "exe_path": "../task/2_pi",
             "run_time": 4,
             "input_num":    1,
             "input":[
@@ -48,7 +48,7 @@
         ,
         {
             "subtask_id":   3,
-            "exe_path": "../task/3",
+            "exe_path": "../task/3_pi",
             "input_num":    1,
             "input":[
                 {
@@ -67,7 +67,7 @@
         ,
         {
             "subtask_id":   4,
-            "exe_path": "../task/4",
+            "exe_path": "../task/4_pi",
             "input_num":    1,
             "input":[
                 {
@@ -85,7 +85,7 @@
         },
         {
             "subtask_id":   5,
-            "exe_path": "../task/5",
+            "exe_path": "../task/5_pi",
             "input_num":    3,
             "input":[
                 {

@@ -3,10 +3,10 @@
    "ip" : "169.254.198.88",
    "master_ip" : "169.254.12.12",
    "master_port" : 10000,
-   "port" : 56502,
+   "port" : 53874,
    "subtask" : [
       {
-         "exe_name" : "../task/2",
+         "exe_name" : "2_pi",
          "input" : [
             {
                "client_id" : 1,
@@ -27,7 +27,7 @@
          "subtask_id" : 2
       },
       {
-         "exe_name" : "../task/4",
+         "exe_name" : "4_pi",
          "input" : [
             {
                "client_id" : 1,

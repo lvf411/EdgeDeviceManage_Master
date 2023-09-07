@@ -44,9 +44,13 @@ struct FileTransInfo
 
 #define WORK_CLIENT_LIST_FNAME "work_client_list.json"
 
+#define TASK_STORE_PATH "../task/"
+
 void FileInfoInit(FileInfo *info);
 
 bool FileInfoGet(std::string path, FileInfo *info);
+
+std::string GetFnameFromPath(std::string path);
 
 std::string client_task_list_export(int client_id);
 
