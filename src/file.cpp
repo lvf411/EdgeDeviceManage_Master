@@ -187,7 +187,7 @@ void file_send(int sock, std::string path)
         Base64_Encode(file_readbuf, ifs.gcount(), sendbuf, &sendlength);
         std::cout << "file_read: " << file_readbuf << "sendlength:" << sendlength << std::endl;
         do{
-            send(sock, sendbuf, sendlength, 0);
+            send(sock, sendbuf, strlen(sendbuf), 0);
             std::cout << "filesend: " << sendbuf << std::endl;
             memset(recvbuf, 0, 1024);
             recv(sock, recvbuf, 1024, 0);

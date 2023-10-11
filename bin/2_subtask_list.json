@@ -1,12 +1,12 @@
 {
    "client_id" : 2,
-   "ip" : "169.254.198.88",
+   "ip" : "169.254.212.224",
    "master_ip" : "169.254.12.12",
    "master_port" : 10000,
-   "port" : 53874,
+   "port" : 39900,
    "subtask" : [
       {
-         "exe_name" : "2_pi",
+         "exe_name" : "2_pi_hf",
          "input" : [
             {
                "client_id" : 1,
@@ -27,7 +27,7 @@
          "subtask_id" : 2
       },
       {
-         "exe_name" : "4_pi",
+         "exe_name" : "4_pi_hf",
          "input" : [
             {
                "client_id" : 1,
