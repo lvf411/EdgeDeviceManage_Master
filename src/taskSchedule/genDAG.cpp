@@ -1,25 +1,26 @@
-#include<iostream>
-#include<unordered_map>
-#include<vector>
-#include<assert.h>
-#include<algorithm>
-#include<iomanip>
-#include<string>
-#include<map>
-#include<random>
-#include<cmath>
-#include<queue>
+#include <iostream>
+#include <unordered_map>
+#include <vector>
+#include <assert.h>
+#include <algorithm>
+#include <iomanip>
+#include <string>
+#include <map>
+#include <random>
+#include <cmath>
+#include <queue>
 #include <numeric>
-#include<fstream>
+#include <fstream>
+
 using namespace std;
 
 extern std::mt19937 Gen;
-//³¢ÊÔÌí¼ÓedgeNum´Î±ß¼´¿É
+//å°è¯•æ·»åŠ edgeNumæ¬¡è¾¹å³å¯
 vector<vector<double>> genDAG(int vnum, int edge_num, double edgewL = 1, double edgewR = 1) {
 	vector<vector<double>> DAG(vnum, vector<double>(vnum, 0));
 	vector<int> indegree(vnum, 0);
 	vector<int> outdegree(vnum, 0);
-	//Ëæ»úÕÒÁ½¸öµã£¬Ğ¡ĞòºÅµã Á¬ ´óĞòºÅµã
+	//éšæœºæ‰¾ä¸¤ä¸ªç‚¹ï¼Œå°åºå·ç‚¹ è¿ å¤§åºå·ç‚¹
 	std::uniform_int_distribution<> int_dist(0, vnum - 1);
 	std::uniform_real_distribution<> real_dist(edgewL, edgewR);
 	for (int itera = 0; itera < edge_num; itera++) {
@@ -41,23 +42,23 @@ vector<vector<double>> genDAG(int vnum, int edge_num, double edgewL = 1, double 
 }
 
 
-//ÒªÇó±ßµÄÊıÁ¿´ïµ½edgeNumÎªÖ¹
+//è¦æ±‚è¾¹çš„æ•°é‡è¾¾åˆ°edgeNumä¸ºæ­¢
 vector<vector<double>> genDAG_ver2(int vnum, int edge_num, double edgewL = 1, double edgewR = 1) {
 	vector<vector<double>> DAG(vnum, vector<double>(vnum, 0));
 	vector<int> indegree(vnum, 0);
 	vector<int> outdegree(vnum, 0);
-	//Ëæ»úÕÒÁ½¸öµã£¬Ğ¡ĞòºÅµã Á¬ ´óĞòºÅµã
+	//éšæœºæ‰¾ä¸¤ä¸ªç‚¹ï¼Œå°åºå·ç‚¹ è¿ å¤§åºå·ç‚¹
 	std::uniform_int_distribution<> int_dist(0, vnum - 1);
 	std::uniform_real_distribution<> real_dist(edgewL, edgewR);
 	int ednum = 0;
-	assert(edge_num < vnum* vnum / 2);//×î¶àÖ»ÄÜÁ¬ÕâÃ´¶à±ß
+	assert(edge_num < vnum* vnum / 2);//æœ€å¤šåªèƒ½è¿è¿™ä¹ˆå¤šè¾¹
 	
-	vector<pair<int, int>> canConnectedEdge;//ÄÄĞ©µãÏÖÔÚ»¹ÓĞ³ö±ß.(µãºÅ£¬³ö±ßÊı)¡£»áerase
+	vector<pair<int, int>> canConnectedEdge;//å“ªäº›ç‚¹ç°åœ¨è¿˜æœ‰å‡ºè¾¹.(ç‚¹å·ï¼Œå‡ºè¾¹æ•°)ã€‚ä¼šerase
 	for (int i = 0; i < vnum; i++) {
 		canConnectedEdge.push_back({ i,vnum - (i + 1) });
 	}
-	canConnectedEdge.pop_back();//×îºóÒ»¸öµãÃ»ÓĞÄÜÁ¬µÄ±ß
-	vector<vector<int>> notConnectedEdge(vnum);//Ã¿¸öµã¶ÔÓ¦»¹ÓĞÄÄĞ©³ö±ß¡£Íâ²ãvector²»»áerase£¬ÏÂ±ê¼´µãºÅ¡£ÄÚ²ã»áerase
+	canConnectedEdge.pop_back();//æœ€åä¸€ä¸ªç‚¹æ²¡æœ‰èƒ½è¿çš„è¾¹
+	vector<vector<int>> notConnectedEdge(vnum);//æ¯ä¸ªç‚¹å¯¹åº”è¿˜æœ‰å“ªäº›å‡ºè¾¹ã€‚å¤–å±‚vectorä¸ä¼šeraseï¼Œä¸‹æ ‡å³ç‚¹å·ã€‚å†…å±‚ä¼šerase
 	for (int i = 0; i < vnum; i++) {
 		for (int j = i+1; j < vnum; j++) {
 			notConnectedEdge[i].push_back(j);
@@ -65,13 +66,13 @@ vector<vector<double>> genDAG_ver2(int vnum, int edge_num, double edgewL = 1, do
 	}
 	//notConnectedEdge[1].erase(find(notConnectedEdge[1].begin(), notConnectedEdge[1].end(), 1));
 	while(ednum<edge_num){
-		std::uniform_int_distribution<> out_intDist(0, canConnectedEdge.size() - 1);//Ëæ»úÒ»³öµã
+		std::uniform_int_distribution<> out_intDist(0, canConnectedEdge.size() - 1);//éšæœºä¸€å‡ºç‚¹
 		int randPos= out_intDist(Gen);
 		int outPoint = canConnectedEdge[randPos].first;
 		int outPoint_notConnNum = canConnectedEdge[randPos].second;
 		assert(outPoint_notConnNum > 0);
 		assert(outPoint_notConnNum == notConnectedEdge[outPoint].size());
-		std::uniform_int_distribution<> in_intDist(0, notConnectedEdge[outPoint].size()-1);//Ëæ»úÒ»Èëµã
+		std::uniform_int_distribution<> in_intDist(0, notConnectedEdge[outPoint].size()-1);//éšæœºä¸€å…¥ç‚¹
 		int randPos2 = in_intDist(Gen);
 		int inPoint = notConnectedEdge[outPoint][randPos2];
 
@@ -92,11 +93,11 @@ vector<vector<double>> genDAG_ver2(int vnum, int edge_num, double edgewL = 1, do
 }
 
 /*
-1¡ª2
+1â€”2
   /
 3
 
-4¡ª5
+4â€”5
 */
 vector<vector<int>> getTopo(const vector<vector<int>>& DAG) {
 	int vnum = DAG.size();
@@ -108,7 +109,7 @@ vector<vector<int>> getTopo(const vector<vector<int>>& DAG) {
 			}
 		}
 	}
-	//ÊÕ¼¯µÚÒ»ÁĞ
+	//æ”¶é›†ç¬¬ä¸€åˆ—
 	vector<vector<int>> topo;
 	vector<int> curCol;
 	for (int i = 0; i < vnum; i++) {
@@ -120,7 +121,7 @@ vector<vector<int>> getTopo(const vector<vector<int>>& DAG) {
 	topo.push_back(curCol);
 	
 	while (!curCol.empty()) {
-		//Çå³ıµ±Ç°ÁĞµÄ³ö¶È
+		//æ¸…é™¤å½“å‰åˆ—çš„å‡ºåº¦
 		while (!curCol.empty()) {
 			int vno = curCol.back(); curCol.pop_back();
 			for (int j = 0; j < vnum; j++) {
@@ -129,7 +130,7 @@ vector<vector<int>> getTopo(const vector<vector<int>>& DAG) {
 				}
 			}
 		}
-		//ÊÕ¼¯µ±Ç°ÁĞ
+		//æ”¶é›†å½“å‰åˆ—
 		for (int i = 0; i < vnum; i++) {
 			if (indegree[i] == 0) {
 				curCol.push_back(i);

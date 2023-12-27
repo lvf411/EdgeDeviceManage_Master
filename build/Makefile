@@ -111,233 +111,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named main
+# Target rules for targets named dagtest
 
 # Build rule for target.
-main: cmake_check_build_system
-	$(MAKE) -f CMakeFiles/Makefile2 main
-.PHONY : main
+dagtest: cmake_check_build_system
+	$(MAKE) -f CMakeFiles/Makefile2 dagtest
+.PHONY : dagtest
 
 # fast build rule for target.
-main/fast:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/build
-.PHONY : main/fast
-
-src/base64.o: src/base64.cpp.o
-
-.PHONY : src/base64.o
-
-# target to build an object file
-src/base64.cpp.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/base64.cpp.o
-.PHONY : src/base64.cpp.o
-
-src/base64.i: src/base64.cpp.i
-
-.PHONY : src/base64.i
-
-# target to preprocess a source file
-src/base64.cpp.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/base64.cpp.i
-.PHONY : src/base64.cpp.i
-
-src/base64.s: src/base64.cpp.s
-
-.PHONY : src/base64.s
-
-# target to generate assembly for a file
-src/base64.cpp.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/base64.cpp.s
-.PHONY : src/base64.cpp.s
-
-src/file.o: src/file.cpp.o
-
-.PHONY : src/file.o
-
-# target to build an object file
-src/file.cpp.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/file.cpp.o
-.PHONY : src/file.cpp.o
-
-src/file.i: src/file.cpp.i
-
-.PHONY : src/file.i
-
-# target to preprocess a source file
-src/file.cpp.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/file.cpp.i
-.PHONY : src/file.cpp.i
-
-src/file.s: src/file.cpp.s
-
-.PHONY : src/file.s
-
-# target to generate assembly for a file
-src/file.cpp.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/file.cpp.s
-.PHONY : src/file.cpp.s
-
-src/interface.o: src/interface.cpp.o
-
-.PHONY : src/interface.o
-
-# target to build an object file
-src/interface.cpp.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/interface.cpp.o
-.PHONY : src/interface.cpp.o
-
-src/interface.i: src/interface.cpp.i
-
-.PHONY : src/interface.i
-
-# target to preprocess a source file
-src/interface.cpp.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/interface.cpp.i
-.PHONY : src/interface.cpp.i
-
-src/interface.s: src/interface.cpp.s
-
-.PHONY : src/interface.s
-
-# target to generate assembly for a file
-src/interface.cpp.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/interface.cpp.s
-.PHONY : src/interface.cpp.s
-
-src/list.o: src/list.cpp.o
-
-.PHONY : src/list.o
-
-# target to build an object file
-src/list.cpp.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/list.cpp.o
-.PHONY : src/list.cpp.o
-
-src/list.i: src/list.cpp.i
-
-.PHONY : src/list.i
-
-# target to preprocess a source file
-src/list.cpp.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/list.cpp.i
-.PHONY : src/list.cpp.i
-
-src/list.s: src/list.cpp.s
-
-.PHONY : src/list.s
-
-# target to generate assembly for a file
-src/list.cpp.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/list.cpp.s
-.PHONY : src/list.cpp.s
-
-src/main.o: src/main.cpp.o
-
-.PHONY : src/main.o
-
-# target to build an object file
-src/main.cpp.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/main.cpp.o
-.PHONY : src/main.cpp.o
-
-src/main.i: src/main.cpp.i
-
-.PHONY : src/main.i
-
-# target to preprocess a source file
-src/main.cpp.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/main.cpp.i
-.PHONY : src/main.cpp.i
-
-src/main.s: src/main.cpp.s
-
-.PHONY : src/main.s
-
-# target to generate assembly for a file
-src/main.cpp.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/main.cpp.s
-.PHONY : src/main.cpp.s
-
-src/md5.o: src/md5.cpp.o
-
-.PHONY : src/md5.o
-
-# target to build an object file
-src/md5.cpp.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/md5.cpp.o
-.PHONY : src/md5.cpp.o
-
-src/md5.i: src/md5.cpp.i
-
-.PHONY : src/md5.i
-
-# target to preprocess a source file
-src/md5.cpp.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/md5.cpp.i
-.PHONY : src/md5.cpp.i
-
-src/md5.s: src/md5.cpp.s
-
-.PHONY : src/md5.s
-
-# target to generate assembly for a file
-src/md5.cpp.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/md5.cpp.s
-.PHONY : src/md5.cpp.s
-
-src/msg.o: src/msg.cpp.o
-
-.PHONY : src/msg.o
-
-# target to build an object file
-src/msg.cpp.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/msg.cpp.o
-.PHONY : src/msg.cpp.o
-
-src/msg.i: src/msg.cpp.i
-
-.PHONY : src/msg.i
-
-# target to preprocess a source file
-src/msg.cpp.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/msg.cpp.i
-.PHONY : src/msg.cpp.i
-
-src/msg.s: src/msg.cpp.s
-
-.PHONY : src/msg.s
-
-# target to generate assembly for a file
-src/msg.cpp.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/msg.cpp.s
-.PHONY : src/msg.cpp.s
-
-src/task.o: src/task.cpp.o
-
-.PHONY : src/task.o
-
-# target to build an object file
-src/task.cpp.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/task.cpp.o
-.PHONY : src/task.cpp.o
-
-src/task.i: src/task.cpp.i
-
-.PHONY : src/task.i
-
-# target to preprocess a source file
-src/task.cpp.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/task.cpp.i
-.PHONY : src/task.cpp.i
-
-src/task.s: src/task.cpp.s
-
-.PHONY : src/task.s
-
-# target to generate assembly for a file
-src/task.cpp.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/task.cpp.s
-.PHONY : src/task.cpp.s
+dagtest/fast:
+	$(MAKE) -f CMakeFiles/dagtest.dir/build.make CMakeFiles/dagtest.dir/build
+.PHONY : dagtest/fast
 
 src/taskSchedule/genDAG.o: src/taskSchedule/genDAG.cpp.o
 
@@ -345,7 +129,7 @@ src/taskSchedule/genDAG.o: src/taskSchedule/genDAG.cpp.o
 
 # target to build an object file
 src/taskSchedule/genDAG.cpp.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/taskSchedule/genDAG.cpp.o
+	$(MAKE) -f CMakeFiles/dagtest.dir/build.make CMakeFiles/dagtest.dir/src/taskSchedule/genDAG.cpp.o
 .PHONY : src/taskSchedule/genDAG.cpp.o
 
 src/taskSchedule/genDAG.i: src/taskSchedule/genDAG.cpp.i
@@ -354,7 +138,7 @@ src/taskSchedule/genDAG.i: src/taskSchedule/genDAG.cpp.i
 
 # target to preprocess a source file
 src/taskSchedule/genDAG.cpp.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/taskSchedule/genDAG.cpp.i
+	$(MAKE) -f CMakeFiles/dagtest.dir/build.make CMakeFiles/dagtest.dir/src/taskSchedule/genDAG.cpp.i
 .PHONY : src/taskSchedule/genDAG.cpp.i
 
 src/taskSchedule/genDAG.s: src/taskSchedule/genDAG.cpp.s
@@ -363,7 +147,7 @@ src/taskSchedule/genDAG.s: src/taskSchedule/genDAG.cpp.s
 
 # target to generate assembly for a file
 src/taskSchedule/genDAG.cpp.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/taskSchedule/genDAG.cpp.s
+	$(MAKE) -f CMakeFiles/dagtest.dir/build.make CMakeFiles/dagtest.dir/src/taskSchedule/genDAG.cpp.s
 .PHONY : src/taskSchedule/genDAG.cpp.s
 
 src/taskSchedule/genTest.o: src/taskSchedule/genTest.cpp.o
@@ -372,7 +156,7 @@ src/taskSchedule/genTest.o: src/taskSchedule/genTest.cpp.o
 
 # target to build an object file
 src/taskSchedule/genTest.cpp.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/taskSchedule/genTest.cpp.o
+	$(MAKE) -f CMakeFiles/dagtest.dir/build.make CMakeFiles/dagtest.dir/src/taskSchedule/genTest.cpp.o
 .PHONY : src/taskSchedule/genTest.cpp.o
 
 src/taskSchedule/genTest.i: src/taskSchedule/genTest.cpp.i
@@ -381,7 +165,7 @@ src/taskSchedule/genTest.i: src/taskSchedule/genTest.cpp.i
 
 # target to preprocess a source file
 src/taskSchedule/genTest.cpp.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/taskSchedule/genTest.cpp.i
+	$(MAKE) -f CMakeFiles/dagtest.dir/build.make CMakeFiles/dagtest.dir/src/taskSchedule/genTest.cpp.i
 .PHONY : src/taskSchedule/genTest.cpp.i
 
 src/taskSchedule/genTest.s: src/taskSchedule/genTest.cpp.s
@@ -390,7 +174,7 @@ src/taskSchedule/genTest.s: src/taskSchedule/genTest.cpp.s
 
 # target to generate assembly for a file
 src/taskSchedule/genTest.cpp.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/taskSchedule/genTest.cpp.s
+	$(MAKE) -f CMakeFiles/dagtest.dir/build.make CMakeFiles/dagtest.dir/src/taskSchedule/genTest.cpp.s
 .PHONY : src/taskSchedule/genTest.cpp.s
 
 src/taskSchedule/globalVar.o: src/taskSchedule/globalVar.cpp.o
@@ -399,7 +183,7 @@ src/taskSchedule/globalVar.o: src/taskSchedule/globalVar.cpp.o
 
 # target to build an object file
 src/taskSchedule/globalVar.cpp.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/taskSchedule/globalVar.cpp.o
+	$(MAKE) -f CMakeFiles/dagtest.dir/build.make CMakeFiles/dagtest.dir/src/taskSchedule/globalVar.cpp.o
 .PHONY : src/taskSchedule/globalVar.cpp.o
 
 src/taskSchedule/globalVar.i: src/taskSchedule/globalVar.cpp.i
@@ -408,7 +192,7 @@ src/taskSchedule/globalVar.i: src/taskSchedule/globalVar.cpp.i
 
 # target to preprocess a source file
 src/taskSchedule/globalVar.cpp.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/taskSchedule/globalVar.cpp.i
+	$(MAKE) -f CMakeFiles/dagtest.dir/build.make CMakeFiles/dagtest.dir/src/taskSchedule/globalVar.cpp.i
 .PHONY : src/taskSchedule/globalVar.cpp.i
 
 src/taskSchedule/globalVar.s: src/taskSchedule/globalVar.cpp.s
@@ -417,7 +201,7 @@ src/taskSchedule/globalVar.s: src/taskSchedule/globalVar.cpp.s
 
 # target to generate assembly for a file
 src/taskSchedule/globalVar.cpp.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/taskSchedule/globalVar.cpp.s
+	$(MAKE) -f CMakeFiles/dagtest.dir/build.make CMakeFiles/dagtest.dir/src/taskSchedule/globalVar.cpp.s
 .PHONY : src/taskSchedule/globalVar.cpp.s
 
 src/taskSchedule/readFileAndConfig.o: src/taskSchedule/readFileAndConfig.cpp.o
@@ -426,7 +210,7 @@ src/taskSchedule/readFileAndConfig.o: src/taskSchedule/readFileAndConfig.cpp.o
 
 # target to build an object file
 src/taskSchedule/readFileAndConfig.cpp.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/taskSchedule/readFileAndConfig.cpp.o
+	$(MAKE) -f CMakeFiles/dagtest.dir/build.make CMakeFiles/dagtest.dir/src/taskSchedule/readFileAndConfig.cpp.o
 .PHONY : src/taskSchedule/readFileAndConfig.cpp.o
 
 src/taskSchedule/readFileAndConfig.i: src/taskSchedule/readFileAndConfig.cpp.i
@@ -435,7 +219,7 @@ src/taskSchedule/readFileAndConfig.i: src/taskSchedule/readFileAndConfig.cpp.i
 
 # target to preprocess a source file
 src/taskSchedule/readFileAndConfig.cpp.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/taskSchedule/readFileAndConfig.cpp.i
+	$(MAKE) -f CMakeFiles/dagtest.dir/build.make CMakeFiles/dagtest.dir/src/taskSchedule/readFileAndConfig.cpp.i
 .PHONY : src/taskSchedule/readFileAndConfig.cpp.i
 
 src/taskSchedule/readFileAndConfig.s: src/taskSchedule/readFileAndConfig.cpp.s
@@ -444,7 +228,7 @@ src/taskSchedule/readFileAndConfig.s: src/taskSchedule/readFileAndConfig.cpp.s
 
 # target to generate assembly for a file
 src/taskSchedule/readFileAndConfig.cpp.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/taskSchedule/readFileAndConfig.cpp.s
+	$(MAKE) -f CMakeFiles/dagtest.dir/build.make CMakeFiles/dagtest.dir/src/taskSchedule/readFileAndConfig.cpp.s
 .PHONY : src/taskSchedule/readFileAndConfig.cpp.s
 
 src/taskSchedule/writeToFile.o: src/taskSchedule/writeToFile.cpp.o
@@ -453,7 +237,7 @@ src/taskSchedule/writeToFile.o: src/taskSchedule/writeToFile.cpp.o
 
 # target to build an object file
 src/taskSchedule/writeToFile.cpp.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/taskSchedule/writeToFile.cpp.o
+	$(MAKE) -f CMakeFiles/dagtest.dir/build.make CMakeFiles/dagtest.dir/src/taskSchedule/writeToFile.cpp.o
 .PHONY : src/taskSchedule/writeToFile.cpp.o
 
 src/taskSchedule/writeToFile.i: src/taskSchedule/writeToFile.cpp.i
@@ -462,7 +246,7 @@ src/taskSchedule/writeToFile.i: src/taskSchedule/writeToFile.cpp.i
 
 # target to preprocess a source file
 src/taskSchedule/writeToFile.cpp.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/taskSchedule/writeToFile.cpp.i
+	$(MAKE) -f CMakeFiles/dagtest.dir/build.make CMakeFiles/dagtest.dir/src/taskSchedule/writeToFile.cpp.i
 .PHONY : src/taskSchedule/writeToFile.cpp.i
 
 src/taskSchedule/writeToFile.s: src/taskSchedule/writeToFile.cpp.s
@@ -471,8 +255,35 @@ src/taskSchedule/writeToFile.s: src/taskSchedule/writeToFile.cpp.s
 
 # target to generate assembly for a file
 src/taskSchedule/writeToFile.cpp.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/taskSchedule/writeToFile.cpp.s
+	$(MAKE) -f CMakeFiles/dagtest.dir/build.make CMakeFiles/dagtest.dir/src/taskSchedule/writeToFile.cpp.s
 .PHONY : src/taskSchedule/writeToFile.cpp.s
+
+src/testDAG.o: src/testDAG.cpp.o
+
+.PHONY : src/testDAG.o
+
+# target to build an object file
+src/testDAG.cpp.o:
+	$(MAKE) -f CMakeFiles/dagtest.dir/build.make CMakeFiles/dagtest.dir/src/testDAG.cpp.o
+.PHONY : src/testDAG.cpp.o
+
+src/testDAG.i: src/testDAG.cpp.i
+
+.PHONY : src/testDAG.i
+
+# target to preprocess a source file
+src/testDAG.cpp.i:
+	$(MAKE) -f CMakeFiles/dagtest.dir/build.make CMakeFiles/dagtest.dir/src/testDAG.cpp.i
+.PHONY : src/testDAG.cpp.i
+
+src/testDAG.s: src/testDAG.cpp.s
+
+.PHONY : src/testDAG.s
+
+# target to generate assembly for a file
+src/testDAG.cpp.s:
+	$(MAKE) -f CMakeFiles/dagtest.dir/build.make CMakeFiles/dagtest.dir/src/testDAG.cpp.s
+.PHONY : src/testDAG.cpp.s
 
 # Help Target
 help:
@@ -482,31 +293,7 @@ help:
 	@echo "... depend"
 	@echo "... rebuild_cache"
 	@echo "... edit_cache"
-	@echo "... main"
-	@echo "... src/base64.o"
-	@echo "... src/base64.i"
-	@echo "... src/base64.s"
-	@echo "... src/file.o"
-	@echo "... src/file.i"
-	@echo "... src/file.s"
-	@echo "... src/interface.o"
-	@echo "... src/interface.i"
-	@echo "... src/interface.s"
-	@echo "... src/list.o"
-	@echo "... src/list.i"
-	@echo "... src/list.s"
-	@echo "... src/main.o"
-	@echo "... src/main.i"
-	@echo "... src/main.s"
-	@echo "... src/md5.o"
-	@echo "... src/md5.i"
-	@echo "... src/md5.s"
-	@echo "... src/msg.o"
-	@echo "... src/msg.i"
-	@echo "... src/msg.s"
-	@echo "... src/task.o"
-	@echo "... src/task.i"
-	@echo "... src/task.s"
+	@echo "... dagtest"
 	@echo "... src/taskSchedule/genDAG.o"
 	@echo "... src/taskSchedule/genDAG.i"
 	@echo "... src/taskSchedule/genDAG.s"
@@ -522,6 +309,9 @@ help:
 	@echo "... src/taskSchedule/writeToFile.o"
 	@echo "... src/taskSchedule/writeToFile.i"
 	@echo "... src/taskSchedule/writeToFile.s"
+	@echo "... src/testDAG.o"
+	@echo "... src/testDAG.i"
+	@echo "... src/testDAG.s"
 .PHONY : help
 
 

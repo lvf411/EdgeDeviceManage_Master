@@ -1,8 +1,8 @@
 #include"genTest.h"
-#include "..\common\writeToFile.h"
+#include "writeToFile.h"
 #include "genDAG.h"
 #include<algorithm>
-#include "..\common\randInfo.h"
+#include "randInfo.h"
 #include<fstream>
 #include"genTest.h"
 //struct TestInfo {
@@ -34,14 +34,14 @@ void writeFile(string filePath, const TestInfo& test) {
 }
 
 /**
-* @brief	½«Éú³ÉµÄÓĞÏòÎŞ»·Í¼Êä³öµ½ÎÄ¼ş
-* @param	filePath ÎÄ¼şÂ·¾¶
-* @param	n ÈÎÎñÊıÁ¿
-* @param	m »úÆ÷ÊıÁ¿
-* @param	DAG Éú³ÉµÄÓĞÏòÎŞ»·Í¼
-* @param	taskWeight ÈÎÎñÈ¨ÖØ
-* @param	cpuspeed cpuËÙ¶È
-* @param	NxPw ÈÎÎñ¸öÊı*cpu¸öÊı¾ØÕó
+* @brief	å°†ç”Ÿæˆçš„æœ‰å‘æ— ç¯å›¾è¾“å‡ºåˆ°æ–‡ä»¶
+* @param	filePath æ–‡ä»¶è·¯å¾„
+* @param	n ä»»åŠ¡æ•°é‡
+* @param	m æœºå™¨æ•°é‡
+* @param	DAG ç”Ÿæˆçš„æœ‰å‘æ— ç¯å›¾
+* @param	taskWeight ä»»åŠ¡æƒé‡
+* @param	cpuspeed cpué€Ÿåº¦
+* @param	NxPw ä»»åŠ¡ä¸ªæ•°*cpuä¸ªæ•°çŸ©é˜µ
 */
 void writeFile(string filePath, int n, int m, const vector<vector<double>>& DAG,
 	const vector<double>& taskWeight, const vector<double>& cpuSpeed, const vector<vector<double>>& NxPw) {
@@ -55,10 +55,10 @@ void writeFile(string filePath, int n, int m, const vector<vector<double>>& DAG,
 
 TestInfo generateAtest(int n, int m, double NC, double hc, double ht, double hb, double CCR) {
 	//int n = 100, m = 10;
-	//double hc = 3;//´¦ÀíÆ÷µÄÒìÖÊĞÔ=×î¿ìËÙ¶È/×îÂıËÙ¶È
-	//double ht = 6;//ÈÎÎñÁ¿
-	//double hb = 1;//´«ÊäÁ¿
-	//double CCR = 1;//ÈÎÎñÁ¿¾ùÖµ/´«ÊäÁ¿¾ùÖµ
+	//double hc = 3;//å¤„ç†å™¨çš„å¼‚è´¨æ€§=æœ€å¿«é€Ÿåº¦/æœ€æ…¢é€Ÿåº¦
+	//double ht = 6;//ä»»åŠ¡é‡
+	//double hb = 1;//ä¼ è¾“é‡
+	//double CCR = 1;//ä»»åŠ¡é‡å‡å€¼/ä¼ è¾“é‡å‡å€¼
 	double cpuSpeed_L = 1;
 	double taskWeight_L = 1;
 
@@ -140,7 +140,7 @@ TestInfo generateAtest2(int n, int m, double NC) {
 	return testInfo;
 }
 
-//used for PLCÈÎÎñ·ÖÅäÏîÄ¿Éê±¨£¨·ÏÆú£©
+//used for PLCä»»åŠ¡åˆ†é…é¡¹ç›®ç”³æŠ¥ï¼ˆåºŸå¼ƒï¼‰
 TestInfo generateAtest3(int n, int m, double NC, int knownDAG_Flag,const vector<vector<double>>& knownDAG) {
 	double taskWeight_L = 100;
 	double taskWeight_r = 600;

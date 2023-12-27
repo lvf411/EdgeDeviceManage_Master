@@ -14,6 +14,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/main.dir/src/taskSchedule/globalVar.cpp.o"
   "CMakeFiles/main.dir/src/taskSchedule/readFileAndConfig.cpp.o"
   "CMakeFiles/main.dir/src/taskSchedule/writeToFile.cpp.o"
+  "CMakeFiles/main.dir/src/testDAG.cpp.o"
 )
 
 # Per-language clean rules from dependency scanning.

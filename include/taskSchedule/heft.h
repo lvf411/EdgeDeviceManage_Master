@@ -3,10 +3,14 @@ heft:
 1. calc ranku
 2. insersion-based allocation
 */
-#include<iostream>
-#include<vector>
+#include <iostream>
+#include <vector>
 #include <algorithm>
-#include<assert.h>
+#include <assert.h>
+#include <queue>
+#include <utility>
+#include <climits>
+
 using namespace std;
 class Heft {
     struct Subtask {
@@ -24,7 +28,7 @@ class Heft {
     unsigned tasknum, cpunum;
     vector<Subtask> subtasks;
 
-    //ÄæÍØÆËÅÅĞòÒÀ´Î¼ÆËã¸÷ranku
+    //é€†æ‹“æ‰‘æ’åºä¾æ¬¡è®¡ç®—å„ranku
     void calc_rankus() {
         vector<int> outdegree(tasknum, 0);
         for (unsigned i = 0; i < DAG.size(); i++) {
@@ -43,7 +47,7 @@ class Heft {
 
 
         while (!stk.empty()) {
-            //³öÒ»£¬É¾Æä"Èë"¶È
+            //å‡ºä¸€ï¼Œåˆ å…¶"å…¥"åº¦
             int idx = stk.back(); stk.pop_back();
             for (unsigned i = 0; i < DAG.size(); i++) {
                 if (DAG[i][idx]) {
@@ -52,9 +56,9 @@ class Heft {
                     }
                 }
             }
-            //¸³Öµtasks[idx].ranku
+            //èµ‹å€¼tasks[idx].ranku
             subtasks[idx].ranku = subtasks[idx].avgw;
-            double maxLatter = 0;//maxLatter = max(cij+ranku(j)) j¡Êsucc(idx)
+            double maxLatter = 0;//maxLatter = max(cij+ranku(j)) jï¿½ï¿½succ(idx)
             for (unsigned j = 0; j < DAG.size(); j++) {
                 if (DAG[idx][j]) {
                     maxLatter = max(DAG[idx][j] + subtasks[j].ranku, maxLatter);
