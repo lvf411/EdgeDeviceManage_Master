@@ -1,0 +1,108 @@
+{
+    "task_id":  "123abc",
+    "subtask_num":  5,
+    "#sample_task_struct":  "1->2, 1->3, 1->4, 2->5, 3->5, 4->5",
+    "subtask":[
+        {
+            "subtask_id":   1,
+            "exe_path": "../task/1_pi_hf",
+            "run_time": 2,
+            "input_src_num":    0,
+            "input_src":[],
+            "output_num":   3,
+            "output":[
+                {
+                    "output_dst":   2,
+                    "output_fname": "1_1_2.txt"
+                },
+                {
+                    "output_dst":   3,
+                    "output_fname": "1_1_3.txt"
+                },
+                {
+                    "output_dst":   4,
+                    "output_fname": "1_1_4.txt"
+                }
+            ],  
+            "#output_dst":  "数组内容为输出目标子任务的编号"
+        },
+        {
+            "subtask_id":   2,
+            "exe_path": "../task/2_pi_hf",
+            "run_time": 4,
+            "input_num":    1,
+            "input":[
+                {
+                    "input_src":    1,
+                    "input_fname":  "1_1_2.txt"
+                }
+            ],
+            "output_num":   1,
+            "output":[
+                {
+                    "output_dst":   5,
+                    "output_fname": "1_2_5.txt"
+                }
+            ]  
+        }
+        ,
+        {
+            "subtask_id":   3,
+            "exe_path": "../task/3_pi_hf",
+            "input_num":    1,
+            "input":[
+                {
+                    "input_src":    1,
+                    "input_fname":  "1_1_3.txt"
+                }
+            ],
+            "output_num":   1,
+            "output":[
+                {
+                    "output_dst":   5,
+                    "output_fname": "1_3_5.txt"
+                }
+            ]  
+        }
+        ,
+        {
+            "subtask_id":   4,
+            "exe_path": "../task/4_pi_hf",
+            "input_num":    1,
+            "input":[
+                {
+                    "input_src":    1,
+                    "input_fname":  "1_1_4.txt"
+                }
+            ],
+            "output_num":   1,
+            "output":[
+                {
+                    "output_dst":   5,
+                    "output_fname": "1_4_5.txt"
+                }
+            ]  
+        },
+        {
+            "subtask_id":   5,
+            "exe_path": "../task/5_pi_hf",
+            "input_num":    3,
+            "input":[
+                {
+                    "input_src":    2,
+                    "input_fname":  "1_1_2.txt"
+                },
+                {
+                    "input_src":    3,
+                    "input_fname":  "1_1_3.txt"
+                },
+                {
+                    "input_src":    4,
+                    "input_fname":  "1_1_4.txt"
+                }
+            ],
+            "output_num":   0,
+            "output":[]  
+        }
+    ]
+}
