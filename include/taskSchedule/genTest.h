@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __GENTEST_H
+#define __GENTEST_H
+
 #include<vector>
 #include<iostream>
 using namespace std;
@@ -16,3 +18,5 @@ TestInfo generateAtest3(int n, int m, double NC, int knownDAG_Flag = 0, const ve
 vector<vector<double>> getNxPw(vector<double> taskWeight, vector<double> cpuSpeed);
 void writeFile(string filePath, int n, int m, const vector<vector<double>>& DAG,
 	const vector<double>& taskWeight, const vector<double>& cpuSpeed, const vector<vector<double>>& NxPw);
+
+#endif //__GENTEST_H

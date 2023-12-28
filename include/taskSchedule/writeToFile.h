@@ -1,4 +1,6 @@
-#pragma once
+#ifndef __WRITE_TO_FILE_H
+#define __WRITE_TO_FILE_H
+
 #include<iostream>
 #include<fstream>
 #include<vector>
@@ -76,3 +78,5 @@ void writeToFile(string path, vector<pair<T, R>> val, bool appendFlag = 0) {
 	}
 	ofs.close();
 }
+
+#endif //__WRITE_TO_FILE_H

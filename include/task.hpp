@@ -10,6 +10,7 @@
 #include <jsoncpp/json/json.h>
 #include "master.hpp"
 #include "list.hpp"
+#include "taskSchedule.hpp"
 
 bool task_add(std::string path);
 

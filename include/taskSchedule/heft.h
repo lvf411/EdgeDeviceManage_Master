@@ -1,3 +1,6 @@
+#ifndef __HEFT_H
+#define __HEFT_H
+
 /*
 heft:
 1. calc ranku
@@ -191,3 +194,5 @@ public:
         return res;
     }
 };
+
+#endif //__HEFT_H

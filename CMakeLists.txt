@@ -11,15 +11,14 @@ aux_source_directory (src SRC_LIST)
 
 aux_source_directory (src/taskSchedule SRC_TASK_SCHEDULE_LIST)
 
-include_directories (include
-                    include/taskSchedule
+include_directories (${PROJECT_SOURCE_DIR}/include 
+                    ${PROJECT_SOURCE_DIR}/include/taskSchedule
                     )
 
-link_directories(usr/local/lib
+link_directories(/usr/local/lib
                 )
 
-# add_executable (main ${SRC_LIST} ${SRC_TASK_SCHEDULE})
+add_executable (main ${SRC_LIST} ${SRC_TASK_SCHEDULE_LIST})
 
-# target_link_libraries(main -lpthread -ljsoncpp)
+target_link_libraries(main -lpthread -ljsoncpp)
 
-add_executable (dagtest src/testDAG.cpp ${SRC_TASK_SCHEDULE_LIST})

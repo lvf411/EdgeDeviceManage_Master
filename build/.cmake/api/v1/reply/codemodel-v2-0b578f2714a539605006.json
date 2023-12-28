@@ -37,9 +37,9 @@
 			[
 				{
 					"directoryIndex" : 0,
-					"id" : "dagtest::@6890427a1f51a3e7e1df",
-					"jsonFile" : "target-dagtest-Debug-36173f9b131aed63ab0e.json",
-					"name" : "dagtest",
+					"id" : "main::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-main-Debug-570e9430eb997b8fbde7.json",
+					"name" : "main",
 					"projectIndex" : 0
 				}
 			]

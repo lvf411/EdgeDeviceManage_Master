@@ -1,10 +1,10 @@
-#include"genTest.h"
+#include "genTest.h"
 #include "writeToFile.h"
 #include "genDAG.h"
-#include<algorithm>
+#include <algorithm>
 #include "randInfo.h"
-#include<fstream>
-#include"genTest.h"
+#include <fstream>
+
 //struct TestInfo {
 //	int n, m;
 //	vector<vector<double>> DAG;
@@ -39,7 +39,7 @@ void writeFile(string filePath, const TestInfo& test) {
 * @param	n 任务数量
 * @param	m 机器数量
 * @param	DAG 生成的有向无环图
-* @param	taskWeight 任务权重
+* @param	taskWeight 任务规模
 * @param	cpuspeed cpu速度
 * @param	NxPw 任务个数*cpu个数矩阵
 */
@@ -123,6 +123,7 @@ TestInfo generateAtest2(int n, int m, double NC) {
 		}
 	}
 
+	//有一个将cpu速度按大小进行重排序的过程
 	sort(testInfo.cpuSpeed.rbegin(), testInfo.cpuSpeed.rend());
 
 

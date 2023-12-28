@@ -161,18 +161,18 @@ CMakeFiles/main.dir/src/task.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/src/task.cpp.s"
 	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lf/Documents/EDM/master/src/task.cpp -o CMakeFiles/main.dir/src/task.cpp.s
 
-CMakeFiles/main.dir/src/testDAG.cpp.o: CMakeFiles/main.dir/flags.make
-CMakeFiles/main.dir/src/testDAG.cpp.o: ../src/testDAG.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lf/Documents/EDM/master/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/main.dir/src/testDAG.cpp.o"
-	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/src/testDAG.cpp.o -c /home/lf/Documents/EDM/master/src/testDAG.cpp
+CMakeFiles/main.dir/src/taskSchedule.cpp.o: CMakeFiles/main.dir/flags.make
+CMakeFiles/main.dir/src/taskSchedule.cpp.o: ../src/taskSchedule.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/lf/Documents/EDM/master/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/main.dir/src/taskSchedule.cpp.o"
+	/usr/bin/g++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/main.dir/src/taskSchedule.cpp.o -c /home/lf/Documents/EDM/master/src/taskSchedule.cpp
 
-CMakeFiles/main.dir/src/testDAG.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/src/testDAG.cpp.i"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lf/Documents/EDM/master/src/testDAG.cpp > CMakeFiles/main.dir/src/testDAG.cpp.i
+CMakeFiles/main.dir/src/taskSchedule.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/main.dir/src/taskSchedule.cpp.i"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/lf/Documents/EDM/master/src/taskSchedule.cpp > CMakeFiles/main.dir/src/taskSchedule.cpp.i
 
-CMakeFiles/main.dir/src/testDAG.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/src/testDAG.cpp.s"
-	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lf/Documents/EDM/master/src/testDAG.cpp -o CMakeFiles/main.dir/src/testDAG.cpp.s
+CMakeFiles/main.dir/src/taskSchedule.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/main.dir/src/taskSchedule.cpp.s"
+	/usr/bin/g++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/lf/Documents/EDM/master/src/taskSchedule.cpp -o CMakeFiles/main.dir/src/taskSchedule.cpp.s
 
 CMakeFiles/main.dir/src/taskSchedule/genDAG.cpp.o: CMakeFiles/main.dir/flags.make
 CMakeFiles/main.dir/src/taskSchedule/genDAG.cpp.o: ../src/taskSchedule/genDAG.cpp
@@ -249,7 +249,7 @@ main_OBJECTS = \
 "CMakeFiles/main.dir/src/md5.cpp.o" \
 "CMakeFiles/main.dir/src/msg.cpp.o" \
 "CMakeFiles/main.dir/src/task.cpp.o" \
-"CMakeFiles/main.dir/src/testDAG.cpp.o" \
+"CMakeFiles/main.dir/src/taskSchedule.cpp.o" \
 "CMakeFiles/main.dir/src/taskSchedule/genDAG.cpp.o" \
 "CMakeFiles/main.dir/src/taskSchedule/genTest.cpp.o" \
 "CMakeFiles/main.dir/src/taskSchedule/globalVar.cpp.o" \
@@ -267,7 +267,7 @@ main_EXTERNAL_OBJECTS =
 ../bin/main: CMakeFiles/main.dir/src/md5.cpp.o
 ../bin/main: CMakeFiles/main.dir/src/msg.cpp.o
 ../bin/main: CMakeFiles/main.dir/src/task.cpp.o
-../bin/main: CMakeFiles/main.dir/src/testDAG.cpp.o
+../bin/main: CMakeFiles/main.dir/src/taskSchedule.cpp.o
 ../bin/main: CMakeFiles/main.dir/src/taskSchedule/genDAG.cpp.o
 ../bin/main: CMakeFiles/main.dir/src/taskSchedule/genTest.cpp.o
 ../bin/main: CMakeFiles/main.dir/src/taskSchedule/globalVar.cpp.o

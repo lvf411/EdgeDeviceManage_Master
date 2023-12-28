@@ -1,32 +1,72 @@
 [
 {
   "directory": "/home/lf/Documents/EDM/master/build",
-  "command": "/usr/bin/g++   -I/home/lf/Documents/EDM/master/include -I/home/lf/Documents/EDM/master/include/taskSchedule  -g   -std=gnu++11 -o CMakeFiles/dagtest.dir/src/testDAG.cpp.o -c /home/lf/Documents/EDM/master/src/testDAG.cpp",
-  "file": "/home/lf/Documents/EDM/master/src/testDAG.cpp"
+  "command": "/usr/bin/g++   -I/home/lf/Documents/EDM/master/include -I/home/lf/Documents/EDM/master/include/taskSchedule  -g   -std=gnu++11 -o CMakeFiles/main.dir/src/base64.cpp.o -c /home/lf/Documents/EDM/master/src/base64.cpp",
+  "file": "/home/lf/Documents/EDM/master/src/base64.cpp"
 },
 {
   "directory": "/home/lf/Documents/EDM/master/build",
-  "command": "/usr/bin/g++   -I/home/lf/Documents/EDM/master/include -I/home/lf/Documents/EDM/master/include/taskSchedule  -g   -std=gnu++11 -o CMakeFiles/dagtest.dir/src/taskSchedule/genDAG.cpp.o -c /home/lf/Documents/EDM/master/src/taskSchedule/genDAG.cpp",
+  "command": "/usr/bin/g++   -I/home/lf/Documents/EDM/master/include -I/home/lf/Documents/EDM/master/include/taskSchedule  -g   -std=gnu++11 -o CMakeFiles/main.dir/src/file.cpp.o -c /home/lf/Documents/EDM/master/src/file.cpp",
+  "file": "/home/lf/Documents/EDM/master/src/file.cpp"
+},
+{
+  "directory": "/home/lf/Documents/EDM/master/build",
+  "command": "/usr/bin/g++   -I/home/lf/Documents/EDM/master/include -I/home/lf/Documents/EDM/master/include/taskSchedule  -g   -std=gnu++11 -o CMakeFiles/main.dir/src/interface.cpp.o -c /home/lf/Documents/EDM/master/src/interface.cpp",
+  "file": "/home/lf/Documents/EDM/master/src/interface.cpp"
+},
+{
+  "directory": "/home/lf/Documents/EDM/master/build",
+  "command": "/usr/bin/g++   -I/home/lf/Documents/EDM/master/include -I/home/lf/Documents/EDM/master/include/taskSchedule  -g   -std=gnu++11 -o CMakeFiles/main.dir/src/list.cpp.o -c /home/lf/Documents/EDM/master/src/list.cpp",
+  "file": "/home/lf/Documents/EDM/master/src/list.cpp"
+},
+{
+  "directory": "/home/lf/Documents/EDM/master/build",
+  "command": "/usr/bin/g++   -I/home/lf/Documents/EDM/master/include -I/home/lf/Documents/EDM/master/include/taskSchedule  -g   -std=gnu++11 -o CMakeFiles/main.dir/src/main.cpp.o -c /home/lf/Documents/EDM/master/src/main.cpp",
+  "file": "/home/lf/Documents/EDM/master/src/main.cpp"
+},
+{
+  "directory": "/home/lf/Documents/EDM/master/build",
+  "command": "/usr/bin/g++   -I/home/lf/Documents/EDM/master/include -I/home/lf/Documents/EDM/master/include/taskSchedule  -g   -std=gnu++11 -o CMakeFiles/main.dir/src/md5.cpp.o -c /home/lf/Documents/EDM/master/src/md5.cpp",
+  "file": "/home/lf/Documents/EDM/master/src/md5.cpp"
+},
+{
+  "directory": "/home/lf/Documents/EDM/master/build",
+  "command": "/usr/bin/g++   -I/home/lf/Documents/EDM/master/include -I/home/lf/Documents/EDM/master/include/taskSchedule  -g   -std=gnu++11 -o CMakeFiles/main.dir/src/msg.cpp.o -c /home/lf/Documents/EDM/master/src/msg.cpp",
+  "file": "/home/lf/Documents/EDM/master/src/msg.cpp"
+},
+{
+  "directory": "/home/lf/Documents/EDM/master/build",
+  "command": "/usr/bin/g++   -I/home/lf/Documents/EDM/master/include -I/home/lf/Documents/EDM/master/include/taskSchedule  -g   -std=gnu++11 -o CMakeFiles/main.dir/src/task.cpp.o -c /home/lf/Documents/EDM/master/src/task.cpp",
+  "file": "/home/lf/Documents/EDM/master/src/task.cpp"
+},
+{
+  "directory": "/home/lf/Documents/EDM/master/build",
+  "command": "/usr/bin/g++   -I/home/lf/Documents/EDM/master/include -I/home/lf/Documents/EDM/master/include/taskSchedule  -g   -std=gnu++11 -o CMakeFiles/main.dir/src/taskSchedule.cpp.o -c /home/lf/Documents/EDM/master/src/taskSchedule.cpp",
+  "file": "/home/lf/Documents/EDM/master/src/taskSchedule.cpp"
+},
+{
+  "directory": "/home/lf/Documents/EDM/master/build",
+  "command": "/usr/bin/g++   -I/home/lf/Documents/EDM/master/include -I/home/lf/Documents/EDM/master/include/taskSchedule  -g   -std=gnu++11 -o CMakeFiles/main.dir/src/taskSchedule/genDAG.cpp.o -c /home/lf/Documents/EDM/master/src/taskSchedule/genDAG.cpp",
   "file": "/home/lf/Documents/EDM/master/src/taskSchedule/genDAG.cpp"
 },
 {
   "directory": "/home/lf/Documents/EDM/master/build",
-  "command": "/usr/bin/g++   -I/home/lf/Documents/EDM/master/include -I/home/lf/Documents/EDM/master/include/taskSchedule  -g   -std=gnu++11 -o CMakeFiles/dagtest.dir/src/taskSchedule/genTest.cpp.o -c /home/lf/Documents/EDM/master/src/taskSchedule/genTest.cpp",
+  "command": "/usr/bin/g++   -I/home/lf/Documents/EDM/master/include -I/home/lf/Documents/EDM/master/include/taskSchedule  -g   -std=gnu++11 -o CMakeFiles/main.dir/src/taskSchedule/genTest.cpp.o -c /home/lf/Documents/EDM/master/src/taskSchedule/genTest.cpp",
   "file": "/home/lf/Documents/EDM/master/src/taskSchedule/genTest.cpp"
 },
 {
   "directory": "/home/lf/Documents/EDM/master/build",
-  "command": "/usr/bin/g++   -I/home/lf/Documents/EDM/master/include -I/home/lf/Documents/EDM/master/include/taskSchedule  -g   -std=gnu++11 -o CMakeFiles/dagtest.dir/src/taskSchedule/globalVar.cpp.o -c /home/lf/Documents/EDM/master/src/taskSchedule/globalVar.cpp",
+  "command": "/usr/bin/g++   -I/home/lf/Documents/EDM/master/include -I/home/lf/Documents/EDM/master/include/taskSchedule  -g   -std=gnu++11 -o CMakeFiles/main.dir/src/taskSchedule/globalVar.cpp.o -c /home/lf/Documents/EDM/master/src/taskSchedule/globalVar.cpp",
   "file": "/home/lf/Documents/EDM/master/src/taskSchedule/globalVar.cpp"
 },
 {
   "directory": "/home/lf/Documents/EDM/master/build",
-  "command": "/usr/bin/g++   -I/home/lf/Documents/EDM/master/include -I/home/lf/Documents/EDM/master/include/taskSchedule  -g   -std=gnu++11 -o CMakeFiles/dagtest.dir/src/taskSchedule/readFileAndConfig.cpp.o -c /home/lf/Documents/EDM/master/src/taskSchedule/readFileAndConfig.cpp",
+  "command": "/usr/bin/g++   -I/home/lf/Documents/EDM/master/include -I/home/lf/Documents/EDM/master/include/taskSchedule  -g   -std=gnu++11 -o CMakeFiles/main.dir/src/taskSchedule/readFileAndConfig.cpp.o -c /home/lf/Documents/EDM/master/src/taskSchedule/readFileAndConfig.cpp",
   "file": "/home/lf/Documents/EDM/master/src/taskSchedule/readFileAndConfig.cpp"
 },
 {
   "directory": "/home/lf/Documents/EDM/master/build",
-  "command": "/usr/bin/g++   -I/home/lf/Documents/EDM/master/include -I/home/lf/Documents/EDM/master/include/taskSchedule  -g   -std=gnu++11 -o CMakeFiles/dagtest.dir/src/taskSchedule/writeToFile.cpp.o -c /home/lf/Documents/EDM/master/src/taskSchedule/writeToFile.cpp",
+  "command": "/usr/bin/g++   -I/home/lf/Documents/EDM/master/include -I/home/lf/Documents/EDM/master/include/taskSchedule  -g   -std=gnu++11 -o CMakeFiles/main.dir/src/taskSchedule/writeToFile.cpp.o -c /home/lf/Documents/EDM/master/src/taskSchedule/writeToFile.cpp",
   "file": "/home/lf/Documents/EDM/master/src/taskSchedule/writeToFile.cpp"
 }
 ]

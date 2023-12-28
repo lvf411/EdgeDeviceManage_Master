@@ -52,6 +52,9 @@
         "condition_variable": "cpp",
         "ctime": "cpp",
         "ratio": "cpp",
-        "mutex": "cpp"
+        "mutex": "cpp",
+        "strstream": "cpp",
+        "iomanip": "cpp",
+        "cinttypes": "cpp"
     }
 }
