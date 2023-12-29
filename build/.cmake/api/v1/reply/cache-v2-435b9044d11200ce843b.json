@@ -274,6 +274,18 @@
 			"value" : "-O2 -g -DNDEBUG"
 		},
 		{
+			"name" : "CMAKE_CXX_STANDARD",
+			"properties" : 
+			[
+				{
+					"name" : "HELPSTRING",
+					"value" : "No help, variable specified on the command line."
+				}
+			],
+			"type" : "STRING",
+			"value" : "11"
+		},
+		{
 			"name" : "CMAKE_C_COMPILER",
 			"properties" : 
 			[

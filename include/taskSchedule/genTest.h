@@ -1,8 +1,8 @@
 #ifndef __GENTEST_H
 #define __GENTEST_H
 
-#include<vector>
-#include<iostream>
+#include <vector>
+#include <iostream>
 using namespace std;
 struct TestInfo {
 	int n, m;

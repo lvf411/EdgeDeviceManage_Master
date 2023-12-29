@@ -150,6 +150,33 @@ src/base64.cpp.s:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/base64.cpp.s
 .PHONY : src/base64.cpp.s
 
+src/cmdInterface.o: src/cmdInterface.cpp.o
+
+.PHONY : src/cmdInterface.o
+
+# target to build an object file
+src/cmdInterface.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/cmdInterface.cpp.o
+.PHONY : src/cmdInterface.cpp.o
+
+src/cmdInterface.i: src/cmdInterface.cpp.i
+
+.PHONY : src/cmdInterface.i
+
+# target to preprocess a source file
+src/cmdInterface.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/cmdInterface.cpp.i
+.PHONY : src/cmdInterface.cpp.i
+
+src/cmdInterface.s: src/cmdInterface.cpp.s
+
+.PHONY : src/cmdInterface.s
+
+# target to generate assembly for a file
+src/cmdInterface.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/cmdInterface.cpp.s
+.PHONY : src/cmdInterface.cpp.s
+
 src/file.o: src/file.cpp.o
 
 .PHONY : src/file.o
@@ -176,33 +203,6 @@ src/file.s: src/file.cpp.s
 src/file.cpp.s:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/file.cpp.s
 .PHONY : src/file.cpp.s
-
-src/interface.o: src/interface.cpp.o
-
-.PHONY : src/interface.o
-
-# target to build an object file
-src/interface.cpp.o:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/interface.cpp.o
-.PHONY : src/interface.cpp.o
-
-src/interface.i: src/interface.cpp.i
-
-.PHONY : src/interface.i
-
-# target to preprocess a source file
-src/interface.cpp.i:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/interface.cpp.i
-.PHONY : src/interface.cpp.i
-
-src/interface.s: src/interface.cpp.s
-
-.PHONY : src/interface.s
-
-# target to generate assembly for a file
-src/interface.cpp.s:
-	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/interface.cpp.s
-.PHONY : src/interface.cpp.s
 
 src/list.o: src/list.cpp.o
 
@@ -501,6 +501,33 @@ src/taskSchedule/writeToFile.cpp.s:
 	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/taskSchedule/writeToFile.cpp.s
 .PHONY : src/taskSchedule/writeToFile.cpp.s
 
+src/visualInterface.o: src/visualInterface.cpp.o
+
+.PHONY : src/visualInterface.o
+
+# target to build an object file
+src/visualInterface.cpp.o:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/visualInterface.cpp.o
+.PHONY : src/visualInterface.cpp.o
+
+src/visualInterface.i: src/visualInterface.cpp.i
+
+.PHONY : src/visualInterface.i
+
+# target to preprocess a source file
+src/visualInterface.cpp.i:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/visualInterface.cpp.i
+.PHONY : src/visualInterface.cpp.i
+
+src/visualInterface.s: src/visualInterface.cpp.s
+
+.PHONY : src/visualInterface.s
+
+# target to generate assembly for a file
+src/visualInterface.cpp.s:
+	$(MAKE) -f CMakeFiles/main.dir/build.make CMakeFiles/main.dir/src/visualInterface.cpp.s
+.PHONY : src/visualInterface.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -513,12 +540,12 @@ help:
 	@echo "... src/base64.o"
 	@echo "... src/base64.i"
 	@echo "... src/base64.s"
+	@echo "... src/cmdInterface.o"
+	@echo "... src/cmdInterface.i"
+	@echo "... src/cmdInterface.s"
 	@echo "... src/file.o"
 	@echo "... src/file.i"
 	@echo "... src/file.s"
-	@echo "... src/interface.o"
-	@echo "... src/interface.i"
-	@echo "... src/interface.s"
 	@echo "... src/list.o"
 	@echo "... src/list.i"
 	@echo "... src/list.s"
@@ -552,6 +579,9 @@ help:
 	@echo "... src/taskSchedule/writeToFile.o"
 	@echo "... src/taskSchedule/writeToFile.i"
 	@echo "... src/taskSchedule/writeToFile.s"
+	@echo "... src/visualInterface.o"
+	@echo "... src/visualInterface.i"
+	@echo "... src/visualInterface.s"
 .PHONY : help
 
 

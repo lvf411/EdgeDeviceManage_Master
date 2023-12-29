@@ -4,6 +4,18 @@
 CMakeFiles/main.dir/src/base64.cpp.o: ../include/base64.hpp
 CMakeFiles/main.dir/src/base64.cpp.o: ../src/base64.cpp
 
+CMakeFiles/main.dir/src/cmdInterface.cpp.o: ../include/base64.hpp
+CMakeFiles/main.dir/src/cmdInterface.cpp.o: ../include/cmdInterface.hpp
+CMakeFiles/main.dir/src/cmdInterface.cpp.o: ../include/file.hpp
+CMakeFiles/main.dir/src/cmdInterface.cpp.o: ../include/list.hpp
+CMakeFiles/main.dir/src/cmdInterface.cpp.o: ../include/master.hpp
+CMakeFiles/main.dir/src/cmdInterface.cpp.o: ../include/md5.hpp
+CMakeFiles/main.dir/src/cmdInterface.cpp.o: ../include/semaphore.hpp
+CMakeFiles/main.dir/src/cmdInterface.cpp.o: ../include/task.hpp
+CMakeFiles/main.dir/src/cmdInterface.cpp.o: ../include/taskSchedule.hpp
+CMakeFiles/main.dir/src/cmdInterface.cpp.o: ../include/taskSchedule/genTest.h
+CMakeFiles/main.dir/src/cmdInterface.cpp.o: ../src/cmdInterface.cpp
+
 CMakeFiles/main.dir/src/file.cpp.o: ../include/base64.hpp
 CMakeFiles/main.dir/src/file.cpp.o: ../include/file.hpp
 CMakeFiles/main.dir/src/file.cpp.o: ../include/list.hpp
@@ -12,25 +24,13 @@ CMakeFiles/main.dir/src/file.cpp.o: ../include/md5.hpp
 CMakeFiles/main.dir/src/file.cpp.o: ../include/semaphore.hpp
 CMakeFiles/main.dir/src/file.cpp.o: ../src/file.cpp
 
-CMakeFiles/main.dir/src/interface.cpp.o: ../include/base64.hpp
-CMakeFiles/main.dir/src/interface.cpp.o: ../include/file.hpp
-CMakeFiles/main.dir/src/interface.cpp.o: ../include/interface.hpp
-CMakeFiles/main.dir/src/interface.cpp.o: ../include/list.hpp
-CMakeFiles/main.dir/src/interface.cpp.o: ../include/master.hpp
-CMakeFiles/main.dir/src/interface.cpp.o: ../include/md5.hpp
-CMakeFiles/main.dir/src/interface.cpp.o: ../include/semaphore.hpp
-CMakeFiles/main.dir/src/interface.cpp.o: ../include/task.hpp
-CMakeFiles/main.dir/src/interface.cpp.o: ../include/taskSchedule.hpp
-CMakeFiles/main.dir/src/interface.cpp.o: ../include/taskSchedule/genTest.h
-CMakeFiles/main.dir/src/interface.cpp.o: ../src/interface.cpp
-
 CMakeFiles/main.dir/src/list.cpp.o: ../include/list.hpp
 CMakeFiles/main.dir/src/list.cpp.o: ../src/list.cpp
 
 CMakeFiles/main.dir/src/main.cpp.o: ../include/base64.hpp
+CMakeFiles/main.dir/src/main.cpp.o: ../include/cmdInterface.hpp
 CMakeFiles/main.dir/src/main.cpp.o: ../include/file.hpp
 CMakeFiles/main.dir/src/main.cpp.o: ../include/interact_status.hpp
-CMakeFiles/main.dir/src/main.cpp.o: ../include/interface.hpp
 CMakeFiles/main.dir/src/main.cpp.o: ../include/list.hpp
 CMakeFiles/main.dir/src/main.cpp.o: ../include/master.hpp
 CMakeFiles/main.dir/src/main.cpp.o: ../include/md5.hpp
@@ -40,6 +40,7 @@ CMakeFiles/main.dir/src/main.cpp.o: ../include/semaphore.hpp
 CMakeFiles/main.dir/src/main.cpp.o: ../include/task.hpp
 CMakeFiles/main.dir/src/main.cpp.o: ../include/taskSchedule.hpp
 CMakeFiles/main.dir/src/main.cpp.o: ../include/taskSchedule/genTest.h
+CMakeFiles/main.dir/src/main.cpp.o: ../include/visualInterface.hpp
 CMakeFiles/main.dir/src/main.cpp.o: ../src/main.cpp
 
 CMakeFiles/main.dir/src/md5.cpp.o: ../include/md5.hpp
@@ -96,4 +97,16 @@ CMakeFiles/main.dir/src/taskSchedule/readFileAndConfig.cpp.o: ../include/taskSch
 CMakeFiles/main.dir/src/taskSchedule/readFileAndConfig.cpp.o: ../src/taskSchedule/readFileAndConfig.cpp
 
 CMakeFiles/main.dir/src/taskSchedule/writeToFile.cpp.o: ../src/taskSchedule/writeToFile.cpp
+
+CMakeFiles/main.dir/src/visualInterface.cpp.o: ../include/base64.hpp
+CMakeFiles/main.dir/src/visualInterface.cpp.o: ../include/file.hpp
+CMakeFiles/main.dir/src/visualInterface.cpp.o: ../include/list.hpp
+CMakeFiles/main.dir/src/visualInterface.cpp.o: ../include/master.hpp
+CMakeFiles/main.dir/src/visualInterface.cpp.o: ../include/md5.hpp
+CMakeFiles/main.dir/src/visualInterface.cpp.o: ../include/semaphore.hpp
+CMakeFiles/main.dir/src/visualInterface.cpp.o: ../include/task.hpp
+CMakeFiles/main.dir/src/visualInterface.cpp.o: ../include/taskSchedule.hpp
+CMakeFiles/main.dir/src/visualInterface.cpp.o: ../include/taskSchedule/genTest.h
+CMakeFiles/main.dir/src/visualInterface.cpp.o: ../include/visualInterface.hpp
+CMakeFiles/main.dir/src/visualInterface.cpp.o: ../src/visualInterface.cpp
 

@@ -6,9 +6,11 @@
 #include <jsoncpp/json/json.h>
 #include <thread>
 #include <mutex>
-#include "interface.hpp"
+#include "cmdInterface.hpp"
 #include "file.hpp"
 #include "msg.hpp"
+#include "visualInterface.hpp"
+#include <random>
 
 #define InitFile "master_init_sample.json"
 #define MAX_LISTENING 1000
@@ -25,6 +27,11 @@ mutex mutex_slave_change;
 
 string work_client_list_export();
 string client_task_list_export(int client_id);
+
+std::random_device Rd{};	//初始化随机种子
+std::mt19937 Gen{ Rd() };	//伪随机数生成器
+std::normal_distribution<> Standard_normal_dist{ 0,1 };		//正态分布随机数
+std::uniform_real_distribution<> Uniform_real_dist01(0.0, 1.0);		//均匀分布随机数
 
 //初始化主节点
 int startup()

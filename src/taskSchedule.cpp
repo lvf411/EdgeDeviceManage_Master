@@ -9,10 +9,10 @@
 #include "taskSchedule.hpp"
 #include "master.hpp"
 
-std::random_device Rd{};	//初始化随机种子
-std::mt19937 Gen{ Rd() };	//伪随机数生成器
-std::normal_distribution<> Standard_normal_dist{ 0,1 };		//正态分布随机数
-std::uniform_real_distribution<> Uniform_real_dist01(0.0, 1.0);		//均匀分布随机数
+extern std::random_device Rd;	//初始化随机种子
+extern std::mt19937 Gen;	//伪随机数生成器
+extern std::normal_distribution<> Standard_normal_dist;		//正态分布随机数
+extern std::uniform_real_distribution<> Uniform_real_dist01;		//均匀分布随机数
 
 string filePathPrefix = FILEPATH_PREFIX;
 
@@ -104,7 +104,7 @@ int test_task_info_import(const TestInfo &tinfo, std::vector<std::queue<int>> &t
     task->id = task_increment_id;
     task_increment_id++;
     mutex_task_id.unlock();
-    //task->task_id = "";   //生成任务不需要自身的task id，只要有系统内的即可
+    //task->task_id.append("");   //生成任务不需要自身的task id，只要有系统内的即可
     task->subtask_num = tinfo.n;
     //构造任务执行程序
     test_task_exeprogram_generate(tinfo, task->id);

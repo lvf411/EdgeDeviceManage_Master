@@ -2,8 +2,8 @@ file(REMOVE_RECURSE
   "../bin/main"
   "../bin/main.pdb"
   "CMakeFiles/main.dir/src/base64.cpp.o"
+  "CMakeFiles/main.dir/src/cmdInterface.cpp.o"
   "CMakeFiles/main.dir/src/file.cpp.o"
-  "CMakeFiles/main.dir/src/interface.cpp.o"
   "CMakeFiles/main.dir/src/list.cpp.o"
   "CMakeFiles/main.dir/src/main.cpp.o"
   "CMakeFiles/main.dir/src/md5.cpp.o"
@@ -15,6 +15,7 @@ file(REMOVE_RECURSE
   "CMakeFiles/main.dir/src/taskSchedule/globalVar.cpp.o"
   "CMakeFiles/main.dir/src/taskSchedule/readFileAndConfig.cpp.o"
   "CMakeFiles/main.dir/src/taskSchedule/writeToFile.cpp.o"
+  "CMakeFiles/main.dir/src/visualInterface.cpp.o"
 )
 
 # Per-language clean rules from dependency scanning.
