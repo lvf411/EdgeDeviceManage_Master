@@ -44,11 +44,61 @@ string scheduleResExport(int taskNum, vector<queue<int>> &scheduleRes)
     return ss.str();
 }
 
-void visualizationTaskGenerateAndDeploy(int taskNum, double NC)
+std::string visualizationTaskGenerateAndDeploy(int taskNum, double NC)
 {
     TestInfo tinfo = DAGGenterate("10_10.txt", taskNum, master.work_client_num, NC);
-cout << "DAG" << endl;
+
     auto scheduleRes = HEFT_task_schedule("10_10.txt");
-cout << "heft" << endl;
-    cout << scheduleResExport(taskNum, scheduleRes) << endl;
+
+    return scheduleResExport(taskNum, scheduleRes);
+}
+
+int testserver()
+{
+    httplib::Server server;
+
+    server.Options("/perform_calculation", [&](const httplib::Request& req, httplib::Response& res) {
+        // 设置 CORS 头
+        res.set_header("Access-Control-Allow-Origin", "*");
+        res.set_header("Access-Control-Allow-Methods", "POST");
+        res.set_header("Access-Control-Allow-Headers", "Content-Type");
+
+        // 返回成功状态码
+        res.status = 200;
+    });
+
+    server.Post("/perform_calculation", [&](const httplib::Request& req, httplib::Response& res) {
+        // 解析接收到的JSON数据
+        Json::CharReaderBuilder readerBuilder;
+        Json::Value data;
+        std::istringstream is(req.body);
+        std::string errs;
+        Json::parseFromStream(readerBuilder, is, &data, &errs);
+
+        std::cout << "get req:" << is.str() << std::endl;
+
+        // 从JSON中获取输入数据
+        int subtaskNum = data["subtaskNum"].asInt();
+        double dagEdgeDensity = data["dagEdgeDensity"].asDouble();
+
+        std::cout << "subtaskNum:" << subtaskNum << std::endl << "nc: " << dagEdgeDensity << std::endl;
+
+        std::string result = visualizationTaskGenerateAndDeploy(subtaskNum, dagEdgeDensity);
+
+        // 设置 CORS 头，允许所有来源，也可以指定具体的域
+        res.set_header("Access-Control-Allow-Origin", "*");
+        // 其他响应头设置，根据需要添加
+        res.set_header("Content-Type", "application/json");
+        // 返回响应
+        res.status = 200;
+        
+        res.set_content(result, "application/json");
+
+        std::cout << "ack: " << result << std::endl;
+    });
+
+    // 启动服务器并监听端口
+    server.listen("192.168.80.128", 8080);
+
+    return 0;
 }

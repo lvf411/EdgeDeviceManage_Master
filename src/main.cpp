@@ -145,24 +145,29 @@ void slave_accept(int sock)
 }
 
 int main(){
-    int sock = startup();
+    // int sock = startup();
 
-    thread slave_listen_threadID(slave_accept, sock);
-    thread bash_io_threadID(bash_io);
-    thread task_deploy_threadID(task_deploy);
+    // thread slave_listen_threadID(slave_accept, sock);
+    // thread bash_io_threadID(bash_io);
+    // thread task_deploy_threadID(task_deploy);
 
-    if(slave_listen_threadID.joinable())
-    {
-        slave_listen_threadID.join();
-    }
-    if(bash_io_threadID.joinable())
-    {
-        bash_io_threadID.join();
-    }
-    if(task_deploy_threadID.joinable())
-    {
-        task_deploy_threadID.join();
-    }
+    // if(slave_listen_threadID.joinable())
+    // {
+    //     slave_listen_threadID.join();
+    // }
+    // if(bash_io_threadID.joinable())
+    // {
+    //     bash_io_threadID.join();
+    // }
+    // if(task_deploy_threadID.joinable())
+    // {
+    //     task_deploy_threadID.join();
+    // }
+
+    master.work_client_num = 10;
+    testserver();
+
+    while(1){}
 
     return 0;
 }

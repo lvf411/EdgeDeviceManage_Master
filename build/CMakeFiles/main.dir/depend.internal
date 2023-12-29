@@ -31,6 +31,7 @@ CMakeFiles/main.dir/src/main.cpp.o
  ../include/base64.hpp
  ../include/cmdInterface.hpp
  ../include/file.hpp
+ ../include/httplib.h
  ../include/interact_status.hpp
  ../include/list.hpp
  ../include/master.hpp
@@ -101,6 +102,7 @@ CMakeFiles/main.dir/src/taskSchedule/writeToFile.cpp.o
 CMakeFiles/main.dir/src/visualInterface.cpp.o
  ../include/base64.hpp
  ../include/file.hpp
+ ../include/httplib.h
  ../include/list.hpp
  ../include/master.hpp
  ../include/md5.hpp

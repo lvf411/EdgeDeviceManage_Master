@@ -58,6 +58,15 @@
         "mutex": "cpp",
         "strstream": "cpp",
         "iomanip": "cpp",
-        "cinttypes": "cpp"
+        "cinttypes": "cpp",
+        "any": "cpp",
+        "bitset": "cpp",
+        "csignal": "cpp",
+        "set": "cpp",
+        "unordered_set": "cpp",
+        "regex": "cpp",
+        "future": "cpp",
+        "shared_mutex": "cpp",
+        "variant": "cpp"
     }
 }
