@@ -24,9 +24,7 @@ map<int, ClientNode *> free_client_list_map, work_client_list_map;
 int increment_slave_id = 1;
 bool slave_list_export_file_flag = true;   //指示当前的从节点链表导出文件是否为最新的
 mutex mutex_slave_change;
-
-string work_client_list_export();
-string client_task_list_export(int client_id);
+pthread_rwlock_t workClientListRWLock;
 
 std::random_device Rd{};	//初始化随机种子
 std::mt19937 Gen{ Rd() };	//伪随机数生成器
@@ -122,9 +120,13 @@ void slave_accept(int sock)
         clientNode->head = new list_head();
         *clientNode->head = LIST_HEAD_INIT(*clientNode->head);
         clientNode->self = LIST_HEAD_INIT(clientNode->self);
-        list_add_tail(&clientNode->self, master.free_client_head);
-        master.free_client_num++;
-        free_client_list_map.insert(map<int, ClientNode *>::value_type(clientNode->client_id, clientNode));
+        // list_add_tail(&clientNode->self, master.free_client_head);
+        // master.free_client_num++;
+        // free_client_list_map.insert(map<int, ClientNode *>::value_type(clientNode->client_id, clientNode));
+        list_add_tail(&clientNode->self, master.work_client_head);
+        master.work_client_num++;
+        work_client_list_map.insert(map<int, ClientNode *>::value_type(clientNode->client_id, clientNode));
+        slave_list_export_file_flag = true;
         mutex_slave_list.unlock();
 
         char recvbuf[100] = {0};
@@ -140,34 +142,69 @@ void slave_accept(int sock)
         clientNode->modified = false;
         clientNode->status = INTERACT_STATUS_ROOT;
 
+        clientNode->work_client_cahange_flag = true;
+
+        
+
     }
     return;
 }
 
+//自动更新节点上的工作节点链表文件
+void workClientListUpdate()
+{
+    while(1)
+    {
+        sleep(WORK_CLIENT_LIST_UPDATE_GAP_TIME);
+        if(slave_list_export_file_flag == true)
+        {
+            //对 work_client_list 加写锁
+            pthread_rwlock_wrlock(&workClientListRWLock);
+            work_client_list_export();
+            pthread_rwlock_unlock(&workClientListRWLock);
+
+            mutex_slave_list.lock();
+            std::map<int, ClientNode*>::iterator it;
+            for (it = work_client_list_map.begin(); it != work_client_list_map.end(); ++it) {
+                it->second->work_client_cahange_flag = true;
+            }
+            slave_list_export_file_flag = false;
+            mutex_slave_list.unlock();
+            
+        }
+        
+    }
+}
+
 int main(){
-    // int sock = startup();
+    int sock = startup();
 
-    // thread slave_listen_threadID(slave_accept, sock);
-    // thread bash_io_threadID(bash_io);
-    // thread task_deploy_threadID(task_deploy);
+    thread slave_listen_threadID(slave_accept, sock);
+    thread bash_io_threadID(bash_io);
+    //thread task_deploy_threadID(task_deploy);
+    thread HTTPServer_threadID(testserver);
+    thread workClientListUpdate_threadID(workClientListUpdate);
 
-    // if(slave_listen_threadID.joinable())
-    // {
-    //     slave_listen_threadID.join();
-    // }
-    // if(bash_io_threadID.joinable())
-    // {
-    //     bash_io_threadID.join();
-    // }
+    if(slave_listen_threadID.joinable())
+    {
+        slave_listen_threadID.join();
+    }
+    if(bash_io_threadID.joinable())
+    {
+        bash_io_threadID.join();
+    }
     // if(task_deploy_threadID.joinable())
     // {
     //     task_deploy_threadID.join();
     // }
-
-    master.work_client_num = 10;
-    testserver();
-
-    while(1){}
+    if(HTTPServer_threadID.joinable())
+    {
+        HTTPServer_threadID.join();
+    }
+    if(workClientListUpdate_threadID.joinable())
+    {
+        workClientListUpdate_threadID.join();
+    }
 
     return 0;
 }

@@ -17,6 +17,8 @@
 #include "file.hpp"
 #include "semaphore.hpp"
 
+#define WORK_CLIENT_LIST_UPDATE_GAP_TIME 3
+
 #define SLAVE_ABILITY_DEFAULT 10
 
 //子任务间结果传递

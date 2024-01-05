@@ -134,7 +134,7 @@ void task_deploy()
                         wcnode->work_client_cahange_flag = true;
                         wctemp = wctemp->next;
                     }
-                    slave_list_export_file_flag = false;
+                    slave_list_export_file_flag = true;
                     mutex_slave_change.unlock();
                 }
             }

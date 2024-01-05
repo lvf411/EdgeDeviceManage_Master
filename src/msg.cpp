@@ -6,6 +6,7 @@
 extern Master master;
 extern bool slave_list_export_file_flag;
 extern std::mutex mutex_slave_change;
+extern pthread_rwlock_t workClientListRWLock;
 
 long long int MsgIDGenerate();
 std::string FileSendReqMsgEncode(FileTransInfo *info);
@@ -22,6 +23,8 @@ void msg_send(ClientNode *client)
     std::stringstream ss;
     ss << fw.write(root);
     send(client->sock, ss.str().c_str(), ss.str().length(), 0);
+    //进入正常工作状态前先睡眠 WORK_CLIENT_LIST_UPDATE_GAP_TIME * 2 秒，防止系统第一次启动时批量从节点请求的 work_client_list.txt 文件可能不同
+    sleep(WORK_CLIENT_LIST_UPDATE_GAP_TIME * 2);
     while(1)
     {
         switch(client->status)
@@ -74,27 +77,43 @@ void msg_send(ClientNode *client)
             case INTERACT_STATUS_SLAVELIST_EXPORT_FILE_GETFILE:
             {
                 //工作从节点链表发生改变，需要重新同步
-                //检查当前的从节点链表导出文件是否最新
-                mutex_slave_change.lock();
-                if(slave_list_export_file_flag == false)
-                {
-                    work_client_list_export();
-                }
-                mutex_slave_change.unlock();
+                // //检查当前的从节点链表导出文件是否最新
+                // mutex_slave_change.lock();
+                // if(slave_list_export_file_flag == true)
+                // {
+                //     work_client_list_export();
+                //     client->work_client_cahange_flag = true;
+                // }
+                // mutex_slave_change.unlock();
+
                 //从节点被分配了新任务，导出子任务链表并向从节点发送json文件
                 client->file_trans_fname.clear();
                 client->file_trans_fname = WORK_CLIENT_LIST_FNAME;
 
-                client->transinfo = new FileTransInfo();
+                if(client->transinfo == NULL)
+                {
+                    client->transinfo = new FileTransInfo();
+                }
+                else
+                {
+                    //清空transinfo
+                    FileInfoInit(&client->transinfo->info);
+                    client->transinfo->splitflag = false;
+                    client->transinfo->base64flag = false;
+                    client->transinfo->packnum = 0;
+                    client->transinfo->packsize = 0;
+                    client->transinfo->file_type = 0;
+                    client->transinfo->dst_rootid = 0;
+                    client->transinfo->dst_subtaskid = 0;
+                }
+                pthread_rwlock_rdlock(&workClientListRWLock);
                 FileInfoInit(&client->transinfo->info);
                 FileInfoGet(client->file_trans_fname, &client->transinfo->info);
-                client->transinfo->file_type = FILE_TYPE_KEY;
+                client->transinfo->file_type = FILE_TYPE_WORK_CLIENT_LIST;
                 client->transinfo->dst_rootid = 0;
                 client->transinfo->dst_subtaskid = 0;
-                client->mutex_status.lock();
-                client->status = INTERACT_STATUS_FILESEND_SEND_REQ;
-                client->mutex_status.unlock();
                 client->work_client_cahange_flag = false;
+
             }
             case INTERACT_STATUS_FILESEND_SEND_REQ:
             {
@@ -149,12 +168,17 @@ void msg_send(ClientNode *client)
                 //接收到从节点对主节点发起的tcp连接的ack确认，主节点可以开始发送文件内容
                 std::thread filesend_threadID(file_send, client->file_trans_sock, client->file_trans_fname);
                 filesend_threadID.join();
-                client->sem.Wait();
-                if(client->status == INTERACT_STATUS_FILESEND_SENDFILE)
+                if(client->transinfo->file_type == FILE_TYPE_WORK_CLIENT_LIST)
                 {
-                    continue;
+                    pthread_rwlock_unlock(&workClientListRWLock);
                 }
                 close(client->file_trans_sock);
+                client->sem.Wait();
+                // if(client->status == INTERACT_STATUS_FILESEND_SENDFILE)
+                // {
+                //     continue;
+                // }
+                // close(client->file_trans_sock);
                 break;
             }
             default:
@@ -217,7 +241,22 @@ void msg_recv(ClientNode *client)
                 int res = root["res"].asBool();
                 if(res == false)
                 {
-                    client->status = INTERACT_STATUS_FILESEND_SENDFILE;
+                    client->mutex_status.lock();
+                    client->status = INTERACT_STATUS_FILESEND_SEND_REQ;
+                    //根据文件名重新获取当前传输文件信息
+                    //初始化当前传输文件信息
+                    FileInfoInit(&client->transinfo->info);
+                    client->transinfo->splitflag = false;
+                    client->transinfo->base64flag = false;
+                    client->transinfo->packnum = 0;
+                    client->transinfo->packsize = 0;
+                    // client->transinfo->file_type = 0;
+                    // client->transinfo->dst_rootid = 0;
+                    // client->transinfo->dst_subtaskid = 0;
+
+                    FileInfoGet(client->file_trans_fname, &client->transinfo->info);
+                    client->mutex_status.unlock();
+
                 }
                 else
                 {

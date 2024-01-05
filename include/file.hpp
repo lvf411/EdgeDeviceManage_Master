@@ -41,6 +41,7 @@ struct FileTransInfo
 #define FILE_TYPE_INPUT         2
 #define FILE_TYPE_OUTPUT        3
 #define FILE_TYPE_KEY           4
+#define FILE_TYPE_WORK_CLIENT_LIST      5
 
 #define WORK_CLIENT_LIST_FNAME "work_client_list.json"
 

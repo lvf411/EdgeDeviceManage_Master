@@ -66,9 +66,9 @@ std::vector<std::queue<int>> HEFT_task_schedule(string DAGfilename)
 
 void test_task_exeprogram_generate(const TestInfo &tinfo, int taskid)
 {
-    for(int i = 1; i <= tinfo.m; i++)
+    for(int i = 1; i <= tinfo.n; i++)
     {
-        int cycleNum = tinfo.taskWeight[i];
+        long cycleNum = tinfo.taskWeight[i];
         cycleNum *= TEST_TASK_CYCLE_PARAM;
         std::string taskFileName = "../task/" + std::to_string(taskid) + '_' + std::to_string(i);
         std::string taskFilePath = taskFileName + ".c";
@@ -78,7 +78,8 @@ void test_task_exeprogram_generate(const TestInfo &tinfo, int taskid)
         ofs << "int main(){" << std::endl;
         ofs << "volatile long sum = 0;" << std::endl;
         ofs << "long i;for(i = 0; i < " << cycleNum << "; i++){" << std::endl;
-        ofs << "sum++;}system(\"touch " + taskOutputpath + "\")return 0;}" << std::endl;
+        // ofs << "sum++;}system(\"touch " + taskOutputpath + "\");return 0;}" << std::endl;
+        ofs << "sum++;}system(\"echo a > " + taskOutputpath +"\");return 0;}" << std::endl;
         ofs.close();
         std::string compileInst;
         compileInst.append(CROSS_COMPILE_TOOL_PATH);
@@ -116,7 +117,7 @@ int test_task_info_import(const TestInfo &tinfo, std::vector<std::queue<int>> &t
     for(int i = 0; i < tinfo.n; i++)
     {
         SubTaskNode *node = new SubTaskNode();
-        node->subtask_id = i;
+        node->subtask_id = i + 1;
         node->root_id = task->id;
         node->exepath = "../task/" + to_string(task->id) + '_' + to_string(i + 1);
 
@@ -133,7 +134,7 @@ int test_task_info_import(const TestInfo &tinfo, std::vector<std::queue<int>> &t
                 SubTaskResult *newprev = new SubTaskResult();
                 newprev->client_id = 0;
                 newprev->subtask_id = j + 1;
-                newprev->fname = to_string(task->id) + '_' + to_string(i + 1) + ".txt";
+                newprev->fname = to_string(task->id) + '_' + to_string(j + 1) + ".txt";
                 newprev->next = temp->next;
                 temp->next = newprev;
                 temp = newprev;
@@ -141,6 +142,7 @@ int test_task_info_import(const TestInfo &tinfo, std::vector<std::queue<int>> &t
         }
         node->prev_num = prevnum;
 
+        //（i，i）~（i，n-1）若有非0值代表有后继关系
         node->succ_head = new SubTaskResult();
         node->succ_head->next = NULL;
         temp = node->succ_head;
@@ -170,12 +172,25 @@ int test_task_info_import(const TestInfo &tinfo, std::vector<std::queue<int>> &t
     ClientNode *slave[tinfo.m];
     for(int i = 0; i < tinfo.m; i++)
     {
-        while(!taskDeploy[i].empty())
+        //taskDeploy 为从0开始单独编号的所有工作节点上被分配的当前任务的子任务序列
+        //假如有工作节点被撤销或掉线的情况需要另外处理，此处未考虑
+        int subtasknum = taskDeploy[i].size();
+        for(int j = 0; j < subtasknum; j++)
         {
-            deployArray[taskDeploy[i].front()] = i;
+            int index = taskDeploy[i].front();
+            deployArray[index] = i + 1;
             taskDeploy[i].pop();
+            taskDeploy[i].push(index);
         }
     }
+
+    cerr << "tinfo.n:" << tinfo.n << "\ttinfo.m:" << tinfo.m << endl;
+    for(int i = 0; i < tinfo.m; i++)
+    {
+        cerr << deployArray[i] << ":";
+    }
+
+    //补充从节点任务链表中自身、前驱与后继被分配的节点信息
     list_head *clientTemp = master.work_client_head->next;
     for(int i = 0; i < tinfo.m; i++)
     {
@@ -188,12 +203,35 @@ int test_task_info_import(const TestInfo &tinfo, std::vector<std::queue<int>> &t
     {
         SubTaskNode *subtaskNode = (SubTaskNode *)list_entry(taskTemp, SubTaskNode, taskself);
         subtaskNode->client_id = deployArray[i];
-        slave[deployArray[i]]->subtask_num++;
-        slave[deployArray[i]]->modified = true;
-        subtaskNode->clienthead = slave[deployArray[i]]->head;
+        slave[deployArray[i] - 1]->subtask_num++;
+        slave[deployArray[i] - 1]->modified = true;
+        subtaskNode->clienthead = slave[deployArray[i] - 1]->head;
         subtaskNode->clientself = LIST_HEAD_INIT(subtaskNode->clientself);
-        list_add_tail(&subtaskNode->clientself, slave[deployArray[i]]->head);
+        list_add_tail(&subtaskNode->clientself, slave[deployArray[i] - 1]->head);
         taskTemp = taskTemp->next;
+    }
+
+    list_head *subt_head = task->subtask_head, *subt_temp = task->subtask_head->next;
+    while(subt_temp != subt_head)
+    {
+        int j = 0;
+        SubTaskNode *subt = (SubTaskNode *)(list_entry(subt_temp, SubTaskNode, taskself));
+        SubTaskResult *res_temp = subt->prev_head->next;
+        while(j < subt->prev_num)
+        {
+            res_temp->client_id = slave[deployArray[res_temp->subtask_id - 1] - 1]->client_id;
+            res_temp = res_temp->next;
+            j++;
+        }
+        j = 0;
+        res_temp = subt->succ_head->next;
+        while(j < subt->next_num)
+        {
+            res_temp->client_id = slave[deployArray[res_temp->subtask_id - 1] - 1]->client_id;
+            res_temp = res_temp->next;
+            j++;
+        }
+        subt_temp = subt_temp->next;
     }
 
     //将task插入到master系统中的任务队列中
