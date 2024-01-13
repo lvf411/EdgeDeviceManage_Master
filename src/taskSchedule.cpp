@@ -97,6 +97,7 @@ void test_task_exeprogram_generate(const TestInfo &tinfo, int taskid)
 extern Master master;
 extern int task_increment_id;
 extern std::mutex mutex_task_list, mutex_uninit_task_list, mutex_task_id;
+extern map<int, Task *>deployedTaskListMap; 
 
 int test_task_info_import(const TestInfo &tinfo, std::vector<std::queue<int>> &taskDeploy)
 {
@@ -236,9 +237,11 @@ int test_task_info_import(const TestInfo &tinfo, std::vector<std::queue<int>> &t
 
     //将task插入到master系统中的任务队列中
     task->self = LIST_HEAD_INIT(task->self);
-    mutex_uninit_task_list.lock();
-    list_add_tail(&task->self, master.uninit_task_list_head);
-    mutex_uninit_task_list.unlock();
+    mutex_task_list.lock();
+    list_add_tail(&task->self, master.task_list_head);
+    deployedTaskListMap.insert(map<int, Task *>::value_type(task->id, task));
+    master.task_num++;
+    mutex_task_list.unlock();
 
     return 0;
 }

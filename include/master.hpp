@@ -43,6 +43,7 @@ struct SubTaskNode{
     struct list_head *clienthead;       //子任务分配执行的客户端的子任务链表表头
     struct list_head clientself;        //指向自身在分配执行的客户端的子任务链表中的指针
     std::string exepath;                //子任务执行文件路径
+    bool done;                          //执行完成标记，true为执行完成
 };
 
 //客户端链表节点
@@ -76,6 +77,10 @@ struct Task{
     int subtask_num;                    //可分解的子任务个数
     struct list_head *subtask_head;     //子任务链表表头
     struct list_head self;              //自身在任务链表中的指针
+    int downloadSubtaskNum;             //已下载完成子任务个数
+    std::mutex mutexDownloadSubtaskNum; //对已下载子任务个数进行保护的锁
+    int doneSubtaskNum;                 //执行完成的子任务个数
+    std::mutex mutexDoneSubtaskNum;     //对执行完成子任务个数进行保护的锁
 };
 
 //服务端信息结构体
@@ -90,6 +95,8 @@ struct Master{
     struct list_head *task_list_head;   //已分配的任务链表表头
     int uninit_task_num;                //未分配的任务数量
     struct list_head *uninit_task_list_head;    //未分配的任务的链表表头
+    int doneTaskNum;                    //已完成的任务数量
+    struct list_head *doneTaskListHead; //已完成的任务链表表头
 };
 
 #endif //__MASTER_HPP

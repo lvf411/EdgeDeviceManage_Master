@@ -18,9 +18,10 @@
 using namespace std;
 
 Master master;
-list_head free_client_list, work_client_list, deployed_task_list, uninit_task_list;
+list_head free_client_list, work_client_list, deployed_task_list, uninit_task_list, doneTaskList;
 mutex mutex_slave_list;
 map<int, ClientNode *> free_client_list_map, work_client_list_map;
+map<int, Task *>deployedTaskListMap; 
 int increment_slave_id = 1;
 bool slave_list_export_file_flag = true;   //指示当前的从节点链表导出文件是否为最新的
 mutex mutex_slave_change;
@@ -93,6 +94,9 @@ int startup()
     uninit_task_list = LIST_HEAD_INIT(uninit_task_list);
     master.uninit_task_num = 0;
     master.uninit_task_list_head = &uninit_task_list;
+    doneTaskList = LIST_HEAD_INIT(doneTaskList);
+    master.doneTaskNum = 0;
+    master.doneTaskListHead = &doneTaskList;
 
 	return sock;
 }

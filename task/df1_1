@@ -1,7 +1,0 @@
-FROM scratch
-MAINTAINER lf
-COPY 1 ~/
-ENV MYPATH ~/
-WORKDIR $MYPATH
-CMD ["1"]
-CMD ["echo" "[done]"]

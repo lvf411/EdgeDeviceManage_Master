@@ -2,11 +2,14 @@
 #include <mutex>
 #include <sys/time.h>
 #include <sstream>
+#include <assert.h>
 
 extern Master master;
 extern bool slave_list_export_file_flag;
-extern std::mutex mutex_slave_change;
+extern std::mutex mutex_slave_change, mutex_task_list, mutexDoneTaskList;
 extern pthread_rwlock_t workClientListRWLock;
+extern std::map<int, ClientNode *> work_client_list_map;
+extern std::map<int, Task *>deployedTaskListMap; 
 
 long long int MsgIDGenerate();
 std::string FileSendReqMsgEncode(FileTransInfo *info);
@@ -302,11 +305,78 @@ void msg_recv(ClientNode *client)
                 msg["msg_id"] = Json::Value(MsgIDGenerate());
                 msg["fname"] = Json::Value(fname);
                 msg["ret"] = Json::Value(flag);
+                msg["rootid"] = Json::Value(root["rootid"].asInt());
+                msg["subtaskid"] = Json::Value(root["subtaskid"].asInt());
                 Json::FastWriter fw;
                 std::stringstream ss;
                 ss << fw.write(msg);
                 send(client->sock, ss.str().c_str(), ss.str().length(), 0);
                 std::cout << ss.str() << std::endl;
+                break;
+            }
+            case MSG_TYPE_SUBTASK_RESULT:
+            {
+                //接收到从节点任务执行完成上报报文
+                //需删除对应从节点结构中的相应任务信息，归档任务链表中的对应信息
+                int rootID = root["root_id"].asInt();
+                int subtaskID = root["subtask_id"].asInt();
+                int slaveID = root["slaveID"].asInt();
+
+                Task *task = NULL;
+                //处理从节点结构体中的子任务信息
+                // auto it = work_client_list_map.find(slaveID);
+                // assert(it != work_client_list_map.end());
+                // ClientNode *client = it->second;
+                list_head *subtaskList = client->head;
+                list_head *temp = subtaskList->next;
+                while (temp != subtaskList)
+                {
+                    SubTaskNode *subtaskNode = list_entry(temp, SubTaskNode, clientself);
+                    std::cout << "rootID:" << subtaskNode->root_id << "subtaskID:" << subtaskNode->subtask_id << std::endl;
+                    auto it = deployedTaskListMap.find(rootID);
+                    task = it->second;
+                    assert(task != NULL);
+                    if(subtaskNode->root_id == rootID)
+                    {
+                        if(subtaskNode->subtask_id == subtaskID)
+                        {
+                            //找到目标子任务结构体，进行清除
+                            subtaskNode->done = true;
+                            list_del(&subtaskNode->clientself);
+                            client->mutex_status.lock();
+                            client->subtask_num--;
+                            client->mutex_status.unlock();
+                            //修改任务结构体中的已执行数量
+                            std::cout << "slaveID:" << client->client_id << ":" << task->task_id << std::endl;
+                            task->mutexDoneSubtaskNum.lock();
+                            task->doneSubtaskNum++;
+                            task->mutexDoneSubtaskNum.unlock();
+                            break;
+                        }
+                    }
+                    temp = temp->next;
+                    std::cout << "slaveID:" << client->client_id << std::endl;
+                }
+                if(temp == subtaskList)
+                {
+                    std::cout << "Error subtask result!!! " << msg_buf << std::endl;
+                    break;
+                }
+                
+                //归档任务链表中对应信息
+                assert(task != NULL);
+                if(task->doneSubtaskNum == task->subtask_num)
+                {
+                    mutex_task_list.lock();
+                    list_del(&task->self);
+                    master.task_num--;
+                    mutex_task_list.unlock();
+
+                    mutexDoneTaskList.lock();
+                    list_add_tail(&task->self, master.doneTaskListHead);
+                    master.doneTaskNum++;
+                    mutexDoneTaskList.unlock();
+                }
                 break;
             }
             default:
