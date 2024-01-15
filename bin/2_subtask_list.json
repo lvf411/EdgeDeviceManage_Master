@@ -1,71 +1,31 @@
 {
    "client_id" : 2,
-   "ip" : "169.254.159.45",
+   "ip" : "169.254.198.88",
    "master_ip" : "169.254.12.12",
    "master_port" : 10000,
-   "port" : 43032,
+   "port" : 35136,
    "subtask" : [
       {
-         "exe_name" : "3_1",
-         "input" : null,
-         "input_num" : 0,
-         "output" : [
-            {
-               "client_id" : 2,
-               "fname" : "3_1.txt",
-               "subtask_id" : 2
-            },
-            {
-               "client_id" : 3,
-               "fname" : "3_1.txt",
-               "subtask_id" : 4
-            },
-            {
-               "client_id" : 1,
-               "fname" : "3_1.txt",
-               "subtask_id" : 5
-            },
-            {
-               "client_id" : 1,
-               "fname" : "3_1.txt",
-               "subtask_id" : 9
-            },
-            {
-               "client_id" : 1,
-               "fname" : "3_1.txt",
-               "subtask_id" : 10
-            }
-         ],
-         "output_num" : 5,
-         "root_id" : 3,
-         "subtask_id" : 1
-      },
-      {
-         "exe_name" : "3_2",
+         "exe_name" : "1_8",
          "input" : [
             {
-               "client_id" : 2,
-               "fname" : "3_1.txt",
-               "subtask_id" : 1
+               "client_id" : 1,
+               "fname" : "1_5.txt",
+               "subtask_id" : 5
             }
          ],
          "input_num" : 1,
          "output" : [
             {
-               "client_id" : 3,
-               "fname" : "3_2.txt",
-               "subtask_id" : 7
-            },
-            {
                "client_id" : 1,
-               "fname" : "3_2.txt",
-               "subtask_id" : 10
+               "fname" : "1_8.txt",
+               "subtask_id" : 9
             }
          ],
-         "output_num" : 2,
-         "root_id" : 3,
-         "subtask_id" : 2
+         "output_num" : 1,
+         "root_id" : 1,
+         "subtask_id" : 8
       }
    ],
-   "subtask_num" : 2
+   "subtask_num" : 1
 }

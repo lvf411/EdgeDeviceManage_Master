@@ -68,7 +68,7 @@ void test_task_exeprogram_generate(const TestInfo &tinfo, int taskid)
 {
     for(int i = 1; i <= tinfo.n; i++)
     {
-        long cycleNum = tinfo.taskWeight[i];
+        long cycleNum = tinfo.taskWeight[i - 1];
         cycleNum *= TEST_TASK_CYCLE_PARAM;
         std::string taskFileName = "../task/" + std::to_string(taskid) + '_' + std::to_string(i);
         std::string taskFilePath = taskFileName + ".c";

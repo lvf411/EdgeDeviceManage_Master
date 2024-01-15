@@ -3,6 +3,7 @@
 #include <sys/time.h>
 #include <sstream>
 #include <assert.h>
+#include <chrono>
 
 extern Master master;
 extern bool slave_list_export_file_flag;
@@ -59,6 +60,13 @@ void msg_send(ClientNode *client)
                     std::stringstream ss;
                     ss << fw.write(root);
                     send(client->sock, ss.str().c_str(), ss.str().length(), 0);
+                    auto currenttime = std::chrono::system_clock::now();
+                    auto timestamp = std::chrono::system_clock::to_time_t(currenttime);
+                    auto timestampMS = std::chrono::duration_cast<std::chrono::milliseconds>(currenttime.time_since_epoch()).count();
+                    char buffer[80];
+                    std::strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", std::localtime(&timestamp));
+                    std::cout << "timestampMS: " << timestampMS << std::endl;
+                    std::cout << "timestamp: " << buffer << std::endl;
                     std::cout << "slaveID:" << client->client_id << " run subtasks!" << std::endl;
                     std::cout << ss.str() << std::endl;
                     client->runFlag = false;
@@ -390,6 +398,13 @@ void msg_recv(ClientNode *client)
                 assert(task != NULL);
                 if(task->doneSubtaskNum == task->subtask_num)
                 {
+                    auto currenttime = std::chrono::system_clock::now();
+                    auto timestamp = std::chrono::system_clock::to_time_t(currenttime);
+                    auto timestampMS = std::chrono::duration_cast<std::chrono::milliseconds>(currenttime.time_since_epoch()).count();
+                    char buffer[80];
+                    std::strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", std::localtime(&timestamp));
+                    std::cout << "end timestampMS: " << timestampMS << std::endl;
+                    std::cout << "end timestamp: " << buffer << std::endl;
                     mutex_task_list.lock();
                     list_del(&task->self);
                     master.task_num--;
