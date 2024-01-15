@@ -1,40 +1,71 @@
 {
    "client_id" : 2,
-   "ip" : "169.254.65.165",
+   "ip" : "169.254.159.45",
    "master_ip" : "169.254.12.12",
    "master_port" : 10000,
-   "port" : 37378,
+   "port" : 43032,
    "subtask" : [
       {
-         "exe_name" : "3_7",
-         "input" : [
+         "exe_name" : "3_1",
+         "input" : null,
+         "input_num" : 0,
+         "output" : [
+            {
+               "client_id" : 2,
+               "fname" : "3_1.txt",
+               "subtask_id" : 2
+            },
+            {
+               "client_id" : 3,
+               "fname" : "3_1.txt",
+               "subtask_id" : 4
+            },
             {
                "client_id" : 1,
                "fname" : "3_1.txt",
+               "subtask_id" : 5
+            },
+            {
+               "client_id" : 1,
+               "fname" : "3_1.txt",
+               "subtask_id" : 9
+            },
+            {
+               "client_id" : 1,
+               "fname" : "3_1.txt",
+               "subtask_id" : 10
+            }
+         ],
+         "output_num" : 5,
+         "root_id" : 3,
+         "subtask_id" : 1
+      },
+      {
+         "exe_name" : "3_2",
+         "input" : [
+            {
+               "client_id" : 2,
+               "fname" : "3_1.txt",
                "subtask_id" : 1
+            }
+         ],
+         "input_num" : 1,
+         "output" : [
+            {
+               "client_id" : 3,
+               "fname" : "3_2.txt",
+               "subtask_id" : 7
             },
             {
                "client_id" : 1,
                "fname" : "3_2.txt",
-               "subtask_id" : 2
-            },
-            {
-               "client_id" : 1,
-               "fname" : "3_3.txt",
-               "subtask_id" : 3
-            },
-            {
-               "client_id" : 1,
-               "fname" : "3_6.txt",
-               "subtask_id" : 6
+               "subtask_id" : 10
             }
          ],
-         "input_num" : 4,
-         "output" : null,
-         "output_num" : 0,
+         "output_num" : 2,
          "root_id" : 3,
-         "subtask_id" : 7
+         "subtask_id" : 2
       }
    ],
-   "subtask_num" : 1
+   "subtask_num" : 2
 }

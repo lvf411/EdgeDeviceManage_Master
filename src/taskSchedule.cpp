@@ -99,6 +99,7 @@ extern int task_increment_id;
 extern std::mutex mutex_task_list, mutex_uninit_task_list, mutex_task_id;
 extern map<int, Task *>deployedTaskListMap; 
 
+//返回系统内分配的任务id
 int test_task_info_import(const TestInfo &tinfo, std::vector<std::queue<int>> &taskDeploy)
 {
     Task *task = new Task();
@@ -243,5 +244,5 @@ int test_task_info_import(const TestInfo &tinfo, std::vector<std::queue<int>> &t
     master.task_num++;
     mutex_task_list.unlock();
 
-    return 0;
+    return task->id;
 }

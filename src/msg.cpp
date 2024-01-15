@@ -50,6 +50,19 @@ void msg_send(ClientNode *client)
                     client->mutex_status.unlock();
                     break;
                 }
+                //检查是否有被指示开始运行子任务
+                if(client->runFlag == true)
+                {
+                    Json::Value root;
+                    root["type"] = Json::Value(MSG_TYPE_SUBTASK_RUN);
+                    Json::FastWriter fw;
+                    std::stringstream ss;
+                    ss << fw.write(root);
+                    send(client->sock, ss.str().c_str(), ss.str().length(), 0);
+                    std::cout << "slaveID:" << client->client_id << " run subtasks!" << std::endl;
+                    std::cout << ss.str() << std::endl;
+                    client->runFlag = false;
+                }
                 //起始状态其他检查项目
 
 
@@ -264,6 +277,16 @@ void msg_recv(ClientNode *client)
                 else
                 {
                     client->status = INTERACT_STATUS_ROOT;
+                    if(client->transinfo->file_type == FILE_TYPE_EXE)
+                    {
+                        auto it = deployedTaskListMap.find(client->transinfo->dst_rootid);
+                        Task *task = it->second;
+                        assert(task != NULL);
+                        task->mutexDownloadSubtaskNum.lock();
+                        task->downloadSubtaskNum++;
+                        task->mutexDownloadSubtaskNum.unlock();
+                    }
+                    
                 }
                 client->sem.Signal();
                 break;

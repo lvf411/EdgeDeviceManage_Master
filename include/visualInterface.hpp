@@ -10,7 +10,7 @@
 #include <strstream>
 #include "httplib.h"
 
-string scheduleResExport(int taskNum, vector<queue<int>> &scheduleRes);
+string scheduleResExport(int taskNum, vector<queue<int>> &scheduleRes, int taskID);
 
 std::string visualizationTaskGenerateAndDeploy(int taskNum, double NC);
 

@@ -68,6 +68,7 @@ struct ClientNode{
     int file_trans_sock;                //文件传输时与从节点建立的新连接
     int file_trans_port;                //文件传输时从节点提供的端口号
     Semaphore sem;                      //实现消息发送/接收线程同步的信号量
+    bool runFlag;                       //指示从节点开始运行子任务，每次置位只会发送一次消息
 };
 
 //任务描述

@@ -3,139 +3,49 @@
    "ip" : "169.254.212.224",
    "master_ip" : "169.254.12.12",
    "master_port" : 10000,
-   "port" : 53086,
+   "port" : 56346,
    "subtask" : [
       {
-         "exe_name" : "4_2",
+         "exe_name" : "3_3",
          "input" : null,
          "input_num" : 0,
          "output" : [
             {
                "client_id" : 1,
-               "fname" : "4_2.txt",
+               "fname" : "3_3.txt",
                "subtask_id" : 5
             },
             {
                "client_id" : 1,
-               "fname" : "4_2.txt",
+               "fname" : "3_3.txt",
                "subtask_id" : 6
             },
             {
-               "client_id" : 2,
-               "fname" : "4_2.txt",
+               "client_id" : 3,
+               "fname" : "3_3.txt",
                "subtask_id" : 7
             },
             {
                "client_id" : 1,
-               "fname" : "4_2.txt",
-               "subtask_id" : 9
-            },
-            {
-               "client_id" : 1,
-               "fname" : "4_2.txt",
+               "fname" : "3_3.txt",
                "subtask_id" : 10
-            },
-            {
-               "client_id" : 2,
-               "fname" : "4_2.txt",
-               "subtask_id" : 11
-            },
-            {
-               "client_id" : 4,
-               "fname" : "4_2.txt",
-               "subtask_id" : 14
-            },
-            {
-               "client_id" : 1,
-               "fname" : "4_2.txt",
-               "subtask_id" : 15
             }
          ],
-         "output_num" : 8,
-         "root_id" : 4,
-         "subtask_id" : 2
-      },
-      {
-         "exe_name" : "4_3",
-         "input" : null,
-         "input_num" : 0,
-         "output" : [
-            {
-               "client_id" : 1,
-               "fname" : "4_3.txt",
-               "subtask_id" : 4
-            },
-            {
-               "client_id" : 1,
-               "fname" : "4_3.txt",
-               "subtask_id" : 5
-            },
-            {
-               "client_id" : 1,
-               "fname" : "4_3.txt",
-               "subtask_id" : 8
-            },
-            {
-               "client_id" : 1,
-               "fname" : "4_3.txt",
-               "subtask_id" : 9
-            },
-            {
-               "client_id" : 1,
-               "fname" : "4_3.txt",
-               "subtask_id" : 10
-            },
-            {
-               "client_id" : 2,
-               "fname" : "4_3.txt",
-               "subtask_id" : 11
-            },
-            {
-               "client_id" : 4,
-               "fname" : "4_3.txt",
-               "subtask_id" : 14
-            },
-            {
-               "client_id" : 1,
-               "fname" : "4_3.txt",
-               "subtask_id" : 15
-            },
-            {
-               "client_id" : 2,
-               "fname" : "4_3.txt",
-               "subtask_id" : 16
-            },
-            {
-               "client_id" : 2,
-               "fname" : "4_3.txt",
-               "subtask_id" : 17
-            },
-            {
-               "client_id" : 1,
-               "fname" : "4_3.txt",
-               "subtask_id" : 18
-            },
-            {
-               "client_id" : 2,
-               "fname" : "4_3.txt",
-               "subtask_id" : 20
-            }
-         ],
-         "output_num" : 12,
-         "root_id" : 4,
+         "output_num" : 4,
+         "root_id" : 3,
          "subtask_id" : 3
       },
       {
-         "exe_name" : "4_4",
+         "exe_name" : "3_5",
          "input" : [
             {
                "client_id" : 2,
-               "fname" : "4_1.txt",
+               "fname" : "3_1.txt",
                "subtask_id" : 1
             },
             {
                "client_id" : 1,
-               "fname" : "4_3.txt",
+               "fname" : "3_3.txt",
                "subtask_id" : 3
             }
          ],
@@ -143,507 +53,181 @@
          "output" : [
             {
                "client_id" : 1,
-               "fname" : "4_4.txt",
-               "subtask_id" : 5
-            },
-            {
-               "client_id" : 1,
-               "fname" : "4_4.txt",
-               "subtask_id" : 8
-            },
-            {
-               "client_id" : 1,
-               "fname" : "4_4.txt",
-               "subtask_id" : 9
-            },
-            {
-               "client_id" : 2,
-               "fname" : "4_4.txt",
-               "subtask_id" : 11
-            },
-            {
-               "client_id" : 1,
-               "fname" : "4_4.txt",
-               "subtask_id" : 15
-            },
-            {
-               "client_id" : 1,
-               "fname" : "4_4.txt",
-               "subtask_id" : 18
-            },
-            {
-               "client_id" : 2,
-               "fname" : "4_4.txt",
-               "subtask_id" : 19
-            },
-            {
-               "client_id" : 2,
-               "fname" : "4_4.txt",
-               "subtask_id" : 20
-            }
-         ],
-         "output_num" : 8,
-         "root_id" : 4,
-         "subtask_id" : 4
-      },
-      {
-         "exe_name" : "4_5",
-         "input" : [
-            {
-               "client_id" : 1,
-               "fname" : "4_2.txt",
-               "subtask_id" : 2
-            },
-            {
-               "client_id" : 1,
-               "fname" : "4_3.txt",
-               "subtask_id" : 3
-            },
-            {
-               "client_id" : 1,
-               "fname" : "4_4.txt",
-               "subtask_id" : 4
-            }
-         ],
-         "input_num" : 3,
-         "output" : [
-            {
-               "client_id" : 1,
-               "fname" : "4_5.txt",
+               "fname" : "3_5.txt",
                "subtask_id" : 6
             },
             {
                "client_id" : 1,
-               "fname" : "4_5.txt",
+               "fname" : "3_5.txt",
                "subtask_id" : 8
             },
             {
-               "client_id" : 2,
-               "fname" : "4_5.txt",
-               "subtask_id" : 11
-            },
-            {
-               "client_id" : 2,
-               "fname" : "4_5.txt",
-               "subtask_id" : 16
-            },
-            {
                "client_id" : 1,
-               "fname" : "4_5.txt",
-               "subtask_id" : 18
-            },
-            {
-               "client_id" : 2,
-               "fname" : "4_5.txt",
-               "subtask_id" : 20
-            }
-         ],
-         "output_num" : 6,
-         "root_id" : 4,
-         "subtask_id" : 5
-      },
-      {
-         "exe_name" : "4_6",
-         "input" : [
-            {
-               "client_id" : 2,
-               "fname" : "4_1.txt",
-               "subtask_id" : 1
-            },
-            {
-               "client_id" : 1,
-               "fname" : "4_2.txt",
-               "subtask_id" : 2
-            },
-            {
-               "client_id" : 1,
-               "fname" : "4_5.txt",
-               "subtask_id" : 5
-            }
-         ],
-         "input_num" : 3,
-         "output" : [
-            {
-               "client_id" : 2,
-               "fname" : "4_6.txt",
-               "subtask_id" : 7
-            },
-            {
-               "client_id" : 1,
-               "fname" : "4_6.txt",
-               "subtask_id" : 8
-            },
-            {
-               "client_id" : 2,
-               "fname" : "4_6.txt",
-               "subtask_id" : 11
-            },
-            {
-               "client_id" : 1,
-               "fname" : "4_6.txt",
-               "subtask_id" : 13
-            },
-            {
-               "client_id" : 4,
-               "fname" : "4_6.txt",
-               "subtask_id" : 14
-            },
-            {
-               "client_id" : 1,
-               "fname" : "4_6.txt",
-               "subtask_id" : 15
-            },
-            {
-               "client_id" : 2,
-               "fname" : "4_6.txt",
-               "subtask_id" : 16
-            },
-            {
-               "client_id" : 2,
-               "fname" : "4_6.txt",
-               "subtask_id" : 19
-            }
-         ],
-         "output_num" : 8,
-         "root_id" : 4,
-         "subtask_id" : 6
-      },
-      {
-         "exe_name" : "4_8",
-         "input" : [
-            {
-               "client_id" : 2,
-               "fname" : "4_1.txt",
-               "subtask_id" : 1
-            },
-            {
-               "client_id" : 1,
-               "fname" : "4_3.txt",
-               "subtask_id" : 3
-            },
-            {
-               "client_id" : 1,
-               "fname" : "4_4.txt",
-               "subtask_id" : 4
-            },
-            {
-               "client_id" : 1,
-               "fname" : "4_5.txt",
-               "subtask_id" : 5
-            },
-            {
-               "client_id" : 1,
-               "fname" : "4_6.txt",
-               "subtask_id" : 6
-            }
-         ],
-         "input_num" : 5,
-         "output" : [
-            {
-               "client_id" : 1,
-               "fname" : "4_8.txt",
+               "fname" : "3_5.txt",
                "subtask_id" : 9
             },
             {
-               "client_id" : 2,
-               "fname" : "4_8.txt",
-               "subtask_id" : 16
-            },
-            {
-               "client_id" : 2,
-               "fname" : "4_8.txt",
-               "subtask_id" : 17
-            },
-            {
-               "client_id" : 2,
-               "fname" : "4_8.txt",
-               "subtask_id" : 19
+               "client_id" : 1,
+               "fname" : "3_5.txt",
+               "subtask_id" : 10
             }
          ],
          "output_num" : 4,
-         "root_id" : 4,
-         "subtask_id" : 8
+         "root_id" : 3,
+         "subtask_id" : 5
       },
       {
-         "exe_name" : "4_9",
+         "exe_name" : "3_6",
          "input" : [
             {
                "client_id" : 1,
-               "fname" : "4_2.txt",
-               "subtask_id" : 2
-            },
-            {
-               "client_id" : 1,
-               "fname" : "4_3.txt",
+               "fname" : "3_3.txt",
                "subtask_id" : 3
             },
             {
-               "client_id" : 1,
-               "fname" : "4_4.txt",
+               "client_id" : 3,
+               "fname" : "3_4.txt",
                "subtask_id" : 4
             },
             {
                "client_id" : 1,
-               "fname" : "4_8.txt",
-               "subtask_id" : 8
-            }
-         ],
-         "input_num" : 4,
-         "output" : [
-            {
-               "client_id" : 1,
-               "fname" : "4_9.txt",
-               "subtask_id" : 10
-            },
-            {
-               "client_id" : 3,
-               "fname" : "4_9.txt",
-               "subtask_id" : 12
-            },
-            {
-               "client_id" : 1,
-               "fname" : "4_9.txt",
-               "subtask_id" : 15
-            },
-            {
-               "client_id" : 2,
-               "fname" : "4_9.txt",
-               "subtask_id" : 17
-            },
-            {
-               "client_id" : 2,
-               "fname" : "4_9.txt",
-               "subtask_id" : 19
-            },
-            {
-               "client_id" : 2,
-               "fname" : "4_9.txt",
-               "subtask_id" : 20
-            }
-         ],
-         "output_num" : 6,
-         "root_id" : 4,
-         "subtask_id" : 9
-      },
-      {
-         "exe_name" : "4_10",
-         "input" : [
-            {
-               "client_id" : 2,
-               "fname" : "4_1.txt",
-               "subtask_id" : 1
-            },
-            {
-               "client_id" : 1,
-               "fname" : "4_2.txt",
-               "subtask_id" : 2
-            },
-            {
-               "client_id" : 1,
-               "fname" : "4_3.txt",
-               "subtask_id" : 3
-            },
-            {
-               "client_id" : 1,
-               "fname" : "4_9.txt",
-               "subtask_id" : 9
-            }
-         ],
-         "input_num" : 4,
-         "output" : [
-            {
-               "client_id" : 1,
-               "fname" : "4_10.txt",
-               "subtask_id" : 13
-            },
-            {
-               "client_id" : 2,
-               "fname" : "4_10.txt",
-               "subtask_id" : 16
-            },
-            {
-               "client_id" : 2,
-               "fname" : "4_10.txt",
-               "subtask_id" : 17
-            }
-         ],
-         "output_num" : 3,
-         "root_id" : 4,
-         "subtask_id" : 10
-      },
-      {
-         "exe_name" : "4_13",
-         "input" : [
-            {
-               "client_id" : 2,
-               "fname" : "4_1.txt",
-               "subtask_id" : 1
-            },
-            {
-               "client_id" : 1,
-               "fname" : "4_6.txt",
-               "subtask_id" : 6
-            },
-            {
-               "client_id" : 1,
-               "fname" : "4_10.txt",
-               "subtask_id" : 10
+               "fname" : "3_5.txt",
+               "subtask_id" : 5
             }
          ],
          "input_num" : 3,
          "output" : [
             {
                "client_id" : 1,
-               "fname" : "4_13.txt",
-               "subtask_id" : 15
+               "fname" : "3_6.txt",
+               "subtask_id" : 8
             },
             {
                "client_id" : 1,
-               "fname" : "4_13.txt",
-               "subtask_id" : 18
-            },
-            {
-               "client_id" : 2,
-               "fname" : "4_13.txt",
-               "subtask_id" : 19
-            }
-         ],
-         "output_num" : 3,
-         "root_id" : 4,
-         "subtask_id" : 13
-      },
-      {
-         "exe_name" : "4_15",
-         "input" : [
-            {
-               "client_id" : 2,
-               "fname" : "4_1.txt",
-               "subtask_id" : 1
-            },
-            {
-               "client_id" : 1,
-               "fname" : "4_2.txt",
-               "subtask_id" : 2
-            },
-            {
-               "client_id" : 1,
-               "fname" : "4_3.txt",
-               "subtask_id" : 3
-            },
-            {
-               "client_id" : 1,
-               "fname" : "4_4.txt",
-               "subtask_id" : 4
-            },
-            {
-               "client_id" : 1,
-               "fname" : "4_6.txt",
-               "subtask_id" : 6
-            },
-            {
-               "client_id" : 2,
-               "fname" : "4_7.txt",
-               "subtask_id" : 7
-            },
-            {
-               "client_id" : 1,
-               "fname" : "4_9.txt",
+               "fname" : "3_6.txt",
                "subtask_id" : 9
             },
             {
                "client_id" : 1,
-               "fname" : "4_13.txt",
-               "subtask_id" : 13
+               "fname" : "3_6.txt",
+               "subtask_id" : 10
             }
          ],
-         "input_num" : 8,
-         "output" : [
-            {
-               "client_id" : 2,
-               "fname" : "4_15.txt",
-               "subtask_id" : 17
-            },
-            {
-               "client_id" : 1,
-               "fname" : "4_15.txt",
-               "subtask_id" : 18
-            }
-         ],
-         "output_num" : 2,
-         "root_id" : 4,
-         "subtask_id" : 15
+         "output_num" : 3,
+         "root_id" : 3,
+         "subtask_id" : 6
       },
       {
-         "exe_name" : "4_18",
+         "exe_name" : "3_8",
          "input" : [
             {
                "client_id" : 1,
-               "fname" : "4_3.txt",
-               "subtask_id" : 3
+               "fname" : "3_5.txt",
+               "subtask_id" : 5
             },
             {
                "client_id" : 1,
-               "fname" : "4_4.txt",
+               "fname" : "3_6.txt",
+               "subtask_id" : 6
+            }
+         ],
+         "input_num" : 2,
+         "output" : [
+            {
+               "client_id" : 1,
+               "fname" : "3_8.txt",
+               "subtask_id" : 9
+            },
+            {
+               "client_id" : 1,
+               "fname" : "3_8.txt",
+               "subtask_id" : 10
+            }
+         ],
+         "output_num" : 2,
+         "root_id" : 3,
+         "subtask_id" : 8
+      },
+      {
+         "exe_name" : "3_9",
+         "input" : [
+            {
+               "client_id" : 2,
+               "fname" : "3_1.txt",
+               "subtask_id" : 1
+            },
+            {
+               "client_id" : 3,
+               "fname" : "3_4.txt",
                "subtask_id" : 4
             },
             {
                "client_id" : 1,
-               "fname" : "4_5.txt",
+               "fname" : "3_5.txt",
                "subtask_id" : 5
             },
             {
+               "client_id" : 1,
+               "fname" : "3_6.txt",
+               "subtask_id" : 6
+            },
+            {
+               "client_id" : 1,
+               "fname" : "3_8.txt",
+               "subtask_id" : 8
+            }
+         ],
+         "input_num" : 5,
+         "output" : null,
+         "output_num" : 0,
+         "root_id" : 3,
+         "subtask_id" : 9
+      },
+      {
+         "exe_name" : "3_10",
+         "input" : [
+            {
                "client_id" : 2,
-               "fname" : "4_7.txt",
-               "subtask_id" : 7
+               "fname" : "3_1.txt",
+               "subtask_id" : 1
             },
             {
                "client_id" : 2,
-               "fname" : "4_11.txt",
-               "subtask_id" : 11
+               "fname" : "3_2.txt",
+               "subtask_id" : 2
+            },
+            {
+               "client_id" : 1,
+               "fname" : "3_3.txt",
+               "subtask_id" : 3
+            },
+            {
+               "client_id" : 1,
+               "fname" : "3_5.txt",
+               "subtask_id" : 5
+            },
+            {
+               "client_id" : 1,
+               "fname" : "3_6.txt",
+               "subtask_id" : 6
             },
             {
                "client_id" : 3,
-               "fname" : "4_12.txt",
-               "subtask_id" : 12
+               "fname" : "3_7.txt",
+               "subtask_id" : 7
             },
             {
                "client_id" : 1,
-               "fname" : "4_13.txt",
-               "subtask_id" : 13
-            },
-            {
-               "client_id" : 4,
-               "fname" : "4_14.txt",
-               "subtask_id" : 14
-            },
-            {
-               "client_id" : 1,
-               "fname" : "4_15.txt",
-               "subtask_id" : 15
-            },
-            {
-               "client_id" : 2,
-               "fname" : "4_16.txt",
-               "subtask_id" : 16
+               "fname" : "3_8.txt",
+               "subtask_id" : 8
             }
          ],
-         "input_num" : 10,
-         "output" : [
-            {
-               "client_id" : 2,
-               "fname" : "4_18.txt",
-               "subtask_id" : 19
-            },
-            {
-               "client_id" : 2,
-               "fname" : "4_18.txt",
-               "subtask_id" : 20
-            }
-         ],
-         "output_num" : 2,
-         "root_id" : 4,
-         "subtask_id" : 18
+         "input_num" : 7,
+         "output" : null,
+         "output_num" : 0,
+         "root_id" : 3,
+         "subtask_id" : 10
       }
    ],
-   "subtask_num" : 11
+   "subtask_num" : 6
 }
