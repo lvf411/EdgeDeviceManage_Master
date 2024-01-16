@@ -3,29 +3,114 @@
    "ip" : "169.254.198.88",
    "master_ip" : "169.254.12.12",
    "master_port" : 10000,
-   "port" : 35136,
+   "port" : 46430,
    "subtask" : [
       {
-         "exe_name" : "1_8",
+         "exe_name" : "1_2",
+         "input" : null,
+         "input_num" : 0,
+         "output" : [
+            {
+               "client_id" : 1,
+               "fname" : "1_2.txt",
+               "subtask_id" : 3
+            },
+            {
+               "client_id" : 1,
+               "fname" : "1_2.txt",
+               "subtask_id" : 5
+            },
+            {
+               "client_id" : 1,
+               "fname" : "1_2.txt",
+               "subtask_id" : 6
+            },
+            {
+               "client_id" : 1,
+               "fname" : "1_2.txt",
+               "subtask_id" : 7
+            },
+            {
+               "client_id" : 2,
+               "fname" : "1_2.txt",
+               "subtask_id" : 9
+            }
+         ],
+         "output_num" : 5,
+         "root_id" : 1,
+         "subtask_id" : 2
+      },
+      {
+         "exe_name" : "1_4",
+         "input" : null,
+         "input_num" : 0,
+         "output" : [
+            {
+               "client_id" : 1,
+               "fname" : "1_4.txt",
+               "subtask_id" : 5
+            },
+            {
+               "client_id" : 1,
+               "fname" : "1_4.txt",
+               "subtask_id" : 6
+            },
+            {
+               "client_id" : 2,
+               "fname" : "1_4.txt",
+               "subtask_id" : 9
+            }
+         ],
+         "output_num" : 3,
+         "root_id" : 1,
+         "subtask_id" : 4
+      },
+      {
+         "exe_name" : "1_9",
          "input" : [
+            {
+               "client_id" : 1,
+               "fname" : "1_1.txt",
+               "subtask_id" : 1
+            },
+            {
+               "client_id" : 2,
+               "fname" : "1_2.txt",
+               "subtask_id" : 2
+            },
+            {
+               "client_id" : 1,
+               "fname" : "1_3.txt",
+               "subtask_id" : 3
+            },
+            {
+               "client_id" : 2,
+               "fname" : "1_4.txt",
+               "subtask_id" : 4
+            },
             {
                "client_id" : 1,
                "fname" : "1_5.txt",
                "subtask_id" : 5
+            },
+            {
+               "client_id" : 1,
+               "fname" : "1_6.txt",
+               "subtask_id" : 6
             }
          ],
-         "input_num" : 1,
+         "input_num" : 6,
          "output" : [
             {
                "client_id" : 1,
-               "fname" : "1_8.txt",
-               "subtask_id" : 9
+               "fname" : "1_9.txt",
+               "subtask_id" : 10
             }
          ],
          "output_num" : 1,
          "root_id" : 1,
-         "subtask_id" : 8
+         "subtask_id" : 9
       }
    ],
-   "subtask_num" : 1
+   "subtask_num" : 3
 }

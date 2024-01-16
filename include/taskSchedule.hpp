@@ -14,7 +14,7 @@
 #define TEST_TASK_CYCLE_PARAM 10000000
 
 //交叉编译器路径
-#define CROSS_COMPILE_TOOL_PATH "/home/lf/Downloads/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian/bin/arm-linux-gnueabihf-gcc"
+#define CROSS_COMPILE_TOOL_PATH "/home/lf/Downloads/tools/arm-bcm2708/gcc-linaro-arm-linux-gnueabihf-raspbian/bin/arm-linux-gnueabihf-g++"
 
 TestInfo DAGGenterate(string DAGfilename, int tasknum, int nodenum, double edgeNumConpensation);
 
